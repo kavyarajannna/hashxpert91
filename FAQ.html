@@ -1,0 +1,1102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<style>
+    /* Reset default browser styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+    }
+
+    /* Header Styles */
+    /* Header Styles */
+    header {
+        background-color: white;
+        color: #000;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #007bff;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        height: 3px;
+        background-color: black;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.close span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.close span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.close span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            width: 100%;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+    }
+
+
+
+
+    /* Scroll Up Button */
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #FBBC05;
+    }
+
+
+    .section-explore {
+        background-color: #f5f7fa;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .section-explore p {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+
+    .section-explore a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .section-explore a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* section content */
+    section.section-connect {
+        background-color: #1B449C;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5.7%;
+        /* 10% padding on left and right */
+    }
+
+    section.section-connect h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        /* Default font size */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-right: 20px;
+        /* Gap between text and button */
+    }
+
+    .contact-button {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        /* Default font size for the button */
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #fff;
+        color: #1B449C;
+    }
+
+    @media (max-width: 1200px) {
+        section.section-connect h2 {
+            font-size: 2.1rem;
+            /* Slightly smaller for medium screens */
+        }
+
+        .contact-button {
+            font-size: 1rem;
+            /* Smaller button text */
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.section-connect h2 {
+            font-size: 1.9rem;
+            /* Smaller font size for tablet screens */
+        }
+
+        .contact-button {
+            font-size: 0.95rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        section.section-connect h2 {
+            font-size: 1.6rem;
+            /* Further reduce font size for small screens */
+        }
+
+        .contact-button {
+            font-size: 0.9rem;
+            /* Reduce button font size */
+            padding: 8px 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        section.section-connect h2 {
+            font-size: 1.4rem;
+            /* Make text smaller for extra-small screens */
+        }
+
+        .contact-button {
+            font-size: 0.85rem;
+            /* Small button text */
+            padding: 8px 12px;
+            /* Adjust padding for extra-small screens */
+        }
+    }
+
+
+    /* Footer Styling */
+    /* Footer Styling */
+    footer {
+        background-color: #eceef1;
+        padding: 30px 0;
+        /* Reduced vertical padding */
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        /* Full width for footer */
+        margin: 0 auto;
+        padding: 0 5%;
+        /* 5% padding on left and right */
+    }
+
+    /* Adjust padding for smaller screens (below 768px) */
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 5%;
+            /* Maintain 5% padding on left and right for small screens */
+        }
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column-left,
+    .column-right {
+        padding: 0 0;
+        /* Reduced padding */
+        flex: 1;
+        min-width: 250px;
+        box-sizing: border-box;
+        /* Prevents extra space from padding */
+    }
+
+    /* Footer Links */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin: 10px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #1B449C;
+        font-weight: bold;
+        font-size: 1.3rem;
+        /* Updated font-size */
+        line-height: 1.5;
+    }
+
+    .footer-links a:hover {
+        color: #000;
+    }
+
+    /* Right Column */
+    .footer-logo {
+        width: 300px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .text-row p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        /* Updated font-size */
+        line-height: 1.8125rem;
+        /* Updated line-height */
+    }
+
+    .text-row a {
+        color: #4b0082;
+        text-decoration: none;
+    }
+
+    .text-row a:hover {
+        text-decoration: underline;
+    }
+
+    /* Social Icons Section */
+    .footer-social {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .social-icons a {
+        color: #1B449C;
+        /* Updated color */
+        font-size: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: #000;
+    }
+
+    .footer-logo img {
+        width: 80px;
+        /* Updated width */
+        height: 49.5px;
+        /* Updated height */
+    }
+
+    /* Footer Bottom Section */
+    .footer-line {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+    }
+
+    .legal-links a {
+        margin: 0 5px;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-main {
+            flex-direction: column;
+            align-items: center;
+            /* Center columns on smaller screens */
+            padding: 0 0%;
+            /* 5% padding on left and right */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .legal-links {
+            margin-top: 10px;
+        }
+
+        .footer-social {
+            text-align: center;
+            /* Center social icons */
+        }
+
+        .social-icons a {
+            margin: 0 8px;
+            /* Adjust social icon spacing */
+        }
+    }
+
+    .container {
+        padding: 5%;
+
+        margin: auto;
+    }
+
+    .header-section {
+        border-left: 16px solid #5107B8;
+        padding-left: 10px;
+    }
+
+    .header-section h1 {
+        font-size: 3rem;
+        /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        /* Reduces letter spacing by 2% */
+        color: #1B449C;
+
+        padding-bottom: 1rem;
+    }
+
+    .header-section p {
+        font-style: italic;
+        color: #000000;
+        font-size: 16px;
+        font-weight: 400;
+        line-height: 22.4px;
+        /* font-family: "McKinsey Sans", "Helvetica Neue", Calibri, Corbel, Helvetica, Roboto, Droid, sans-serif; */
+    }
+
+    .mobile-only {
+        display: none;
+        /* Hide by default */
+    }
+
+    @media screen and (max-width: 768px) {
+        .mobile-only {
+            display: block;
+            /* Show only on mobile */
+        }
+    }
+
+    .faq-container {
+        padding: 1% 5%;
+        max-width: 100%;
+        border-radius: 8px;
+    }
+
+    .faq-container h1 {
+
+
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 4rem;
+        letter-spacing: -0.02em;
+        /* Reduces letter spacing by 2% */
+        color: #1B449C;
+        text-align: left;
+
+
+    }
+
+    .faq-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 10px;
+        padding-bottom: 10px;
+        justify-content: center;
+    }
+
+    .faq-categories div {
+        background: #f3f3f3;
+        padding: 10px 15px;
+        color: #1d2833;
+        line-height: 35px;
+        font-size: 1.2857142857rem;
+        text-align: center;
+        border-radius: 5px;
+
+        flex: 1;
+        /* font-family: "McKinsey Sans", "Helvetica Neue", Calibri, Corbel, Helvetica, Roboto, Droid, sans-serif; */
+        min-width: 180px;
+        cursor: pointer;
+        transition: background 0.3s ease;
+    }
+
+    .faq-categories div:hover {
+        background: #ddd;
+    }
+
+    .faq-title {
+
+        letter-spacing: -0.02em;
+        /* Reduces letter spacing by 2% */
+        color: #1B449C;
+        font-size: 2.2857142858rem;
+        /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-top: 70px;
+
+    }
+
+    .faq-item {
+        margin: 15px 0;
+        padding: 15px;
+    }
+
+    .faq-item h3 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: .5rem;
+    }
+
+
+    .faq-item p {
+        margin: 5px 0;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #1d2833;
+        font-size: 1.2857142857rem;
+        /* font-family: "McKinsey Sans", "Helvetica Neue", Calibri, Corbel, Helvetica, Roboto, Droid, sans-serif; */
+
+
+        padding-left: 2rem;
+    }
+
+
+
+    .industries {
+        max-width: 600px;
+        /* Adjust as needed */
+        margin: 0 auto;
+        /* Center the text */
+        text-align: left;
+        /* Align text properly */
+        white-space: normal;
+        /* Ensure wrapping */
+        word-break: break-word;
+        /* Prevent overflow issues */
+    }
+
+
+    .global-partner-wrapper {
+        max-width: 600px;
+        /* Set a max width */
+        margin-left: 2rem;
+        /* Adjust margin for proper alignment */
+    }
+
+    .global-partners {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 15px;
+        /* Add spacing between items */
+        align-items: center;
+        justify-content: flex-start;
+        /* Align content to the left */
+    }
+
+    .global-partners span {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        /* Adjust spacing between flag and text */
+        white-space: nowrap;
+        /* Prevent text from breaking into multiple lines */
+    }
+
+    .global-partners img {
+        width: 20px;
+        height: 15px;
+    }
+
+
+
+
+    /* Button Styling */
+    button {
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 12px 24px;
+        font-size: 1rem;
+        font-weight: bold;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background 0.3s ease, transform 0.2s ease;
+        margin-top: 10px;
+    }
+
+    /* Default: Button Left-Aligned */
+    .faq-item .btn-container {
+        text-align: left;
+    }
+
+    /* Button Hover Effect */
+    button:hover {
+        background-color: #6a0dad;
+        transform: scale(1.05);
+    }
+
+    /* Center Button on Small Screens */
+    @media (max-width: 1024px) {
+        .faq-item .btn-container {
+            text-align: center;
+        }
+    }
+
+
+    /* List Item Styling */
+    ul {
+        padding-left: 2rem;
+    }
+
+    .faq-item li {
+        list-style-type: none;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #1d2833;
+        line-height: 35px;
+        font-size: 1.2857142857rem;
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 8px;
+    }
+
+    .faq-item li::before {
+        content: "•";
+        color: black;
+        font-size: 1.2rem;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+        top: 2px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+
+
+        .faq-categories {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .faq-categories div {
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .faq-title {
+            font-size: 1.4rem;
+            text-align: left;
+        }
+
+        .faq-item {
+            text-align: left;
+        }
+
+
+    }
+
+    @media (max-width: 768px) {
+        h1 {
+            font-size: 1.5rem;
+        }
+
+        .faq-title {
+            font-size: 1.3rem;
+        }
+
+        .faq-item {
+            text-align: justify;
+            padding: 10px;
+        }
+
+        .faq-item h3 {
+            font-size: 1.1rem;
+        }
+
+        .faq-item p {
+            text-align: justify;
+            font-size: 0.95rem;
+            padding-left: 1rem;
+        }
+
+        ul {
+            padding-left: 1rem;
+        }
+
+        button {
+            font-size: 0.95rem;
+            padding: 10px 20px;
+        }
+    }
+</style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header-section">
+            <h1>Frequently Asked Questions</h1>
+            <p class="italic-text">Got questions ? We’ve got answers. Explore our FAQs to discover how Hashxpert
+                delivers next-gen XR, AI, and SaaS solutions to power your business.</p>
+        </div>
+
+    </div>
+    <div class="faq-container">
+        <h1>FAQ Categories</h1>
+        <div class="faq-categories">
+            <div>General Questions</div>
+            <div>Pricing & Project Timelines</div>
+            <div>Services and Expertise</div>
+            <div>Technical Support</div>
+            <div>Offshore Team Management</div>
+            <div>Partnerships and Collaboration</div>
+        </div>
+
+        <h2 class="faq-title">1. General Questions</h2>
+        <div class="faq-item">
+            <h3>Q1. What is Hashxpert, and what do you specialize in ?</h3>
+            <p>Hashxpert is a global tech powerhouse, pioneering solutions in XR (AR/VR/MR), AI, SaaS development,
+                QA testing, offshore team management, and 3D design.</p>
+            <p><strong>260+ successful projects</strong> delivered across <strong>20+ countries</strong>, trusted by top
+                brands.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q2. Which industries do you serve ?</h3>
+            <p>We bring disruptive innovation to industries like:</p>
+            <p class="industries"><span>Healthcare | Retail | Manufacturing | Real Estate | Aviation | Gaming |
+                    Education</span></p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q3. Where are your offices located?</h3>
+            <p><strong>India:</strong> Bangalore & Mysore</p>
+            <div class="global-partner-wrapper">
+                <p class="industries"><strong>Global Partners:</strong></p>
+                <div class="global-partners">
+                    <span>UAE <img src="United Arab Emirates (AE) (1).png" alt="UAE Flag"></span> |
+                    <span>USA <img src="United States of America (US).png" alt="USA Flag"></span> |
+                    <span>Canada <img src="Canada (CA).png" alt="Canada Flag"></span> |
+                    <span>South Korea <img src="South Korea (KR).png" alt="South Korea Flag"></span>
+                </div>
+            </div>
+
+        </div>
+
+
+
+
+
+
+
+        <h2 class="faq-title">2. Services and Expertise</h2>
+        <div class="faq-item">
+            <h3>Q1. What is XR, and how can it benefit my business ?</h3>
+            <p>XR (Extended Reality) includes VR (Virtual Reality), AR (Augmented Reality), and MR (Mixed Reality).</p>
+            <p>It enhances training, product showcases, remote collaboration, and customer engagement through
+                hyper-immersive experiences.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q2. Can you develop custom AI solutions ?</h3>
+            <p>Yes! We build AI-powered chatbots, predictive analytics, NLP tools, and generative AI models for
+                automation and data-driven decision-making.</p>
+
+        </div>
+
+        <div class="faq-item">
+            <h3>Q3. What types of SaaS platforms do you develop ?</h3>
+            <p>Scalable, cloud-native SaaS solutions, including :  </p>
+            <p>E-commerce platforms, Learning Management Systems (LMS), ERP & CRM software, AI-driven automation tools 
+            </p>
+
+        </div>
+
+
+        <div class="faq-item">
+            <h3>Q4. Do you provide 3D design and rendering services ?</h3>
+            <p>Yes! Our photo-realistic 3D modeling, animation, and rendering services power gaming, real estate, and
+                product visualization.</p>
+
+        </div>
+
+
+
+
+
+        <h2 class="faq-title">3. Technical Support</h2>
+        <div class="faq-item">
+            <h3>Q1. What technical support services do you offer ?</h3>
+            <p>24/7 tech support for web, mobile, AI, and XR platforms. L1 & L2 troubleshooting, proactive maintenance,
+                and performance optimization.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q2. How can I contact your technical support team ?</h3>
+            <p><strong>Email:</strong> support@hashxpert.com</p>
+            <button onclick="window.location.href='Contact.html'">Get in touch</button>
+
+        </div>
+
+        <div class="faq-item">
+            <h3>Q3. Do you offer support for XR devices ?</h3>
+            <p>Yes! We provide customized support for VR headsets, AR glasses, and MR environments to optimize
+                performance and compatibility.</p>
+        </div>
+
+
+
+
+
+        <h2 class="faq-title">4. Offshore Team Management</h2>
+        <div class="faq-item">
+            <h3>Q1. What is offshore team management, and how does it work ?</h3>
+            <p>We help businesses scale efficiently by building and managing dedicated remote teams, handling: Talent
+                acquisition & onboarding, Training & upskilling, Performance monitoring & payroll.</p>
+        </div>
+        <div class="faq-item">
+            <h3 style="margin-bottom: .5%;">Q2. What roles can you provide through offshore teams?</h3>
+            <p>We offer highly skilled professionals, including:</p>
+            <ul>
+                <li><strong>XR Developers</strong></li>
+                <li><strong>AI Engineers</strong></li>
+                <li><strong>QA Testers</strong></li>
+                <li><strong>3D Designers</strong></li>
+                <li><strong>Technical Support Specialists</strong></li>
+            </ul>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q3. How do you ensure the quality of offshore teams ?</h3>
+            <p>Industry-leading hiring standards, ongoing training, and rigorous quality checks ensure that your remote
+                team delivers excellence. </p>
+        </div>
+
+
+
+        <h2 class="faq-title">5. Partnerships and Collaboration</h2>
+        <div class="faq-item">
+            <h3>Q1. Can we collaborate on a project if my company is not in your location ?</h3>
+            <p>Yes! We specialize in remote project execution, using secure, real-time collaboration tools for seamless
+                communication.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q2. How do you support your international partners ?</h3>
+            <p>We offer localized support via our global partners in UAE, USA, Canada, and South Korea for smoother
+                service delivery.</p>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q3. Are you open to long-term partnerships ?</h3>
+            <p>Absolutely! We prioritize long-term collaborations and are committed to becoming your trusted tech
+                partner.</p>
+
+        </div>
+
+
+
+        <h2 class="faq-title">6. Pricing and Project Duration</h2>
+        <div class="faq-item">
+            <h3>Q1. How do you determine the cost of a project ?</h3>
+            <p>Pricing depends on scope, complexity, technology stack, and delivery timeline. After an initial
+                consultation, we provide a detailed project proposal.</p>
+        </div>
+
+
+        <div class="faq-item">
+            <h3>Q2. Do you offer flexible pricing models?</h3>
+            <p>Yes! We provide:</p>
+            <ul>
+                <li><strong>Price:</strong> For well-defined project scopes.</li>
+                <li><strong>Time & Material:</strong> Ideal for evolving requirements.</li>
+                <li><strong>Dedicated Team:</strong> A fully managed team working exclusively on your project.</li>
+
+            </ul>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q3. Are there any hidden charges ?</h3>
+            <p>No, our pricing is transparent. All costs are outlined in the project proposal, and any additional
+                changes are discussed upfront before implementation.</p>
+        </div>
+
+
+        <div class="faq-item">
+            <h3>Q4. How long does it take to complete a project ?</h3>
+            <p>Project duration varies by complexity:</p>
+            <ul>
+                <li><strong>Small Projects:</strong> 4–6 weeks (Website, MVPs, basic apps).</li>
+                <li><strong>Medium Projects:</strong> 2–4 months (SaaS platforms, XR modules).</li>
+                <li><strong>Large Projects:</strong> 6+ months (Enterprise solutions, AI-powered platforms).</li>
+
+            </ul>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q5. Can you expedite project timelines ?</h3>
+            <p>Yes! We fast-track delivery by scaling resources and prioritizing key milestones (Additional cost
+                applies).</p>
+
+        </div>
+
+        <div class="faq-item">
+            <h3>Q6. Do you offer a free consultation or project estimate ?</h3>
+            <p>Yes! Schedule a free consultation to discuss your project & get a custom quote.</p>
+
+        </div>
+
+
+        <div class="faq-item">
+            <h3>Q7. How do I pay for your services ?</h3>
+            <p>We accept:</p>
+            <ul>
+                <li><strong>Credit Card</strong> </li>
+                <li><strong>Wire Transfer</strong> </li>
+                <li><strong>Digital Payment Platforms</strong> </li>
+
+            </ul>
+        </div>
+
+        <div class="faq-item">
+            <h3>Q8. Is there any post-project support included in the cost ?</h3>
+            <p>Yes! Every project includes a defined post-launch support period, with optional long-term maintenance
+                plans.</p>
+
+        </div>
+
+
+    </div>
+
+
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact
+            Us</button>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="HASHXPERT Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert specializes in providing
+                            end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/hashxpert-technologies-llc/?originalSubdomain=ae"><i
+                            class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <div class="legal-links">
+                    <a href="PrivacyPolicy.html">PrivacyPolicy</a> |
+                    <a href="TermsOfUse.html">Terms</a> |
+                    <a href="FAQ.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const elements = document.querySelectorAll(
+                ".faq-container h1,.faq-title"
+            );
+
+            function revealOnScroll() {
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add("reveal");
+                    }
+                });
+            }
+
+            window.addEventListener("scroll", revealOnScroll);
+            revealOnScroll(); // Run on page load in case elements are already in view
+        });
+
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>

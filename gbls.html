@@ -1,0 +1,1107 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<style>
+    /* Reset default browser styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+    }
+
+    /* Header Styles */
+    /* Header Styles */
+    header {
+        background-color: white;
+        color: #000;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #007bff;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        height: 3px;
+        background-color: black;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.close span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.close span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.close span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            width: 100%;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+    }
+
+
+
+
+    /* Scroll Up Button */
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #FBBC05;
+    }
+
+
+
+    .section-explore {
+        background-color: #f5f7fa;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .section-explore p {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+
+    .section-explore a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .section-explore a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* section content */
+    section.section-connect {
+        background-color: #1B449C;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5.7%;
+        /* 10% padding on left and right */
+    }
+
+    section.section-connect h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        /* Default font size */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-right: 20px;
+        /* Gap between text and button */
+    }
+
+    .contact-button {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        /* Default font size for the button */
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #fff;
+        color: #1B449C;
+    }
+
+    @media (max-width: 1200px) {
+        section.section-connect h2 {
+            font-size: 2.1rem;
+            /* Slightly smaller for medium screens */
+        }
+
+        .contact-button {
+            font-size: 1rem;
+            /* Smaller button text */
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.section-connect h2 {
+            font-size: 1.9rem;
+            /* Smaller font size for tablet screens */
+        }
+
+        .contact-button {
+            font-size: 0.95rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        section.section-connect h2 {
+            font-size: 1.6rem;
+            /* Further reduce font size for small screens */
+        }
+
+        .contact-button {
+            font-size: 0.9rem;
+            /* Reduce button font size */
+            padding: 8px 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        section.section-connect h2 {
+            font-size: 1.4rem;
+            /* Make text smaller for extra-small screens */
+        }
+
+        .contact-button {
+            font-size: 0.85rem;
+            /* Small button text */
+            padding: 8px 12px;
+            /* Adjust padding for extra-small screens */
+        }
+    }
+
+
+    /* Footer Styling */
+    /* Footer Styling */
+    footer {
+        background-color: #eceef1;
+        padding: 30px 0;
+        /* Reduced vertical padding */
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        /* Full width for footer */
+        margin: 0 auto;
+        padding: 0 5%;
+        /* 5% padding on left and right */
+    }
+
+    /* Adjust padding for smaller screens (below 768px) */
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 5%;
+            /* Maintain 5% padding on left and right for small screens */
+        }
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column-left,
+    .column-right {
+        padding: 0 0;
+        /* Reduced padding */
+        flex: 1;
+        min-width: 250px;
+        box-sizing: border-box;
+        /* Prevents extra space from padding */
+    }
+
+    /* Footer Links */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin: 10px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #1B449C;
+        font-weight: bold;
+        font-size: 1.3rem;
+        /* Updated font-size */
+        line-height: 1.5;
+    }
+
+    .footer-links a:hover {
+        color: #000;
+    }
+
+    /* Right Column */
+    .footer-logo {
+        width: 300px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .text-row p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        /* Updated font-size */
+        line-height: 1.8125rem;
+        /* Updated line-height */
+    }
+
+    .text-row a {
+        color: #4b0082;
+        text-decoration: none;
+    }
+
+    .text-row a:hover {
+        text-decoration: underline;
+    }
+
+    /* Social Icons Section */
+    .footer-social {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .social-icons a {
+        color: #1B449C;
+        /* Updated color */
+        font-size: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: #000;
+    }
+
+    .footer-logo img {
+        width: 80px;
+        /* Updated width */
+        height: 49.5px;
+        /* Updated height */
+    }
+
+    /* Footer Bottom Section */
+    .footer-line {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+    }
+
+    .legal-links a {
+        margin: 0 5px;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-main {
+            flex-direction: column;
+            align-items: center;
+            /* Center columns on smaller screens */
+            padding: 0 0%;
+            /* 5% padding on left and right */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .legal-links {
+            margin-top: 10px;
+        }
+
+        .footer-social {
+            text-align: center;
+            /* Center social icons */
+        }
+
+        .social-icons a {
+            margin: 0 8px;
+            /* Adjust social icon spacing */
+        }
+    }
+
+    /* Grit12 Section - Isolated CSS */
+    .grit12 {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        background: #ffffff;
+        color: #1d2833;
+        padding: 50px;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .grit12-content {
+        width: 50%;
+        min-width: 300px;
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .grit12-content.reveal {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .grit12-content h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: .5rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .grit12-content h1 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: .5rem;
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease, transform 1s ease;
+    }
+
+    .grit12-content h1.reveal,
+    .grit12-content h2.reveal {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .grit12-content p,
+    .grit12-content ul {
+        font-size: 1.2857142857rem;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        line-height: 1.875rem;
+    }
+
+    .grit12-content ul {
+        padding-left: 20px;
+    }
+
+    .grit12-content ul li {
+        margin-bottom: 10px;
+    }
+
+    .grit12-image {
+        width: 45%;
+        min-width: 300px;
+        position: relative;
+        overflow: hidden;
+        opacity: 0;
+        transform: translateX(-50px);
+        transition: transform 1s ease-out, opacity 1s ease-out;
+    }
+
+    .grit12-image.reveal {
+        opacity: 1;
+        transform: translateX(0);
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .grit12 {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .grit12-content,
+        .grit12-image {
+            width: 100%;
+        }
+
+        .grit12-image {
+            transform: translateX(-30px);
+        }
+    }
+
+    /* Scoped CSS */
+    .grit13 {
+        padding: 5% 5%;
+        text-align: center;
+        overflow: hidden;
+    }
+
+    .grit13 h1 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: .5rem;
+    }
+
+    .grit13-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 20px;
+        width: 100%;
+        /* Ensures full width */
+        margin: 0;
+        padding-top: 30px;
+    }
+
+    .grit13-card {
+        background: white;
+        padding: 20px;
+        /* border-radius: 10px; */
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        opacity: 0;
+        transform: translateY(50px);
+        transition: all 0.5s ease-out;
+    }
+
+    .grit13-card h3 {
+        font-size: 1.5rem;
+        margin: 0;
+    }
+
+    /* Scroll Animation */
+    .grit13-card.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .services-section8310 {
+        padding: 2rem 1rem;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .services-section8310 h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+    }
+
+    .services-section8310 h3 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+        color: #1d2833;
+    }
+
+    .services-section8310 p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #1d2833;
+        margin-bottom: 2rem;
+    }
+   .content8310 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        /* Increased gap between columns */
+        align-items: flex-start;
+        /* Ensures columns align at the top */
+    }
+
+    .image-container8310 {
+        flex: 1;
+        min-width: 300px;
+        max-width: 100%;
+        /* Ensure images do not overflow */
+    }
+
+    .image-container8310 img {
+        width: 100%;
+        /* border-radius: 0.5rem; Optional: Rounded corners for images */
+        object-fit: cover;
+        /* Ensures the image covers the container without stretching */
+    }
+
+    .text-container8310 {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .button8310 {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        display: inline-block;
+        background: #1B449C;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+    }
+
+    .button8310:hover {
+        background-color: white;
+        color: #1B449C;
+        border: 1px solid #1B449C;
+    }
+
+
+    .hr8310 {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 2rem 0;
+        width: 90%;
+        /* Ensures it doesn't touch the edges */
+        margin-left: auto;
+        /* Centers the line */
+        margin-right: auto;
+        /* Centers the line */
+    }
+
+
+    /* Responsive design */
+    @media (max-width: 1024px) {
+        .content8310 {
+            gap: 1rem;
+            /* Reduce gap on medium screens */
+        }
+
+        .image-container8310 {
+            max-width: 100%;
+            /* Ensure images don't overflow on smaller screens */
+        }
+
+        .text-container8310 {
+            margin-top: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content8310 {
+            flex-direction: column;
+            text-align: center;
+            /* Center text on smaller screens */
+        }
+
+        .image-container8310 {
+            order: 1;
+            /* Image first */
+            margin-bottom: 1rem;
+            /* Space between image and text */
+        }
+
+        .text-container8310 {
+            order: 2;
+            /* Text second */
+            margin-top: 1rem;
+        }
+
+        .services-section8310 p {
+            text-align: justify;
+            /* Ensure better readability on smaller screens */
+        }
+
+        .button8310 {
+            width: 100%;
+            /* Make the button full width */
+            padding: 1rem 1.5rem;
+            /* Adjust padding for better touch area */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .services-section8310 h2 {
+            font-size: 1.8rem;
+            /* Reduce font size for very small screens */
+        }
+
+        .services-section8310 h3 {
+            font-size: 1.8rem;
+            /* Adjust for better readability */
+        }
+
+        .services-section8310 p {
+            font-size: 1.28rem;
+            /* Reduce paragraph text size */
+            line-height: 1.8rem;
+            /* Adjust line height for better readability */
+        }
+
+        .button8310 {
+            font-size: 0.9rem;
+            /* Smaller button text */
+        }
+
+        .content8310 {
+            gap: 1rem;
+            /* Reduce gap for smaller screens */
+        }
+
+        .image-container8310 {
+            min-width: 100%;
+            /* Ensure image takes full width on smaller screens */
+        }
+    }
+
+    .hero {
+        position: relative;
+        width: 100%;
+        height: 92vh;
+        /* Full viewport height */
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .hero video,
+    .hero img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .hero img {
+        display: none;
+        /* Hide the image initially */
+    }
+</style>
+</style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Solutions.html">Services</a></li>
+                <li><a href="service1.html">Solution</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <section class="hero">
+        <video id="heroVideo" autoplay muted>
+            <source src="gbls.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <img id="heroImage" src="gbls.png" alt="Hero Image">
+    </section>
+
+
+    <section class="grit12" id="grit12">
+        <div class="grit12-content">
+            <h1>Driving Innovation with Hashxpert</h1>
+            <p>In today's rapidly evolving digital world, businesses that embrace cutting-edge technology thrive.
+                At Hashxpert, we do not just follow trends - we shape them.</p>
+
+            <p>We are a passionate team of innovators, engineers, and visionaries, dedicated to empowering businesses
+                like yours with the transformative power of technology. Whether it is the immersive experiences of XR,
+                the intelligent automation of AI, the scalability of SaaS, or the limitless potential of the web, we
+                deliver solutions that go beyond the ordinary</p>
+            <p>The journey began with a simple yet profound belief: that technology should empower, not complicate. We
+                have consistently proven this through our work, partnering with global leaders like Pfizer, Bosch
+                Rexroth, and GameIn to achieve remarkable results.
+            </p>
+
+            <h2>What sets us apart?</h2>
+            <ul>
+                <li><strong>A relentless pursuit of innovation : </strong> We embrace emerging technologies and explore
+                    their untapped potential.</li>
+                <li><strong>A deep understanding of your unique needs : </strong> We go beyond simply delivering
+                    solutions.</li>
+                <li><strong>A global reach with a local touch : </strong>
+                    Our presence spans continents, enabling us to deliver world- class solutions with a deep
+                    understanding of local markets.
+                </li>
+                <li><strong>A commitment to excellence : </strong>A commitment to excellence:
+                    We adhere to the highest quality standards, ensuring every project we undertake exceeds
+                    expectations.
+                </li>
+            </ul>
+
+            <h2>Advantage Hashxpert:</h2>
+            <ul>
+                <li>We are revolutionizing industries with our expertise in XR, AI, SaaS, and web development.
+                </li>
+                <li>Our dedicated teams can accelerate your projects and deliver exceptional results.
+                </li>
+                <li>We empower businesses to achieve measurable success through innovative solutions.
+                </li>
+            </ul>
+        </div>
+
+        <div class="grit12-image">
+            <img src="grit.png" alt="Innovation Image" width="100%">
+        </div>
+    </section>
+    <section class="grit13">
+        <h1>Our Services</h1>
+        <div class="grit13-cards">
+            <div class="grit13-card">
+                <h3>End-to-End Development</h3>
+            </div>
+            <div class="grit13-card">
+                <h3>Staff Augmentation</h3>
+            </div>
+            <div class="grit13-card">
+                <h3>Offshore Team Management</h3>
+            </div>
+            <div class="grit13-card">
+                <h3>QA Testing & Technical Support</h3>
+            </div>
+        </div>
+    </section>
+    <!-- First Section -->
+    <section class="services-section8310">
+        <h2>Technology That Transforms</h2>
+        <div class="content8310">
+            <div class="image-container8310">
+                <img src="pru.jpg" alt="Product Configurators" />
+            </div>
+            <div class="text-container8310">
+                <h3>Product Configurators
+                </h3>
+                <p>Customizable 3D tools enabling real-time visualization and personalization of products.
+
+                </p>
+                <a href="ProductConfigurators.html" class="button8310">Explore More</a>
+            </div>
+        </div>
+    </section>
+    <hr class="hr8310"> <!-- Horizontal line between sections -->
+    <!-- Second Section -->
+    <section class="services-section8310">
+
+        <div class="content8310">
+            <div class="text-container8310">
+                <h3>AI Assistants
+                </h3>
+                <p>Voice- and character-based AI solutions that
+                    automate interactions while delivering a human-like experience.
+
+                </p>
+                <a href="AIAssistants.html" class="button8310">Learn More</a>
+            </div>
+            <div class="image-container8310">
+                <img src="aiasssss.jpg" alt="Cloud Solutions" />
+            </div>
+        </div>
+    </section>
+    <hr class="hr8310"> <!-- Horizontal line between sections -->
+    <!-- Third Section -->
+    <section class="services-section8310">
+
+        <div class="content8310">
+            <div class="image-container8310">
+                <img src="staffaugmentation.jpg" alt="Networking" />
+            </div>
+            <div class="text-container8310">
+                <h3>Staff Augmentation
+                    </h2>
+
+                </h3>
+                <p>Providing skilled professionals to support and scale client teams efficiently.
+                </p>
+                <a href="StaffAugmentation.html" class="button8310">Discover More</a>
+            </div>
+        </div>
+    </section>
+    <hr class="hr8310"> <!-- Horizontal line between sections -->
+    <!-- Second Section -->
+    <section class="services-section8310">
+
+        <div class="content8310">
+            <div class="text-container8310">
+                <h3>3D Design & Rendering
+                </h3>
+                <p>Creating high-quality visual assets for gaming, training, and product configurators.
+
+
+
+                </p>
+                <a href="StaffAugmentation.html" class="button8310">Learn More</a>
+            </div>
+            <div class="image-container8310">
+                <img src="3dd.png" alt="Cloud Solutions" />
+            </div>
+        </div>
+    </section>
+    <hr class="hr8310"> <!-- Horizontal line between sections -->
+
+
+
+
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact
+            Us</button>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="HASHXPERT Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert specializes in providing
+                            end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/hashxpert-technologies-llc/?originalSubdomain=ae"><i
+                            class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <div class="legal-links">
+                    <a href="PrivacyPolicy.html">PrivacyPolicy</a> |
+                    <a href="TermsOfUse.html">Terms</a> |
+                    <a href="FAQ.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+    <script>
+        // Scroll Animation for Cards
+        const cards = document.querySelectorAll('.grit13-card');
+
+        function revealCards() {
+            const triggerBottom = window.innerHeight * 0.85;
+
+            cards.forEach((card, index) => {
+                const cardTop = card.getBoundingClientRect().top;
+
+                if (cardTop < triggerBottom) {
+                    setTimeout(() => {
+                        card.classList.add('show');
+                    }, index * 200); // Delayed effect
+                }
+            });
+        }
+
+        window.addEventListener('scroll', revealCards);
+        revealCards(); // Run on page load in case section is already in view
+    </script>
+
+    <script>
+        function revealOnScroll() {
+            var section = document.getElementById('grit12');
+            var rect = section.getBoundingClientRect();
+            var screenHeight = window.innerHeight;
+
+            if (rect.top < screenHeight - 100) {
+                document.querySelector('.grit12-content').classList.add('reveal');
+                document.querySelectorAll('.grit12-content h1, .grit12-content h2').forEach(el => {
+                    el.classList.add('reveal');
+                });
+                document.querySelector('.grit12-image').classList.add('reveal');
+            }
+        }
+
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Ensure elements are revealed if already in view
+    </script>
+
+    <script>
+        function sendMessage() {
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const message = document.getElementById('message').value;
+
+            const phoneNumber = '+9199450 00068'; // Your WhatsApp number
+            const text = `Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`; // %0A is for new line
+
+            const url = `https://api.whatsapp.com/send?phone=${phoneNumber}&text=${text}`;
+            window.open(url, '_blank');
+        }
+    </script>
+
+    <script>
+        document.getElementById("heroVideo").addEventListener("ended", function () {
+            this.style.display = "none"; // Hide the video after it finishes
+            document.getElementById("heroImage").style.display = "block"; // Show the image
+        });
+    </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
