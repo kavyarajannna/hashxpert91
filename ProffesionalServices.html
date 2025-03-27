@@ -1,0 +1,878 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Proffesional Services</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<style>
+    /* Reset default browser styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+    }
+
+    /* Header Styles */
+    header {
+        background-color: white;
+        color: #000;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #1B449C;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        height: 3px;
+        background-color: black;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.close span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.close span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.close span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            width: 100%;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+    }
+
+
+
+    /* Map Box */
+    .map {
+        flex: 1;
+        background-color: #ffffff;
+        /* Same background color */
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    /* Scroll Up Button */
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #FFB81C;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .contact-container {
+            flex-direction: column;
+            gap: 10px;
+            /* Reduces gap between columns for small screens */
+        }
+
+        .contact-container .vertical-line {
+            display: none;
+            /* Hides the vertical line on mobile */
+        }
+    }
+
+    .section-explore {
+        background-color: #f5f7fa;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .section-explore p {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+
+    .section-explore a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .section-explore a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* section content */
+    section.section-connect {
+        background-color: #1B449C;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5.7%;
+        /* 10% padding on left and right */
+    }
+
+    section.section-connect h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        /* Default font size */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-right: 20px;
+        /* Gap between text and button */
+    }
+
+    .contact-button {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        /* Default font size for the button */
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #fff;
+        color: #1B449C;
+    }
+
+    @media (max-width: 1200px) {
+        section.section-connect h2 {
+            font-size: 2.1rem;
+            /* Slightly smaller for medium screens */
+        }
+
+        .contact-button {
+            font-size: 1rem;
+            /* Smaller button text */
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.section-connect h2 {
+            font-size: 1.9rem;
+            /* Smaller font size for tablet screens */
+        }
+
+        .contact-button {
+            font-size: 0.95rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        section.section-connect h2 {
+            font-size: 1.6rem;
+            /* Further reduce font size for small screens */
+        }
+
+        .contact-button {
+            font-size: 0.9rem;
+            /* Reduce button font size */
+            padding: 8px 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        section.section-connect h2 {
+            font-size: 1.4rem;
+            /* Make text smaller for extra-small screens */
+        }
+
+        .contact-button {
+            font-size: 0.85rem;
+            /* Small button text */
+            padding: 8px 12px;
+            /* Adjust padding for extra-small screens */
+        }
+    }
+
+
+    /* Footer Styling */
+    /* Footer Styling */
+    footer {
+        background-color: #eceef1;
+        padding: 30px 0;
+        /* Reduced vertical padding */
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        /* Full width for footer */
+        margin: 0 auto;
+        padding: 0 5%;
+        /* 5% padding on left and right */
+    }
+
+    /* Adjust padding for smaller screens (below 768px) */
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 5%;
+            /* Maintain 5% padding on left and right for small screens */
+        }
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column-left,
+    .column-right {
+        padding: 0 0;
+        /* Reduced padding */
+        flex: 1;
+        min-width: 250px;
+        box-sizing: border-box;
+        /* Prevents extra space from padding */
+    }
+
+    /* Footer Links */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin: 10px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #1B449C;
+        font-weight: bold;
+        font-size: 1.3rem;
+        /* Updated font-size */
+        line-height: 1.5;
+    }
+
+    .footer-links a:hover {
+        color: #000;
+    }
+
+    /* Right Column */
+    .footer-logo {
+        width: 300px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .text-row p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        /* Updated font-size */
+        line-height: 1.8125rem;
+        /* Updated line-height */
+    }
+
+    .text-row a {
+        color: #4b0082;
+        text-decoration: none;
+    }
+
+    .text-row a:hover {
+        text-decoration: underline;
+    }
+
+    /* Social Icons Section */
+    .footer-social {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .social-icons a {
+        color: #1B449C;
+        /* Updated color */
+        font-size: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: #000;
+    }
+
+    .footer-logo img {
+        width: 80px;
+        /* Updated width */
+        height: 49.5px;
+        /* Updated height */
+    }
+
+    /* Footer Bottom Section */
+    .footer-line {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+    }
+
+    .legal-links a {
+        margin: 0 5px;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-main {
+            flex-direction: column;
+            align-items: center;
+            /* Center columns on smaller screens */
+            padding: 0 0%;
+            /* 5% padding on left and right */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .legal-links {
+            margin-top: 10px;
+        }
+
+        .footer-social {
+            text-align: center;
+            /* Center social icons */
+        }
+
+        .social-icons a {
+            margin: 0 8px;
+            /* Adjust social icon spacing */
+        }
+    }
+
+
+    /* Hero Section Styles */
+    /* Hero Section Styles */
+    .hero {
+        background: url('proffesional.jpg') no-repeat center center/cover;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        padding: 0 105px;
+        text-align: left;
+        background-size: cover;
+        background-position: center center;
+        background-attachment: fixed;
+    }
+
+    /* Hero Content */
+    .hero-content h1,
+    .hero-content p {
+        color: #f5f7fa;
+        opacity: 0;
+        /* Initially hidden */
+        transform: translateX(-50px);
+        /* Start position for animation */
+        animation: textReveal 1.5s ease-out forwards;
+    }
+
+    .hero-content h1 {
+        font-size: 3rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin: 0;
+        animation-delay: 0.2s;
+        /* Slight delay for smooth effect */
+    }
+
+    .hero-content p {
+        font-size: 1.2857142857rem;
+        font-weight: 400;
+        margin-top: 10px;
+        animation-delay: 0.5s;
+
+        text-align: left;
+    line-height: 1.875rem;
+        /* Delayed effect for p tag */
+    }
+
+    /* Keyframes for Text Reveal */
+    @keyframes textReveal {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero {
+            padding: 0 20px;
+            text-align: center;
+            justify-content: center;
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            transform: translateX(0);
+        }
+
+        .hero-content p {
+            font-size: 1rem;
+            transform: translateX(0);
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero {
+            padding: 0 10px;
+        }
+
+        .hero-content h1 {
+            font-size: 2rem;
+        }
+
+        .hero-content p {
+            font-size: 0.9rem;
+        }
+    }
+
+    .container8976 {
+        width: 100%;
+        /* Ensures full width */
+        padding: 5%;
+    }
+
+    /* Grid Layout with 3 Columns Per Row */
+    .grid8976 {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        /* Auto-adjusts column count */
+        gap: 20px;
+        grid-auto-flow: dense;
+        /* Fills empty gaps */
+    }
+
+    /* Card Styles */
+    .card8976 {
+        background-color: #fff;
+        border: .5px solid #ddd;
+        /* border-radius: 8px; */
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        text-align: left;
+        transition: box-shadow 0.3s ease;
+    }
+
+    .card8976:hover {
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .card8976 img {
+        width: 100%;
+        height: auto;
+        object-fit: cover;
+    }
+
+    .card-content8976 {
+        padding: 15px;
+    }
+
+    /* Responsive Adjustments */
+    @media (max-width: 1024px) {
+        .grid8976 {
+            grid-template-columns: repeat(2, 1fr);
+            /* 2 cards per row */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .grid8976 {
+            grid-template-columns: repeat(1, 1fr);
+            /* 1 card per row */
+        }
+    }
+
+    .card-content8976 h2 {
+        text-align: center;
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 1rem;
+        color: #000000;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .card-content8976 p {
+        font-size: 1.2857142857rem;
+        margin-bottom: 1rem;
+        margin-top: 1rem;
+        line-height: 1.875rem;
+        text-align: left;
+
+    }
+
+    .h8976 {
+        font-size: 2.2rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 3rem;
+        color: #000000;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+</style>
+
+</style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Solutions.html">Services</a></li>
+                <li><a href="service1.html">Solution</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Elevate Your Business with ,<br> Expert Professional Services</h1>
+            <p>Tailored Solutions to Drive Growth, Efficiency, and Success</p>
+
+        </div>
+    </section>
+    <section class="container8976">
+        <h1 class="h8976">What We Stand For</h1>
+        <div class="grid8976">
+            <!-- Card 1 -->
+            <div class="card8976">
+                <img src="solutions8.jpg" alt="Solutions Design
+                ">
+                <div class="card-content8976">
+                    <h2>Solutions Design
+                    </h2>
+                    <hr>
+                    <p class="p8976">We create a blueprint for your vision, translating ideas into a feasible design and
+                        implementing them effectively.
+
+                    </p>
+                    <!-- <a href="#" class="link8976">Learn More</a> -->
+                </div>
+            </div>
+            <!-- Card 2 -->
+            <div class="card8976">
+                <img src="solution2.jpg" alt="Deployment Support
+                ">
+                <div class="card-content8976">
+                    <h2>Deployment Support
+                    </h2>
+                    <hr>
+                    <p class="p8976">Our services encompass the complete implementation and rollout of new
+                        infrastructure, including hardware configuration and installation.
+                    </p>
+                    <!-- <a href="#" class="link8976">Learn More</a> -->
+                </div>
+            </div>
+            <!-- Card 3 -->
+            <div class="card8976">
+                <img src="solution3.jpg" alt="Proof of Concept (POC)
+                ">
+                <div class="card-content8976">
+                    <h2>Proof of Concept (POC)
+                    </h2>
+                    <hr>
+                    <p class="p8976">We provide Proof-of-Concepts (POCs) to assess the feasibility of solutions,
+                        ensuring they function as intended within your infrastructure.
+                    </p>
+                    <!-- <a href="#" class="link8976">Learn More</a> -->
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="card8976">
+                <img src="solution6.jpg" alt="Pre-sales Support
+                ">
+                <div class="card-content8976">
+                    <h2>Pre-sales Support
+                    </h2>
+                    <hr>
+                    <p class="p8976">We focus on addressing your inquiries and guiding you through the buying process,
+                        providing more than just marketing insights.
+                    </p>
+                    <!-- <a href="#" class="link8976">Learn More</a> -->
+                </div>
+            </div>
+            <!-- Card 4 -->
+            <div class="card8976">
+                <img src="solution7.jpg" alt="Pre-sales Support
+                ">
+                <div class="card-content8976">
+                    <h2>Post-sales Support
+
+                    </h2>
+                    <hr>
+                    <p class="p8976">We prioritize ongoing assistance after the sale, ensuring you have the support you
+                        need at every stage.
+
+                    </p>
+                    <!-- <a href="#" class="link8976">Learn More</a> -->
+                </div>
+            </div>
+             <!-- Card 5 -->
+             <div class="card8976">
+                <img src="solution9.jpg" alt="Pre-sales Support
+                ">
+                <div class="card-content8976">
+                    <h2>Annual Maintenance Contracts
+
+                    </h2>
+                    <hr>
+                    <p class="p8976">Ongoing protection with seamless renewals,
+                        Ensuring uninterrupted service and security.
+                        Stay covered without gaps or delays,
+                        With hassle-free, automatic extensions.
+
+                    </p>
+                    <!-- <a href="#" class="link8976">Learn More</a> -->
+                </div>
+            </div>
+             <!-- Card 6 -->
+             <div class="card8976">
+                <img src="solution10.jpg" alt="Pre-sales Support
+                ">
+                <div class="card-content8976">
+                    <h2>Managed <br>Services
+
+                    </h2>
+                    <hr>
+                    <p class="p8976">Round-the-clock operations with active oversight,
+                        Ensuring seamless performance day and night.
+                        Proactive monitoring to detect issues fast,
+                        Keeping systems secure and running at last.
+
+                    </p>
+                    <!-- <a href="#" class="link8976">Learn More</a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact
+            Us</button>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="HASHXPERT Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert
+                            specializes in providing end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/hashxpert-technologies-llc/?originalSubdomain=ae"><i
+                            class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <div class="legal-links">
+                    <a href="PrivacyPolicy.html">PrivacyPolicy</a> |
+                    <a href="TermsOfUse.html">Terms</a> |
+                    <a href="FAQ.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+
+
+    <script>
+
+
+        // Scroll Up Button Functionality
+        var scrollUpBtn = document.getElementById("scrollUpBtn");
+
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollUpBtn.style.display = "block";
+            } else {
+                scrollUpBtn.style.display = "none";
+            }
+        };
+
+        scrollUpBtn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

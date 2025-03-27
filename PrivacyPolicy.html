@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<style>
+    /* Reset default browser styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+    }
+
+    /* Header Styles */
+    /* Header Styles */
+    header {
+        background-color: white;
+        color: #000;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #007bff;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        height: 3px;
+        background-color: black;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.close span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.close span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.close span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            width: 100%;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+    }
+
+
+
+
+    /* Scroll Up Button */
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #FBBC05;
+    }
+
+
+    .section-explore {
+        background-color: #f5f7fa;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .section-explore p {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+
+    .section-explore a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .section-explore a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* section content */
+    section.section-connect {
+        background-color: #1B449C;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5.7%;
+        /* 10% padding on left and right */
+    }
+
+    section.section-connect h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        /* Default font size */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-right: 20px;
+        /* Gap between text and button */
+    }
+
+    .contact-button {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        /* Default font size for the button */
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #fff;
+        color: #1B449C;
+    }
+
+    @media (max-width: 1200px) {
+        section.section-connect h2 {
+            font-size: 2.1rem;
+            /* Slightly smaller for medium screens */
+        }
+
+        .contact-button {
+            font-size: 1rem;
+            /* Smaller button text */
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.section-connect h2 {
+            font-size: 1.9rem;
+            /* Smaller font size for tablet screens */
+        }
+
+        .contact-button {
+            font-size: 0.95rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        section.section-connect h2 {
+            font-size: 1.6rem;
+            /* Further reduce font size for small screens */
+        }
+
+        .contact-button {
+            font-size: 0.9rem;
+            /* Reduce button font size */
+            padding: 8px 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        section.section-connect h2 {
+            font-size: 1.4rem;
+            /* Make text smaller for extra-small screens */
+        }
+
+        .contact-button {
+            font-size: 0.85rem;
+            /* Small button text */
+            padding: 8px 12px;
+            /* Adjust padding for extra-small screens */
+        }
+    }
+
+
+    /* Footer Styling */
+    /* Footer Styling */
+    footer {
+        background-color: #eceef1;
+        padding: 30px 0;
+        /* Reduced vertical padding */
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        /* Full width for footer */
+        margin: 0 auto;
+        padding: 0 5%;
+        /* 5% padding on left and right */
+    }
+
+    /* Adjust padding for smaller screens (below 768px) */
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 5%;
+            /* Maintain 5% padding on left and right for small screens */
+        }
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column-left,
+    .column-right {
+        padding: 0 0;
+        /* Reduced padding */
+        flex: 1;
+        min-width: 250px;
+        box-sizing: border-box;
+        /* Prevents extra space from padding */
+    }
+
+    /* Footer Links */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin: 10px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #1B449C;
+        font-weight: bold;
+        font-size: 1.3rem;
+        /* Updated font-size */
+        line-height: 1.5;
+    }
+
+    .footer-links a:hover {
+        color: #000;
+    }
+
+    /* Right Column */
+    .footer-logo {
+        width: 300px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .text-row p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        /* Updated font-size */
+        line-height: 1.8125rem;
+        /* Updated line-height */
+    }
+
+    .text-row a {
+        color: #4b0082;
+        text-decoration: none;
+    }
+
+    .text-row a:hover {
+        text-decoration: underline;
+    }
+
+    /* Social Icons Section */
+    .footer-social {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .social-icons a {
+        color: #1B449C;
+        /* Updated color */
+        font-size: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: #000;
+    }
+
+    .footer-logo img {
+        width: 80px;
+        /* Updated width */
+        height: 49.5px;
+        /* Updated height */
+    }
+
+    /* Footer Bottom Section */
+    .footer-line {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+    }
+
+    .legal-links a {
+        margin: 0 5px;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-main {
+            flex-direction: column;
+            align-items: center;
+            /* Center columns on smaller screens */
+            padding: 0 0%;
+            /* 5% padding on left and right */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .legal-links {
+            margin-top: 10px;
+        }
+
+        .footer-social {
+            text-align: center;
+            /* Center social icons */
+        }
+
+        .social-icons a {
+            margin: 0 8px;
+            /* Adjust social icon spacing */
+        }
+    }
+
+    .container {
+        padding: 5%;
+
+        margin: auto;
+    }
+
+    .header-section {
+        border-left: 8px solid #1B449C;
+        padding-left: 10px;
+    }
+
+   
+    .header-section h1 {
+        font-size: 3rem;
+        /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+        font-weight: 600;
+        line-height: 1.2;
+        letter-spacing: -0.02em;
+        /* Reduces letter spacing by 2% */
+        color: #1B449C;
+
+        padding-bottom: 1rem;
+    }
+    .container67 h1 {
+
+        padding-top: 5%;
+        padding-bottom: 1%;
+        color: #1B449C;
+    font-size: 2.2857142858rem;
+    /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+    font-weight: 600;
+    line-height: 1.2;
+    }
+
+    .container67 h2 {
+        padding-top: 2%;
+        padding-bottom: 1%;
+        font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: .5rem;
+    }
+
+    .container67 h3 {
+        color: #1B449C;
+ 
+ font-size: 2.2857142858rem;
+ /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+ font-weight: 600;
+ line-height: 1.2;
+    }
+
+    .container67 p {
+        padding-top: 1%;
+        padding-bottom: 1%;
+    }
+
+    .container67 p,
+    .container67 li {
+        font-weight: 400;
+        line-height: 1.5;
+        color: #1d2833;
+        line-height: 35px;
+        font-size: 1.2857142857rem;
+        margin-bottom: 1rem;
+        margin-top: 0;
+    }
+
+    .container67 ul {
+        padding-left: 20px;
+    }
+
+    .italic-text {
+        font-style: italic;
+        color: #666;
+        font-size: clamp(1rem, 1.5vw, 1.25rem);
+    }
+
+    /* Responsive adjustments */
+    @media (max-width: 768px) {
+        .container {
+            padding: 5% 3%;
+        }
+
+        .container67 h1,
+        .container67 h2,
+        .container67 h3 {
+            line-height: 1.4;
+        }
+    }
+
+    .container67 {
+        padding: 5%;
+    }
+
+    .mobile-only {
+        display: none;
+        /* Hide by default */
+    }
+
+    @media screen and (max-width: 768px) {
+        .mobile-only {
+            display: block;
+            /* Show only on mobile */
+        }
+    }
+     /* Keep original design */
+     .container67 h1 {
+            opacity: 0;
+            transform: translateY(20px);
+            /* Smooth entry */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Reveal effect */
+        .container67 h1.reveal {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+        .faq-container {
+                padding: 1% 5%;
+                max-width: 100%;
+                border-radius: 8px;
+            }
+
+            .faq-container h1 {
+
+                /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+                font-size: 24px;
+                line-height: 28.8px;
+                letter-spacing: -0.02em;
+                /* Reduces letter spacing by 2% */
+                color: #5107B8;
+                text-align: left;
+                margin-bottom: 4rem;
+                font-weight: 800;
+
+            }
+
+            .faq-categories {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 10px;
+                padding-bottom: 10px;
+                justify-content: center;
+            }
+
+            .faq-categories div {
+                background: #f3f3f3;
+                padding: 10px 15px;
+                font-weight: 600;
+                text-align: center;
+                border-radius: 5px;
+                font-size: 16px;
+                line-height: 22.4px;
+                flex: 1;
+                /* font-family: "McKinsey Sans", "Helvetica Neue", Calibri, Corbel, Helvetica, Roboto, Droid, sans-serif; */
+                min-width: 180px;
+                cursor: pointer;
+                transition: background 0.3s ease;
+            }
+
+            .faq-categories div:hover {
+                background: #ddd;
+            }
+
+            .faq-title {
+                color: #5107B8;
+                letter-spacing: -0.02em;
+                /* Reduces letter spacing by 2% */
+                font-weight: 800;
+                /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+                line-height: 28.8px;
+                font-size: 24px;
+                margin-top: 70px;
+
+            }
+
+            .faq-item {
+                margin: 15px 0;
+                padding: 15px;
+            }
+
+            .faq-item h3 {
+                font-weight: 700;
+                margin-bottom: 1%;
+                /* font-family: "Bower", Georgia, "Times New Roman", serif; */
+                line-height: 24px;
+                font-size: 20px;
+                color: #000000;
+            }
+
+            .faq-item p {
+                margin: 5px 0;
+                font-size: 20px;
+                line-height: 24px;
+                font-weight: 400;
+                /* font-family: "McKinsey Sans", "Helvetica Neue", Calibri, Corbel, Helvetica, Roboto, Droid, sans-serif; */
+
+                color: #000000;
+                padding-left: 2rem;
+            }
+
+
+
+            .industries {
+                max-width: 600px;
+                /* Adjust as needed */
+                margin: 0 auto;
+                /* Center the text */
+                text-align: left;
+                /* Align text properly */
+                white-space: normal;
+                /* Ensure wrapping */
+                word-break: break-word;
+                /* Prevent overflow issues */
+            }
+
+
+            .global-partner-wrapper {
+                max-width: 600px;
+                /* Set a max width */
+                margin-left: 2rem;
+                /* Adjust margin for proper alignment */
+            }
+
+            .global-partners {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 15px;
+                /* Add spacing between items */
+                align-items: center;
+                justify-content: flex-start;
+                /* Align content to the left */
+            }
+
+            .global-partners span {
+                display: flex;
+                align-items: center;
+                gap: 5px;
+                /* Adjust spacing between flag and text */
+                white-space: nowrap;
+                /* Prevent text from breaking into multiple lines */
+            }
+
+            .global-partners img {
+                width: 20px;
+                height: 15px;
+            }
+
+
+
+
+            /* Button Styling */
+            button {
+                background-color: #5107B8;
+                color: white;
+                border: none;
+                padding: 12px 24px;
+                font-size: 1rem;
+                font-weight: bold;
+                border-radius: 5px;
+                cursor: pointer;
+                transition: background 0.3s ease, transform 0.2s ease;
+                margin-top: 10px;
+            }
+
+            /* Default: Button Left-Aligned */
+            .faq-item .btn-container {
+                text-align: left;
+            }
+
+            /* Button Hover Effect */
+            button:hover {
+                background-color: #6a0dad;
+                transform: scale(1.05);
+            }
+
+            /* Center Button on Small Screens */
+            @media (max-width: 1024px) {
+                .faq-item .btn-container {
+                    text-align: center;
+                }
+            }
+
+
+            /* List Item Styling */
+            ul {
+                padding-left: 2rem;
+            }
+
+            .faq-item li {
+        list-style-type: none;
+        font-weight: 400;
+        line-height: 1.5;
+        color: #1d2833;
+        line-height: 35px;
+        font-size: 1.2857142857rem;
+        position: relative;
+        padding-left: 25px;
+        margin-bottom: 8px;
+    }
+
+    .faq-item li::before {
+        content: "•";
+        color: black;
+        font-size: 1.2rem;
+        font-weight: bold;
+        position: absolute;
+        left: 0;
+        top: 2px;
+    }
+
+            /* Responsive Design */
+            @media (max-width: 1024px) {
+
+
+                .faq-categories {
+                    flex-direction: column;
+                    align-items: center;
+                }
+
+                .faq-categories div {
+                    width: 100%;
+                    max-width: 400px;
+                }
+
+                .faq-title {
+                    font-size: 1.4rem;
+                    text-align: left;
+                }
+
+                .faq-item {
+                    text-align: left;
+                }
+
+
+            }
+
+            @media (max-width: 768px) {
+                h1 {
+                    font-size: 1.5rem;
+                }
+
+                .faq-title {
+                    font-size: 1.3rem;
+                }
+
+                .faq-item {
+                    text-align: justify;
+                    padding: 10px;
+                }
+
+                .faq-item h3 {
+                    font-size: 1.1rem;
+                }
+
+                .faq-item p {
+                    text-align: justify;
+                    font-size: 0.95rem;
+                    padding-left: 1rem;
+                }
+
+                ul {
+                    padding-left: 1rem;
+                }
+
+                button {
+                    font-size: 0.95rem;
+                    padding: 10px 20px;
+                }
+            }
+
+/* Keep original design */
+.faq-container h1,
+.faq-title {
+            opacity: 0;
+            transform: translateY(20px);
+            /* Smooth entry */
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        /* Reveal effect */
+        .faq-container h1.reveal,
+        .faq-title.reveal {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+
+</style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+
+    <div class="container">
+        <div class="header-section">
+            <h1>Privacy Policy</h1>
+            <p class="italic-text">This privacy notice was last reviewed or revised on February 14, 2025.</p>
+        </div>
+    </div>
+    <div class="container67">
+        <p>At Hashxpert ("Company," "we," "our," or "us"), we are committed to protecting your privacy and ensuring
+            compliance with applicable data protection laws. This Privacy Policy explains how we collect, use, disclose,
+            and safeguard personal data when you interact with our company, services, and applications (collectively,
+            "Services").</p>
+        <br>
+        <p>This Privacy Policy applies to:</p><br>
+        <ul>
+            <li>Company Operations: Includes interactions with clients, business communications,
+                marketing, and support services.</li>
+            <li>Developed Applications: Covers applications we develop for clients and those we
+                directly publish on platforms such as Google Play, the App Store, Oculus Store, and Steam.</li>
+            <br>
+        </ul>
+
+        <p>By using our Services, you acknowledge and agree to the practices described in this Privacy Policy.</p>
+
+        <h1 class="section67">1. Scope of the Privacy Policy</h1>
+        <p><strong>This Privacy Policy governs</strong></p>
+        <ul>
+            <li>Company Operations: We collect and process personal data in connection with our business activities...
+            </li>
+            <li>Applications Developed for Clients: For applications developed on behalf of clients, we adhere to their
+                specific privacy requirements...</li>
+        </ul>
+
+        <h1 class="section67">2. Information We Collect</h1>
+        <p>We collect personal and non-personal data to operate and improve our Services. The type of data collected
+            depends on the interaction with us and the functionality of the applications.</p>
+
+        <h2 class="section67">2.1 Company Operations</h2>
+        <p>We collect and process the following types of data: </p>
+        <ul>
+            <li>Contact Information: Name, email address, phone number, and company details.</li>
+            <li>Project Information: Requirements, feedback, and communications related to our services.</li>
+            <li>Payment Information: Billing and payment details, securely processed by third-party payment providers.
+            </li>
+            <li>Usage Data: Information regarding interactions with our website, emails, or other digital services.</li>
+        </ul>
+
+        <h2 class="section67">2.2 Applications Developed</h2>
+        <p>Depending on the application’s functionality, we may collect:  </p>
+        <ul>
+            <li>Account Information: Name, email, username, and profile details.</li>
+            <li>Device Information: Device model, OS, IP address, and unique identifiers.</li>
+            <li>Usage Data: App interaction details, session activity, and preferences.</li>
+            <li>Location Data: If necessary for app functionality, approximate or precise location data.</li>
+            <li>Payment Information: In-app purchase or subscription details, processed by platform-specific payment
+                systems (e.g., Google Play, App Store). </li>
+        </ul>
+
+        <h1 class="section67">3. How We Use Your Information </h1>
+        <p>We use collected data to: </p>
+
+        <h2 class="section67">3.1 For Company Operations </h2>
+        <ul>
+            <li>Service Delivery: Provide customized solutions based on client needs. </li>
+            <li>Customer Support: Respond to inquiries and resolve technical or service-related issues. </li>
+            <li>Analytics & Improvement: Enhance our services based on usage insights. </li>
+            <li>Marketing & Communications: Send updates, newsletters, and promotional content (subject to user
+                consent). </li>
+        </ul>
+
+        <h2 class="section67">3.2 For Developed Applications </h2>
+        <ul>
+            <li>App Functionality: Enable core features such as authentication, gameplay, and transactions. </li>
+            <li>Performance Optimization: Improve app efficiency, usability, and stability. </li>
+            <li>Personalization: Customize user experience based on preferences. </li>
+            <li>Compliance: Ensure adherence to platform guidelines and legal requirements, including parental consent
+                where applicable. </li>
+
+        </ul>
+
+
+        <h1 class="section67">4. Sharing Your Information</h1>
+        <p>We do not sell or rent personal data. However, we may share information under the following circumstances:  
+        </p>
+
+        <h2 class="section67">4.1 For Company Operations </h2>
+        <ul>
+            <li>Service Providers: Trusted third-party vendors providing cloud storage, payment processing, marketing,
+                or analytics services.  </li>
+            <li>Legal Compliance: When required by law, government request, or legal proceedings. </li>
+
+        </ul>
+
+        <h2 class="section67">4.2 For Applications Developed </h2>
+        <ul>
+            <li>Platform Providers: To enable features such as Google Play Games, Steam Achievements, or App Store
+                services. </li>
+            <li>Client-Specific Requirements: Data-sharing as per agreements with clients, subject to their privacy
+                policies. </li>
+            <li>Third-Party Tools & APIs: Integration with external analytics, advertising, or software services within
+                the app. </li>
+        </ul>
+        <p>For client apps, data-sharing practices are defined by agreements with our customers, who may have their own
+            privacy policies. </p>
+
+
+
+        <h1 class="section67">5. Data Security</h1>
+        <p>We implement industry-standard security measures to protect personal data from unauthorized access, loss,
+            misuse, or alteration. For applications developed for clients, data collection and sharing practices are
+            governed by contractual agreements with the client, who may have their own data policies. 
+        </p>
+
+        <h2 class="section67">5.1 Security Practices </h2>
+        <ul>
+            <li>Encryption: Sensitive data is encrypted during storage and transmission using industry-standard
+                protocols such as SSL/TLS. </li>
+            <li>Access Control: Access to systems and data is restricted to authorized personnel only, with strict
+                authentication and monitoring mechanisms. </li>
+            <li>Regular Audits: We conduct periodic security assessments and vulnerability testing to identify and
+                mitigate risks. </li>
+            <li>Third-Party Compliance: Any third-party service providers engaged by us must adhere to recognized
+                security standards, such as ISO 27001, SOC 2, or equivalent. </li>
+
+        </ul>
+
+        <h2 class="section67">5.2 Security Measures in Applications </h2>
+        <ul>
+            <li>Secure Integration: All applications developed incorporate secure API integrations and comply with
+                platform security requirements (e.g., Google Play, App Store, Oculus Store, Steam). </li>
+            <li>Client-Specific Requirements: Data-sharing as per agreements with clients, subject to their privacy
+                policies. </li>
+            <li>Data Minimization: We collect only the data necessary for the app’s intended functionality and avoid
+                excessive data retention. </li>
+        </ul>
+
+        <h2 class="section67">5.3 Limitations </h2>
+        <p>While we employ robust security measures, no system can be completely immune to security breaches. In the
+            event of a data breach, we will: </p>
+        <ul>
+            <li>Take immediate steps to contain and mitigate the breach. </li>
+            <li>Notify affected users and relevant authorities as required by applicable data protection laws. </li>
+            <li>Implement corrective actions to prevent future occurrences. </li>
+        </ul>
+
+
+
+
+        <h1 class="section67">6. Cookies and Tracking Technologies</h1>
+        <p>We use cookies and similar tracking technologies to enhance user experience and improve our services. </p>
+
+        <h2 class="section67">6.1 Use of Cookies </h2>
+        <p>Cookies and tracking technologies may be used for the following purposes: </p>
+        <ul>
+            <li>Session Management: To remember user sessions and preferences. </li>
+            <li>Analytics: To analyze website and app performance, user engagement, and trends. </li>
+            <li>Personalization: To deliver customized content, including personalized ads where applicable. </li>
+        </ul>
+
+        <h2 class="section67">6.2 Tracking Technologies in Applications  </h2>
+        <p>For applications, we may utilize: </p>
+        <ul>
+            <li>Device Identifiers: Unique device identifiers may be used for session tracking and app optimization. 
+            </li>
+            <li>Analytics Tools: We may integrate third-party analytics services such as Google Analytics, Firebase, or
+                similar platforms to gather insights for app performance and user experience improvements. </li>
+        </ul>
+
+        <h2 class="section67">6.3 Managing Cookies and Tracking </h2>
+        <p>Users have the ability to: </p>
+        <ul>
+            <li>Adjust browser or device settings to block or manage cookies. </li>
+            <li>Opt out of tracking through in-app settings or platform preferences, such as App Tracking Transparency
+                (ATT) on iOS or Google Play’s opt-out mechanisms. </li>
+        </ul>
+
+
+
+
+
+
+        <h1 class="section67">7. Children’s Privacy</h1>
+
+        <h2 class="section67">7.1 General Policy  </h2>
+        <p>Our applications and services are not directed at children under the age of 13 (or the relevant minimum age
+            in their jurisdiction) unless explicitly designed for them. </p>
+        <p>If an application is intended for children, we ensure compliance with child protection laws and
+            platform-specific requirements. </p>
+        <ul>
+            <li>Session Management: To remember user sessions and preferences. </li>
+            <li>Analytics: To analyze website and app performance, user engagement, and trends. </li>
+            <li>Personalization: To deliver customized content, including personalized ads where applicable. </li>
+        </ul>
+
+        <h2 class="section67">7.2 Data Collection for Children   </h2>
+        <p>For applications intended for children:</p>
+        <ul>
+            <li>Data collection is strictly limited to what is necessary for the app’s core functionality. </li>
+            <li>No personal information is collected without verifiable parental consent where required by law. </li>
+            <li>Behavioral advertising and tracking technologies are disabled in compliance with regulatory standards. 
+            </li>
+        </ul>
+
+        <h2 class="section67">7.3 Compliance for Client-Developed Applications </h2>
+        <p>When developing applications for clients targeting children, we ensure adherence to: </p>
+        <ul>
+            <li>Google Play Families Policy: Ensuring apps meet the required standards for child-directed content and
+                data handling. </li>
+            <li>Apple App Store Guidelines: Compliance with child protection policies regarding data collection and
+                storage. </li>
+            <li>Oculus Store & Steam Requirements: Ensuring age-appropriate content and restrictions on data collection
+                from minors. </li>
+        </ul>
+        <h2 class="section67">7.4 Reporting Concerns  </h2>
+        <p>If you believe that we have inadvertently collected a child’s personal data without appropriate consent,
+            please contact us at privacy@hashxpert.com. We will promptly investigate and take the necessary action to
+            delete such information. </p>
+
+
+
+
+
+        <h1 class="section67">8. Data Retention </h1>
+        <p>We retain personal data only for as long as necessary to fulfill its intended purpose, comply with legal
+            obligations, or meet contractual requirements. </p>
+        <h2 class="section67">8.1 Data Retention for Company Operations  </h2>
+
+        <ul>
+            <li>Client Data: Retained for the duration of the business relationship and securely archived after project
+                completion, unless otherwise requested by the client. </li>
+            <li>Financial Records: Retained as required by applicable tax, accounting, and regulatory laws. </li>
+            <li>Communication Data: Emails, support requests, and related correspondence may be stored for quality
+                assurance, record-keeping, and dispute resolution purposes. </li>
+        </ul>
+
+        <h2 class="section67">8.2 Data Retention for Developed Applications </h2>
+
+        <ul>
+            <li>User Data: Retention periods vary based on the app’s functionality and platform-specific guidelines.
+                Data is retained only as long as required for core features, such as saving user progress or
+                preferences. </li>
+            <li>Analytics Data: Aggregated and anonymized analytics data may be retained for performance optimization,
+                security monitoring, and research purposes. </li>
+            <li>User-Initiated Deletion: Users may request deletion of their personal data through in-app settings or by
+                contacting the app’s support team. </li>
+        </ul>
+
+        <h2 class="section67">8.3 Data Deletion Policies  </h2>
+
+        <ul>
+            <li>For applications developed for third-party clients, data deletion policies are governed by contractual
+                agreements and compliance with applicable regulations (e.g., GDPR, CCPA). </li>
+            <li>Users can request data deletion via app settings or by submitting a request through the designated
+                support channels. </li>
+        </ul>
+
+
+
+
+
+
+        <h1 class="section67">9. Store Publishing Compliance </h1>
+        <p>We ensure that all applications published on major digital platforms, including Google Play, App Store,
+            Oculus Store, and Steam, comply with their respective data privacy and security requirements. </p>
+        <h2 class="section67">9.1 Google Play Compliance</h2>
+
+        <ul>
+            <li>Adherence to Google’s User Data Policy, including mandatory disclosure of data collection and usage
+                through the Data Safety section. </li>
+            <li>Compliance with the Families Policy for apps targeting children, ensuring age-appropriate content and
+                obtaining verifiable parental consent where required. </li>
+
+        </ul>
+
+        <h2 class="section67">9.2 App Store Compliance</h2>
+
+        <ul>
+            <li>Full disclosure of data collection and usage practices via Privacy Nutrition Labels, including whether
+                data is linked to individual users. </li>
+            <li>Compliance with Apple’s App Tracking Transparency (ATT) framework, requiring explicit user consent for
+                tracking activities. </li>
+
+        </ul>
+
+        <h2 class="section67">9.3 Oculus Store Compliance</h2>
+
+        <ul>
+            <li>Collection of VR-related data (e.g., tracking, spatial data) follows Meta/Oculus privacy guidelines. 
+            </li>
+            <li>Implementation of minimal data collection practices, ensuring users are clearly informed about how their
+                data is processed. </li>
+        </ul>
+        <h2 class="section67">9.4 Steam Store Compliance </h2>
+
+        <ul>
+            <li>Compliance with Valve’s privacy and security standards for multiplayer games, in-game transactions, and
+                community interactions. </li>
+            <li>Transparent disclosures regarding data collection related to achievements, leaderboards, and other
+                gameplay features. </li>
+        </ul>
+
+        <h2 class="section67">9.5 Platform-Specific Opt-Outs </h2>
+
+        <ul>
+            <li>9.5 Platform-Specific Opt-Outs </li>
+        </ul>
+
+
+
+        <h1 class="section67">10. User Rights </h1>
+        <p>Users have control over their data preferences and can adjust their settings via: </p>
+
+
+        <ul>
+            <li>Google Account Preferences for limiting data sharing. </li>
+            <li>iOS Privacy Settings to manage tracking permissions. </li>
+            <li>Steam Privacy Controls for restricting data visibility. </li>
+        </ul>
+
+        <h2 class="section67">10.1 User Rights in Company Interactions </h2>
+
+        <ul>
+            <li><strong> 
+                    Right to Access:</strong> Users may request a copy of the personal data we hold about them. </li>
+            <li><strong>Right to Correction : </strong>Users can request corrections to inaccurate or incomplete
+                information. </li>
+            <li><strong>Right to Deletion :</strong> Users may request deletion of their personal data, subject to
+                applicable legal and contractual obligations. </li>
+            <li><strong>Right to Data Portability :</strong> Users can request their data in a structured, commonly used
+                format. </li>
+        </ul>
+
+        <h2 class="section67">10.2 Rights for Developed Applications: </h2>
+        <p>For applications, users can exercise their rights through in-app settings or by contacting the designated
+            support team. Rights include: </p>
+        <ul>
+            <li>Opt-out of tracking or personalized advertising. </li>
+            <li>Request access, modification, or deletion of personal data. </li>
+            <li>Withdraw consent for data processing, where applicable. </li>
+        </ul>
+        <h2 class="section67">10.3 How to Exercise Your Rights </h2>
+        <p>To submit a request regarding personal data, users may contact us at privacy@hashxpert.com. Requests will be
+            processed in accordance with applicable laws such as the General Data Protection Regulation (GDPR) and the
+            California Consumer Privacy Act (CCPA). </p>
+
+
+
+        <h1 class="section67">11. Updates to the Privacy Policy</h1>
+        <p>We may update this Privacy Policy periodically to reflect changes in regulatory requirements, operational
+            practices, or new features in our services and applications. </p>
+        <h2 class="section67">11.1 Notification of Changes </h2>
+
+        <ul>
+            <li>Updated versions of this Privacy Policy will be posted on our website and, where applicable, within the
+                apps we develop. </li>
+            <li>For significant updates affecting user rights or data processing, we will notify users via email or
+                in-app notifications. </li>
+
+        </ul>
+
+        <h2 class="section67">11.2 Effective Date of Changes </h2>
+
+        <ul>
+            <li>Each update to this Privacy Policy will include an Effective Date at the top of the document. Continued
+                use of our services or applications after an update constitutes acceptance of the revised terms. </li>
+        </ul>
+
+
+        <h1 class="section67">12. Contact Information</h1>
+        <p>If you have any questions, concerns, or requests related to this Privacy Policy or the handling of your data,
+            please contact us at: </p>
+
+        <ul>
+            <li><strong>Email:</strong> <a href="mailto:privacy@hashxpert.com">privacy@hashxpert.com</a></li>
+            <li><strong>Phone:</strong> <a href="tel:+918431962626">+91-8431962626</a></li>
+
+            <li><strong>Office Address :</strong> Bangalore, India </li>
+        </ul>
+        <p>For app-related inquiries, please use the support options provided within the respective application or
+            platform. </p>
+
+
+
+        <h1 class="section67">13. General Transparency Commitments </h1>
+        <h2 class="section67">13.1 Clear Communication </h2>
+        <p>We prioritize transparency in how we collect, use, and process data. Users can review privacy details
+            through: </p>
+        <ul>
+            <li>Google Play : “Data Safety” section. </li>
+            <li>App Store : Privacy Nutrition Labels. </li>
+            <li>Oculus Store : Data usage notifications. </li>
+            <li>Steam Store : Privacy disclosures in app descriptions. </li>
+        </ul>
+
+
+        <h2 class="section67">13.2 Adherence to Platform-Specific Guidelines </h2>
+        <p>Each digital platform has unique privacy and security requirements. We ensure full compliance for: </p>
+        <ul>
+            <li>Internally published applications developed under our brand. </li>
+            <li>Client applications where we align with their privacy policies and contractual obligations. </li>
+
+        </ul>
+
+        <h2 class="section67">13.3 Commitment to User Trust and Data Security</h2>
+        <p>We are dedicated to: </p>
+        <ul>
+            <li>Safeguarding user privacy through robust data security measures. </li>
+            <li>Ensuring compliance with global privacy regulations, including GDPR, CCPA, and other
+                jurisdiction-specific laws. </li>
+            <li>Continuously enhancing transparency by updating our privacy policies and security frameworks in line
+                with industry best practices. </li>
+
+        </ul>
+
+
+
+
+
+
+
+    </div>
+
+
+
+
+
+
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact
+            Us</button>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="HASHXPERT Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert specializes in providing
+                            end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/hashxpert-technologies-llc/?originalSubdomain=ae"><i
+                            class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <div class="legal-links">
+                    <a href="PrivacyPolicy.html">PrivacyPolicy</a> |
+                    <a href="TermsOfUse.html">Terms</a> |
+                    <a href="FAQ.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const elements = document.querySelectorAll(
+                ".container67 h1"
+            );
+
+            function revealOnScroll() {
+                elements.forEach(element => {
+                    const elementTop = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+
+                    if (elementTop < windowHeight - 100) {
+                        element.classList.add("reveal");
+                    }
+                });
+            }
+
+            window.addEventListener("scroll", revealOnScroll);
+            revealOnScroll(); // Run on page load in case elements are already in view
+        });
+
+    </script>
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+ 
+
+    <script src="script.js"></script>
+</body>
+
+</html>
