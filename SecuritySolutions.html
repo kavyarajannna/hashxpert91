@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Security Solutions</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<style>
+    /* Reset default browser styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+    }
+
+    /* Header Styles */
+    header {
+        background-color: white;
+        color: #000;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #1B449C;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        height: 3px;
+        background-color: black;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.close span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.close span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.close span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            width: 100%;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+    }
+
+
+    /* Map Box */
+    .map {
+        flex: 1;
+        background-color: #ffffff;
+        /* Same background color */
+        padding: 20px;
+        border-radius: 8px;
+    }
+
+    /* Scroll Up Button */
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #FFB81C;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .contact-container {
+            flex-direction: column;
+            gap: 10px;
+            /* Reduces gap between columns for small screens */
+        }
+
+        .contact-container .vertical-line {
+            display: none;
+            /* Hides the vertical line on mobile */
+        }
+    }
+
+    .section-explore {
+        background-color: #f5f7fa;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .section-explore p {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+
+    .section-explore a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .section-explore a:hover {
+        text-decoration: underline;
+    }
+
+
+    /* section content */
+    section.section-connect {
+        background-color: #1B449C;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5.7%;
+        /* 10% padding on left and right */
+    }
+
+    section.section-connect h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        /* Default font size */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-right: 20px;
+        /* Gap between text and button */
+    }
+
+    .contact-button {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        /* Default font size for the button */
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #fff;
+        color: #1B449C;
+    }
+
+    @media (max-width: 1200px) {
+        section.section-connect h2 {
+            font-size: 2.1rem;
+            /* Slightly smaller for medium screens */
+        }
+
+        .contact-button {
+            font-size: 1rem;
+            /* Smaller button text */
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.section-connect h2 {
+            font-size: 1.9rem;
+            /* Smaller font size for tablet screens */
+        }
+
+        .contact-button {
+            font-size: 0.95rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        section.section-connect h2 {
+            font-size: 1.6rem;
+            /* Further reduce font size for small screens */
+        }
+
+        .contact-button {
+            font-size: 0.9rem;
+            /* Reduce button font size */
+            padding: 8px 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        section.section-connect h2 {
+            font-size: 1.4rem;
+            /* Make text smaller for extra-small screens */
+        }
+
+        .contact-button {
+            font-size: 0.85rem;
+            /* Small button text */
+            padding: 8px 12px;
+            /* Adjust padding for extra-small screens */
+        }
+    }
+
+
+    /* Footer Styling */
+    /* Footer Styling */
+    footer {
+        background-color: #eceef1;
+        padding: 30px 0;
+        /* Reduced vertical padding */
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        /* Full width for footer */
+        margin: 0 auto;
+        padding: 0 5%;
+        /* 5% padding on left and right */
+    }
+
+    /* Adjust padding for smaller screens (below 768px) */
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 5%;
+            /* Maintain 5% padding on left and right for small screens */
+        }
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column-left,
+    .column-right {
+        padding: 0 0;
+        /* Reduced padding */
+        flex: 1;
+        min-width: 250px;
+        box-sizing: border-box;
+        /* Prevents extra space from padding */
+    }
+
+    /* Footer Links */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin: 10px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #1B449C;
+        font-weight: bold;
+        font-size: 1.3rem;
+        /* Updated font-size */
+        line-height: 1.5;
+    }
+
+    .footer-links a:hover {
+        color: #000;
+    }
+
+    /* Right Column */
+    .footer-logo {
+        width: 300px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .text-row p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        /* Updated font-size */
+        line-height: 1.8125rem;
+        /* Updated line-height */
+    }
+
+    .text-row a {
+        color: #1B449C;
+        text-decoration: none;
+    }
+
+    .text-row a:hover {
+        text-decoration: underline;
+    }
+
+    /* Social Icons Section */
+    .footer-social {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .social-icons a {
+        color: #1B449C;
+        /* Updated color */
+        font-size: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: #000;
+    }
+
+    .footer-logo img {
+        width: 80px;
+        /* Updated width */
+        height: 49.5px;
+        /* Updated height */
+    }
+
+    /* Footer Bottom Section */
+    .footer-line {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+    }
+
+    .legal-links a {
+        margin: 0 5px;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-main {
+            flex-direction: column;
+            align-items: center;
+            /* Center columns on smaller screens */
+            padding: 0 0%;
+            /* 5% padding on left and right */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .legal-links {
+            margin-top: 10px;
+        }
+
+        .footer-social {
+            text-align: center;
+            /* Center social icons */
+        }
+
+        .social-icons a {
+            margin: 0 8px;
+            /* Adjust social icon spacing */
+        }
+    }
+
+
+    /* Hero Section Styles */
+    .hero {
+        background: url('securitysolutionss.jpg') no-repeat center center/cover;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        padding: 0 105px;
+        text-align: left;
+        background-size: cover;
+        /* Ensures the image covers the entire container */
+        background-position: center center;
+        /* Keeps the image centered */
+        background-attachment: fixed;
+        /* Keeps the background fixed while scrolling (optional) */
+    }
+
+
+    .hero-content h1 {
+        text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.822); /* X-offset, Y-offset, blur, color */
+        color: #f5f7fa;
+        font-size: 3rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin: 0;
+        opacity: 0;
+        /* Initially hidden */
+        transform: translateX(-50px);
+        /* Start position for animation */
+        animation: textReveal 1.5s ease-out forwards;
+        /* Trigger animation */
+    }
+
+    @keyframes textReveal {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+            /* End position */
+        }
+    }
+
+    .custom-section {
+        padding: 20px 5%;
+    }
+
+    /* Responsive design */
+    @media (max-width: 768px) {
+        .hero {
+            padding: 0 20px;
+            /* Adjust padding for smaller screens */
+            text-align: center;
+            /* Center the text */
+        }
+
+        .hero-content h1 {
+            font-size: 2.5rem;
+            /* Smaller font size for small screens */
+            transform: translateX(0);
+            /* Ensure no animation offset */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .hero {
+            padding: 0 10px;
+            /* Further reduce padding for very small screens */
+        }
+
+        .hero-content h1 {
+            font-size: 2rem;
+            /* Further adjust font size */
+        }
+    }
+
+    /* Container for the specific section */
+    .section9500 {
+        padding: 5% 5%;
+        /* Left and Right padding */
+    }
+
+    /* Header inside the specific section */
+    .section9500 .header {
+        font-size: 2.285rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: left;
+        margin-top: 5rem;
+    }
+
+    /* Row with columns inside the specific section */
+    .section9500 .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        margin-bottom: 20px;
+        gap: 20px;
+        /* Creates space between columns */
+        flex-wrap: wrap;
+    }
+
+    /* Column styles inside the specific section */
+    .section9500 .column1 {
+        width: 50%;
+    }
+
+    .section9500 .column2,
+    .section9500 .column3 {
+        width: 22%;
+    }
+
+    .section9500 .column1 h1 {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        margin-top: 5rem;
+        font-weight: 600;
+    }
+
+    .section9500 .column1 p {
+        font-size: 1.2857rem;
+        color: #555;
+        margin-bottom: 10px;
+    }
+
+    .section9500 .column1 hr {
+        border: 1px solid #30B700;
+        margin: 10px 0;
+    }
+
+    .section9500 .column2 img,
+    .section9500 .column3 img {
+        margin-top: 4rem;
+        width: 100%;
+        height: 4rem;
+        object-fit: contain;
+        /* Ensures full visibility of the image */
+        margin-bottom: 10px;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .section9500 .column1 {
+            width: 100%;
+        }
+
+        .section9500 .column2,
+        .section9500 .column3 {
+            width: 48%;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section9500 .row {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section9500 .column1,
+        .section9500 .column2,
+        .section9500 .column3 {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+    }
+    
+    .container123 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 2% 5%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .content123 {
+        width: 50%;
+    }
+
+    .content123 h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: left;
+        margin-bottom: 100px;
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .list-item123 {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        opacity: 0;
+        /* Initially hidden */
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .list-item123.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .list-item123 .number123 {
+        min-width: 60px;
+        min-height: 60px;
+        background: #e4e8f3;
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        padding: 10px;
+        position: relative;
+    }
+
+    .list-item123 .number123::after {
+        content: "";
+        position: absolute;
+        right: -15px;
+        top: 0;
+        width: 20px;
+        height: 100%;
+        background: inherit;
+        clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    }
+
+    .text-content123 h3 {
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        text-align: justify;
+        margin-bottom: 5px;
+    }
+
+    .text-content123 p {
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        text-align: justify;
+    }
+
+    .image-container123 {
+        width: 50%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .image-container123 img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 992px) {
+        .container123 {
+            flex-direction: column;
+            padding: 5%;
+        }
+
+        .content123,
+        .image-container123 {
+            width: 100%;
+        }
+
+        .image-container123 {
+            height: 300px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .content123 h2 {
+            font-size: 1.8rem;
+        }
+
+        .list-item123 {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .list-item123 .number123 {
+            margin-bottom: 10px;
+        }
+    }
+</style>
+
+</style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <section class="hero">
+        <div class="hero-content">
+            <h1>SECURITY SOLUTIONS</h1>
+
+        </div>
+    </section>
+    <div class="section9500">
+        <div class="header">SECURITY SOLUTIONS</div>
+
+        <div class="row">
+            <div class="column1">
+                <h1>Endpoint Security</h1>
+                <p>Secure endpoints or entry points of end-user devices such as desktops, laptops, and mobile devices
+                    from being exploited by malicious actors and campaigns.
+                </p>
+                <hr>
+                <h1>Network Security</h1>
+                <p>Protect the usability and integrity of your network and data.
+                </p>
+                <hr>
+                <h1>Data Security</h1>
+                <p>Protecting corporate data and preventing data loss through unauthorized access</p>
+                <hr>
+                <h1>Detection and Response Solutions</h1>
+                <p>Solution for obtaining full visibility to both known and unknown threats that cross your network.
+                </p>
+                <hr>
+                <h1>Access Management</h1>
+                <p>Effectively managing the flow of people and restricting access where there is a need.</p>
+                <hr>
+            </div>
+
+            <div class="column2">
+                <img src="Picture30.png" alt="Trend Micro">
+                <img src="Picture31.png" alt="Okta">
+                <img src="Picture32.png" alt="Array">
+                <img src="Picture33.png" alt="CheckPoint">
+                <img src="Picture34.png" alt="ForcePoint">
+                <img src="Picture35.png" alt="FORTINET">
+                <img src="Picture36.png" alt="SENTINELONE">
+
+            </div>
+
+            <div class="column3">
+                <img src="Picture37.jpg" alt="Boldon James">
+                <img src="Picture38.png" alt="GoAnywhere">
+                <img src="Picture39.png" alt="WALLIX">
+                <img src="Picture40.png" alt="CheckMarx">
+                <img src="Picture41.png" alt="SecureWorks">
+                <img src="Picture42.jpg" alt="EmailAuth.io">
+                <img src="Picture43.png" alt="NDMARC">
+
+            </div>
+        </div>
+        <hr>
+    </div>
+  
+    <div class="container123">
+        <div class="content123">
+            <h2>Cybersecurity Solutions</h2>
+
+            <div class="list-item123">
+                <div class="number123">1</div>
+                <div class="text-content123">
+                    <h3>End-to-End Strategy</h3>
+                    <p>Protecting applications, networks & data with comprehensive security approaches.</p>
+                </div>
+            </div>
+
+            <div class="list-item123">
+                <div class="number123">2</div>
+                <div class="text-content123">
+                    <h3>Threat Intelligence</h3>
+                    <p>Preventing, detecting, and responding to threats with proactive security measures.</p>
+                </div>
+            </div>
+
+            <div class="list-item123">
+                <div class="number123">3</div>
+                <div class="text-content123">
+                    <h3>Compliance-Driven</h3>
+                    <p>Adhering to GDPR, ISO 27001, SOC2 standards for regulatory compliance.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="image-container123">
+            <img src="cybersecurity.jpg" alt="Cybersecurity Image">
+        </div>
+
+    </div>
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact Us</button>
+    </section>
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="HASHXPERT Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert
+                            specializes in providing end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/hashxpert-technologies-llc/?originalSubdomain=ae"><i
+                            class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <div class="legal-links">
+                    <a href="PrivacyPolicy.html">PrivacyPolicy</a> |
+                    <a href="TermsOfUse.html">Terms</a> |
+                    <a href="FAQ.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+    <script>
+        const items = document.querySelectorAll(".list-item123");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add("show");
+                    }, index * 800); // Increased delay for a slower, smoother effect
+                }
+            });
+        }, { threshold: 0.2 });
+
+        items.forEach(item => {
+            observer.observe(item);
+        });
+
+    </script>
+
+    <script>
+
+
+        // Scroll Up Button Functionality
+        var scrollUpBtn = document.getElementById("scrollUpBtn");
+
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollUpBtn.style.display = "block";
+            } else {
+                scrollUpBtn.style.display = "none";
+            }
+        };
+
+        scrollUpBtn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+    <script src="script.js"></script>
+</body>
+
+</html>

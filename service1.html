@@ -1,0 +1,1767 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solution</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css" />
+</head>
+<style>
+    /* Reset default browser styles */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+    }
+
+    /* Header Styles */
+    header {
+        background-color: white;
+        color: #000;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #1B449C;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        height: 3px;
+        background-color: black;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.close span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.close span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.close span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            width: 100%;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+    }
+
+
+
+
+    .section121 {
+        padding: 3% 5%;
+        /* 3% top and bottom, 5% left and right */
+        background-color: #f7f9fc;
+    }
+
+    .grid-container121 {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* Two columns per row */
+        gap: 3rem;
+        /* Horizontal gap between columns */
+        row-gap: 1rem;
+        /* Reduced vertical gap between rows */
+    }
+
+    .grid-item121 {
+        display: flex;
+        align-items: flex-start;
+        flex-direction: column;
+        /* Arrange elements vertically */
+        gap: 0.8rem;
+        /* Reduced gap between image and text */
+        /* background-color: #fff; */
+        /* padding: 1.5rem; */
+        /* border: 1px solid #e6e6e6;
+      border-radius: 0.5rem;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+    }
+
+    .icon121 {
+        width: 100px;
+        /* Adjust width of the icon */
+        height: 100px;
+        /* Adjust height of the icon */
+        object-fit: cover;
+        /* border-radius: 50%; */
+        /* Makes the images circular */
+        /* border: 2px solid #ddd; */
+        /* Adds a border for better visibility */
+    }
+
+    .content121 {
+        flex: 1;
+    }
+
+    .divider121 {
+        margin: 0.3rem 0;
+        /* Reduced gap above and below the horizontal line */
+        width: 100%;
+        /* Full-width line */
+        height: 1px;
+        background-color: #ccc;
+    }
+
+    .text121 {
+        font-size: 1.2857142857rem;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        font-weight: 400;
+        line-height: 1.5;
+
+
+        color: #1d2833;
+        text-align: justify;
+        /* Left-align the text */
+    }
+
+    @media (max-width: 768px) {
+        .grid-container121 {
+            grid-template-columns: 1fr;
+            /* Switch to one column on smaller screens */
+        }
+    }
+
+
+
+
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .contact-container {
+            flex-direction: column;
+            gap: 10px;
+            /* Reduces gap between columns for small screens */
+        }
+
+        .contact-container .vertical-line {
+            display: none;
+            /* Hides the vertical line on mobile */
+        }
+    }
+
+    .section-explore {
+        background-color: #f5f7fa;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .section-explore p {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+
+    .section-explore a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .section-explore a:hover {
+        text-decoration: underline;
+    }
+
+    /* section connect */
+    /* section content */
+    section.section-connect {
+        background-color: #1B449C;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5.7%;
+        /* 10% padding on left and right */
+    }
+
+    section.section-connect h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        /* Default font size */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-right: 20px;
+        /* Gap between text and button */
+    }
+
+    .contact-button {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        /* Default font size for the button */
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #fff;
+        color: #5c2d91;
+    }
+
+    @media (max-width: 1200px) {
+        section.section-connect h2 {
+            font-size: 2.1rem;
+            /* Slightly smaller for medium screens */
+        }
+
+        .contact-button {
+            font-size: 1rem;
+            /* Smaller button text */
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.section-connect h2 {
+            font-size: 1.9rem;
+            /* Smaller font size for tablet screens */
+        }
+
+        .contact-button {
+            font-size: 0.95rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        section.section-connect h2 {
+            font-size: 1.6rem;
+            /* Further reduce font size for small screens */
+        }
+
+        .contact-button {
+            font-size: 0.9rem;
+            /* Reduce button font size */
+            padding: 8px 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        section.section-connect h2 {
+            font-size: 1.4rem;
+            /* Make text smaller for extra-small screens */
+        }
+
+        .contact-button {
+            font-size: 0.85rem;
+            /* Small button text */
+            padding: 8px 12px;
+            /* Adjust padding for extra-small screens */
+        }
+    }
+
+    /* Scroll Up Button */
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #FFB81C;
+    }
+
+    /* Video and Text Section */
+    .video-text {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 30px 15%;
+        gap: 30px;
+        color: #000;
+    }
+
+    .video {
+        flex: 1;
+        max-width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .video-thumbnail {
+        position: relative;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .video-thumbnail img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .video-thumbnail .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.7);
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .video-thumbnail .play-button::before {
+        content: '\25BA';
+        color: #fff;
+        font-size: 20px;
+    }
+
+    .text {
+        flex: 1;
+    }
+
+    .text h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: #050505;
+    }
+
+    .text p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #000000;
+    }
+
+    /* Video Popup */
+    .video-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        display: none;
+        /* Hidden by default */
+    }
+
+    .video-popup video {
+        width: 80%;
+        border-radius: 10px;
+    }
+
+    .video-popup .close-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero {
+            padding: 20px;
+            height: auto;
+            text-align: center;
+        }
+
+        .stats {
+            flex-direction: column;
+            padding: 20px;
+        }
+
+        .vertical-line {
+            display: none;
+        }
+
+        .video-text {
+            flex-direction: column;
+            padding: 20px;
+        }
+    }
+
+    .container123 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+        padding: 2% 5%;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    .content123 {
+        width: 50%;
+    }
+
+    .content123 h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        text-align: left;
+        margin-bottom: 100px;
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .list-item123 {
+        display: flex;
+        align-items: center;
+        margin-bottom: 30px;
+        opacity: 0;
+        /* Initially hidden */
+        transform: translateY(30px);
+        transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+    }
+
+    .list-item123.show {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    .list-item123 .number123 {
+        min-width: 60px;
+        min-height: 60px;
+        background: #e4e8f3;
+        color: #333;
+        font-size: 24px;
+        font-weight: bold;
+        text-align: center;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-right: 20px;
+        padding: 10px;
+        position: relative;
+    }
+
+    .list-item123 .number123::after {
+        content: "";
+        position: absolute;
+        right: -15px;
+        top: 0;
+        width: 20px;
+        height: 100%;
+        background: inherit;
+        clip-path: polygon(0% 0%, 100% 50%, 0% 100%);
+    }
+
+    .text-content123 h3 {
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        text-align: justify;
+        margin-bottom: 5px;
+    }
+
+    .text-content123 p {
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        text-align: justify;
+    }
+
+    .image-container123 {
+        width: 50%;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .image-container123 img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    @media (max-width: 992px) {
+        .container123 {
+            flex-direction: column;
+            padding: 5%;
+        }
+
+        .content123,
+        .image-container123 {
+            width: 100%;
+        }
+
+        .image-container123 {
+            height: 300px;
+        }
+    }
+
+    @media (max-width: 600px) {
+        .content123 h2 {
+            font-size: 1.8rem;
+        }
+
+        .list-item123 {
+            flex-direction: column;
+            align-items: flex-start;
+        }
+
+        .list-item123 .number123 {
+            margin-bottom: 10px;
+        }
+    }
+
+    /* Footer Styling */
+    /* Footer Styling */
+    footer {
+        background-color: #eceef1;
+        padding: 30px 0;
+        /* Reduced vertical padding */
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        /* Full width for footer */
+        margin: 0 auto;
+        padding: 0 5%;
+        /* 5% padding on left and right */
+    }
+
+    /* Adjust padding for smaller screens (below 768px) */
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 5%;
+            /* Maintain 5% padding on left and right for small screens */
+        }
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column-left,
+    .column-right {
+        padding: 0 0;
+        /* Reduced padding */
+        flex: 1;
+        min-width: 250px;
+        box-sizing: border-box;
+        /* Prevents extra space from padding */
+    }
+
+    /* Footer Links */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin: 10px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #1B449C;
+        font-weight: bold;
+        font-size: 1.3rem;
+        /* Updated font-size */
+        line-height: 1.5;
+    }
+
+    .footer-links a:hover {
+        color: #000;
+    }
+
+    /* Right Column */
+    .footer-logo {
+        width: 300px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .text-row p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        /* Updated font-size */
+        line-height: 1.8125rem;
+        /* Updated line-height */
+    }
+
+    .text-row a {
+        color: #4b0082;
+        text-decoration: none;
+    }
+
+    .text-row a:hover {
+        text-decoration: underline;
+    }
+
+    /* Social Icons Section */
+    .footer-social {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .social-icons a {
+        color: #1B449C;
+        /* Updated color */
+        font-size: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: #000;
+    }
+
+    .footer-logo img {
+        width: 80px;
+        /* Updated width */
+        height: 49.5px;
+        /* Updated height */
+    }
+
+    /* Footer Bottom Section */
+    .footer-line {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+    }
+
+    .legal-links a {
+        margin: 0 5px;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-main {
+            flex-direction: column;
+            align-items: center;
+            /* Center columns on smaller screens */
+            padding: 0 0%;
+            /* 5% padding on left and right */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .legal-links {
+            margin-top: 10px;
+        }
+
+        .footer-social {
+            text-align: center;
+            /* Center social icons */
+        }
+
+        .social-icons a {
+            margin: 0 8px;
+            /* Adjust social icon spacing */
+        }
+    }
+
+    /* General styles for class214 */
+    .class214 {
+        display: flex;
+        flex-wrap: nowrap;
+        gap: 1rem;
+        padding: 2rem 4%;
+        background-color: #f9f9f9;
+    }
+
+    .class214 .content {
+        flex: 1 1 60%;
+        /* background-color: #f9f9f9; */
+        padding: 2%;
+        border-radius: 8px;
+    }
+
+    .class214 .highlight {
+        flex: 1 1 40%;
+        background-color: #1B449C;
+        color: white;
+        padding: 3%;
+        border-radius: 0 9rem 0 0;
+        position: relative;
+    }
+
+    .class214 h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: .5rem;
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        text-align: left;
+    }
+
+    .class214 p {
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #1d2833;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin-bottom: 1rem;
+        margin-top: 0;
+        text-align: justify;
+    }
+
+    .class214 .highlight h2 {
+        color: white;
+    }
+
+    .class214 .highlight p {
+        color: white;
+    }
+
+    .class214 .highlight a {
+        display: inline-block;
+        margin-top: 1rem;
+        padding: 0.75rem 1.5rem;
+        background-color: #FBBC05;
+        color: white;
+        text-decoration: none;
+        /* border-radius: 5px; */
+        font-weight: 600;
+    }
+
+    .class214 .highlight a:hover {
+        background-color: #dfbc55;
+    }
+
+    @media (max-width: 768px) {
+        .class214 {
+            flex-direction: column;
+            padding: 2rem 5%;
+        }
+
+        .class214 .content {
+            flex: 1 1 100%;
+            border-radius: 8px;
+        }
+
+        .class214 .highlight {
+            flex: 1 1 100%;
+            border-radius: 0 3rem 0 0;
+        }
+    }
+
+
+
+
+    .services-section8310 {
+        padding: 2rem 1rem;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    .services-section8310 h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+    }
+
+    .services-section8310 h3 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+        color: #1d2833;
+    }
+
+    .services-section8310 p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #1d2833;
+    }
+
+    .content8310 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
+        /* Increased gap between columns */
+        align-items: flex-start;
+        /* Ensures columns align at the top */
+    }
+
+    .image-container8310 {
+        flex: 1;
+        min-width: 300px;
+        max-width: 100%;
+        /* Ensure images do not overflow */
+    }
+
+    .image-container8310 img {
+        width: 100%;
+        /* border-radius: 0.5rem; Optional: Rounded corners for images */
+        object-fit: cover;
+        /* Ensures the image covers the container without stretching */
+    }
+
+    .text-container8310 {
+        flex: 1;
+        min-width: 300px;
+    }
+
+    .button8310 {
+        font-size: 1rem;
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        display: inline-block;
+        background: #1B449C;
+        color: white;
+        padding: 0.75rem 1.5rem;
+        text-decoration: none;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        border: none;
+        cursor: pointer;
+        transition: background 0.3s ease, color 0.3s ease, border 0.3s ease;
+    }
+
+    .button8310:hover {
+        background-color: white;
+        color: #1B449C;
+        border: 1px solid #1B449C;
+    }
+
+
+    .hr8310 {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 2rem 0;
+        width: 90%;
+        /* Ensures it doesn't touch the edges */
+        margin-left: auto;
+        /* Centers the line */
+        margin-right: auto;
+        /* Centers the line */
+    }
+
+
+    /* Responsive design */
+    @media (max-width: 1024px) {
+        .content8310 {
+            gap: 1rem;
+            /* Reduce gap on medium screens */
+        }
+
+        .image-container8310 {
+            max-width: 100%;
+            /* Ensure images don't overflow on smaller screens */
+        }
+
+        .text-container8310 {
+            margin-top: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .content8310 {
+            flex-direction: column;
+            text-align: center;
+            /* Center text on smaller screens */
+        }
+
+        .image-container8310 {
+            order: 1;
+            /* Image first */
+            margin-bottom: 1rem;
+            /* Space between image and text */
+        }
+
+        .text-container8310 {
+            order: 2;
+            /* Text second */
+            margin-top: 1rem;
+        }
+
+        .services-section8310 p {
+            text-align: justify;
+            /* Ensure better readability on smaller screens */
+        }
+
+        .button8310 {
+            width: 100%;
+            /* Make the button full width */
+            padding: 1rem 1.5rem;
+            /* Adjust padding for better touch area */
+        }
+    }
+
+    @media (max-width: 480px) {
+        .services-section8310 h2 {
+            font-size: 1.8rem;
+            /* Reduce font size for very small screens */
+        }
+
+        .services-section8310 h3 {
+            font-size: 1.8rem;
+            /* Adjust for better readability */
+        }
+
+        .services-section8310 p {
+            font-size: 1.28rem;
+            /* Reduce paragraph text size */
+            line-height: 1.8rem;
+            /* Adjust line height for better readability */
+        }
+
+        .button8310 {
+            font-size: 0.9rem;
+            /* Smaller button text */
+        }
+
+        .content8310 {
+            gap: 1rem;
+            /* Reduce gap for smaller screens */
+        }
+
+        .image-container8310 {
+            min-width: 100%;
+            /* Ensure image takes full width on smaller screens */
+        }
+    }
+
+  /* resposnive section */
+  .responsive-section {
+        padding: 20px 5%;
+        box-sizing: border-box;
+    }
+
+    .container1 {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .row1 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3%;
+        margin-bottom: 3%;
+    }
+
+    .column1 {
+        width: 48%;
+        display: flex;
+        justify-content: space-between;
+        gap: 2%;
+    }
+
+    .image-column {
+        width: 100%;
+    }
+
+    .text-column {
+        width: 100%;
+        padding-left: 10px;
+    }
+
+    .image-column img {
+        width: 100%;
+        height: auto;
+    }
+
+    .border-top {
+        border-top: 2px solid black;
+        padding-top: 10px;
+    }
+
+    /* Styles for h3 */
+    .responsive-section h3 {
+        margin-top: 5%;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #000000;
+        text-align: left;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    /* Styles for h2 */
+    .responsive-section h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+        color: #000000;
+        text-align: left;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    /* Styles for p */
+    .responsive-section p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #000000;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    /* Styles for Learn More link */
+    .responsive-section .learn-more1 {
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.4;
+        color: #1B449C;
+        text-decoration: none;
+    }
+
+    .responsive-section .learn-more1:hover {
+        text-decoration: underline;
+    }
+
+    /* Reveal Effect */
+    .reveal-text.revealed {
+        opacity: 1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .responsive-section {
+            padding: 20px 5%;
+        }
+
+        .column1 {
+            width: 100%;
+            flex-direction: column;
+            margin-bottom: 20px;
+            /* Added gap between columns */
+        }
+
+        .row1 {
+            gap: 5%;
+        }
+    }
+
+
+
+    .reveal-text {
+        animation: reveal 1s ease-out forwards;
+    }
+
+    .reveal-text.revealed {
+        opacity: 1;
+    }
+
+
+
+
+    /* General styles */
+    .services-section9898 {
+        padding: 2rem;
+        max-width: 1200px;
+        margin: auto;
+    }
+
+    /* Hero Section Styles */
+    .hero-section9898 {
+        background-image: url('service23.jpg');
+        /* Replace with your image */
+        background-size: cover;
+        background-position: center;
+        height: 60vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: left;
+        padding: 2rem 5%;
+    }
+
+    .hero-section9898 h2 {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: .5rem;
+        color: #ffffff;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        opacity: 0;
+        transform: translateX(-50px);
+        animation: revealText 0.8s forwards;
+    }
+
+    .hero-section9898 p {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #ffffff;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        opacity: 0;
+        transform: translateX(-50px);
+        animation: revealText 1s forwards 0.3s;
+    }
+
+    @keyframes revealText {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+        }
+    }
+
+    /* Section with 4 columns */
+    .second-section9898 {
+        padding: 0 10%;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        gap: 1rem;
+        align-items: center;
+    }
+
+    .column9898 {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    /* First column with vertical line */
+    .first-column9898 {
+        border-left: 3px solid #700394;
+        padding-left: 1rem;
+        height: 100%;
+    }
+
+    /* Text and links styles */
+    .second-column9898 {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        font-size: 1.2857142857rem;
+        font-weight: 400;
+        color: #1d2833;
+    }
+
+    .third-column9898 {
+        margin-top: 2rem;
+        margin-bottom: 2rem;
+        font-size: 1.2857142857rem;
+        font-weight: 400;
+        color: #1d2833;
+
+    }
+
+    /* Fourth column with Contact Us link aligned right and left margin */
+    .fourth-column9898 a {
+        font-size: 1.2857142857rem;
+        font-weight: 400;
+        color: #0088c9;
+        text-decoration: none;
+        position: relative;
+        margin-left: 3rem;
+        /* Add more margin to the left */
+        text-align: right;
+        /* Align text to the right */
+    }
+
+    .fourth-column9898 a::after {
+        content: '→';
+        margin-left: 0.5rem;
+        opacity: 0;
+        transition: opacity 0.3s;
+    }
+
+    .fourth-column9898 a:hover::after {
+        opacity: 1;
+    }
+
+    /* Media Queries for Responsiveness */
+    @media (max-width: 768px) {
+
+        /* Disable text effect and adjust layout */
+        .hero-section9898 h2,
+        .hero-section9898 p {
+            opacity: 1;
+            transform: translateX(0);
+            animation: none;
+        }
+
+        .hero-section9898 {
+            height: auto;
+            padding: 2rem;
+        }
+
+        .second-section9898 {
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .column9898 {
+            align-items: center;
+        }
+
+        .first-column9898 {
+            border-left: 3px solid #1d2833;
+            /* Keep the vertical line in mobile */
+            padding-left: 1rem;
+        }
+
+        /* .second-column9898, .third-column9898 {
+                text-align: center;
+            } */
+
+        .fourth-column9898 a {
+            text-align: center;
+            /* Align Contact Us in center for mobile */
+            margin-left: 0;
+            /* Reset left margin on mobile */
+        }
+    }
+</style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="Index.html">Home</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Solutions.html">Services</a></li>
+                <li><a href="service1.html">Solution</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero-section9898">
+        <div>
+            <h2>Reinvent business processes for better outcomes</h2>
+            <p>Modernise your operations to a digital business model with business process services that improve the
+                customer experience, optimise business processes, lower costs and increase agility.</p>
+        </div>
+    </section>
+
+
+    <!-- Video and Text Section -->
+    <!-- <section class="video-text">
+        <div class="video">
+            <div class="video-thumbnail" onclick="openVideo()">
+                <img src="thumbnail.jpg" alt="Video Thumbnail">
+                <button class="play-button"></button>
+            </div>
+        </div>
+        <div class="text">
+            <h2>Innovative Solutions</h2>
+            <p>
+                We provide cutting-edge solutions to empower businesses and improve operational efficiency.
+                Our technology enables sustainable growth and fosters innovation across industries.
+            </p>
+        </div>
+    </section> -->
+    <section class="section121">
+        <div class="grid-container121">
+            <div class="grid-item121">
+                <img src="icons8-global-100 (1).png" alt="HashXpert’s" class="icon121">
+                <hr class="divider121">
+                <div class="content121">
+                    <p class="text121">HashXpert threat intelligence is powered by global cyber services, trusted
+                        partners, and government agencies, delivering cutting-edge defense insights.</p>
+                </div>
+            </div>
+            <div class="grid-item121">
+                <img src="icons8-blockchain-technology-100 (1).png" alt="global security" class="icon121">
+                <hr class="divider121">
+                <div class="content121">
+                    <p class="text121">Our global security operations centers deliver round-the-clock monitoring,
+                        management, and incident response to safeguard the world's top enterprises.</p>
+                </div>
+            </div>
+            <div class="grid-item121">
+                <img src="icons8-change-user-100.png" alt="Icon 3" class="icon121">
+                <hr class="divider121">
+                <div class="content121">
+                    <p class="text121">Proper networking enables seamless <a href="#"
+                            style="color: #0066cc; text-decoration: none;">
+                            collaboration, internet access, and data sharing across systems.</a>.</p>
+                </div>
+            </div>
+            <div class="grid-item121">
+                <img src="icons8-cyber-security-100.png" alt="Icon 4" class="icon121">
+                <hr class="divider121">
+                <div class="content121">
+                    <p class="text121">Over security experts delivering advisory, managed services, and
+                        third-party tech solutions end-to-end.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- First Section -->
+    <section class="services-section8310">
+        <h2>Our Solutions</h2>
+        <div class="content8310">
+            <div class="image-container8310">
+                <img src="Picture7.jpg" alt="Security Solutions" />
+            </div>
+            <div class="text-container8310">
+                <h3>Security Solutions</h3>
+                <p>Security solutions in IT are designed to protect systems, networks, and data from cyber threats such
+                    as hacking, malware, and data breaches. These solutions include firewalls, encryption, intrusion
+                    detection systems, and multi-factor authentication to ensure confidentiality, integrity, and
+                    availability. Implementing robust security measures helps safeguard critical business operations and
+                    customer data from evolving cyber risks.
+                </p>
+                <a href="SecuritySolutions.html" class="button8310">Explore More</a>
+            </div>
+        </div>
+    </section>
+    <hr class="hr8310"> <!-- Horizontal line between sections -->
+    <!-- Second Section -->
+    <section class="services-section8310">
+
+        <div class="content8310">
+            <div class="text-container8310">
+                <h3>Cloud Solutions</h3>
+                <p>Cloud solutions in IT provide scalable, on-demand access to computing resources like storage,
+                    processing power, and software through the internet. They offer flexibility, cost-efficiency, and
+                    the ability to easily scale up or down based on business needs. Cloud computing enables
+                    organizations to focus on innovation and growth while minimizing the need for physical
+                    infrastructure.
+                </p>
+                <a href="CloudSolutions.html" class="button8310">Learn More</a>
+            </div>
+            <div class="image-container8310">
+                <img src="digital-9301924_1280.jpg" alt="Cloud Solutions" />
+            </div>
+        </div>
+    </section>
+    <hr class="hr8310"> <!-- Horizontal line between sections -->
+    <!-- Third Section -->
+    <section class="services-section8310">
+
+        <div class="content8310">
+            <div class="image-container8310">
+                <img src="network-3148727_1280.jpg" alt="Networking" />
+            </div>
+            <div class="text-container8310">
+                <h3>Networking
+                </h3>
+                <p>Networking in IT refers to the practice of connecting computers and devices to share resources,
+                    communicate, and transfer data. It involves protocols, hardware like routers and switches, and
+                    software to ensure secure and efficient communication. Proper networking enables seamless
+                    collaboration, internet access, and data sharing across systems.
+                </p>
+                <a href="Networking.html" class="button8310">Discover More</a>
+            </div>
+        </div>
+    </section>
+    <hr class="hr8310"> <!-- Horizontal line between sections -->
+
+    <section class="class214">
+        <section class="content">
+            <h2>A Focus on Excellence
+            </h2>
+            <p>Our team of experts is dedicated to delivering high-quality solutions.We prioritize innovation to create
+                cutting-edge technology.Our focus is on user-friendly and efficient product design.We develop solutions
+                that enhance productivity and performance.Cost-effectiveness is a key aspect of our approach.</p>
+            <p>Our products are designed for easy maintenance and longevity.We are committed to ensuring seamless system
+                integration.Long-term usability is a cornerstone of our development process.Client satisfaction is our
+                top priority in every project.We work closely with businesses to understand their needs.</p>
+            <p>Our offerings are tailored to address unique challenges.We leverage the latest technology for optimal
+                results.Reliability is at the heart of our service delivery.We continuously refine our processes for
+                excellence.Exceptional value and service define our commitment.</p>
+            <p>We foster strong relationships built on trust and transparency.Customer success is integral to our
+                company’s vision.</p>
+        </section>
+        <section class="highlight">
+            <h2>Comprehensive IT Solutions
+            </h2>
+            <p>
+                We are a leading system integrator in the UAE, expanding our services across India.
+                Our expertise covers the entire IT spectrum, ensuring comprehensive solutions.
+                From staffing and product design to implementation, we deliver excellence.
+                We provide ongoing support to ensure seamless operations and growth.Our team collaborates closely with
+                clients to understand their unique needs.We transform ideas into reality through innovative and tailored
+                solutions.Commitment to quality and efficiency drives our approach to integration.
+            </p>
+            <a href="Solutions.html">Our Services</a>
+        </section>
+    </section>
+    <section class="responsive-section">
+        <h3>Fortifying Your Digital Defenses</h3><br>
+        <div class="container1">
+            <div class="row1">
+                <!-- Column 1 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="helo1.jpg"
+                            alt="Crafting Detailed Job Descriptions">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Impenetrable Infrastructure & Network Security</h2>
+                        <p class="reveal-text">Cutting-edge firewalls, intelligent IDS, and zero-trust protocols to keep your data fortress secure.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="helo43.jpg"
+                            alt="Outline the Key Responsibilities">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Uncompromising Data Security & Encryption
+                        </h2>
+                        <p class="reveal-text">Fortified secure storage, military-grade cryptography, and rock-solid regulatory compliance.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="responsive-section">
+        <!-- //<h3>What we stand for</h3>  -->
+        <div class="container1">
+            <div class="row1">
+                <!-- Column 1 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="airtight.jpg"
+                            alt="Skills Needed for Each Position">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Airtight Identity & Access Management
+                        </h2>
+                        <p class="reveal-text">Role-based access, seamless SSO, and impenetrable MFA to keep your digital fortress impregnable.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="risk.jpg"
+                            alt="Image 2">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Bulletproof Security Testing & Risk Assessments
+                        </h2>
+                        <p class="reveal-text">Rigorous penetration testing, meticulous vulnerability audits, and comprehensive risk analysis to identify and eliminate weak points.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <div class="container123">
+        <div class="content123">
+            <h2>Cybersecurity Solutions</h2>
+
+            <div class="list-item123">
+                <div class="number123">1</div>
+                <div class="text-content123">
+                    <h3>End-to-End Strategy</h3>
+                    <p>Protecting applications, networks & data with comprehensive security approaches.</p>
+                </div>
+            </div>
+
+            <div class="list-item123">
+                <div class="number123">2</div>
+                <div class="text-content123">
+                    <h3>Threat Intelligence</h3>
+                    <p>Preventing, detecting, and responding to threats with proactive security measures.</p>
+                </div>
+            </div>
+
+            <div class="list-item123">
+                <div class="number123">3</div>
+                <div class="text-content123">
+                    <h3>Compliance-Driven</h3>
+                    <p>Adhering to GDPR, ISO 27001, SOC2 standards for regulatory compliance.</p>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="image-container123">
+            <img src="cybersecurity.jpg" alt="Cybersecurity Image">
+        </div>
+
+    </div> -->
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact Us</button>
+
+
+    </section>
+   
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="Index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="HASHXPERT Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert
+                            specializes in providing end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="#"><i class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <!-- <div class="legal-links">
+                    <a href="#">Cookies</a> |
+                    <a href="#">Terms</a> |
+                    <a href="#">FAQ</a>
+                </div> -->
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+
+
+
+    <script>
+
+
+        // Scroll Up Button Functionality
+        var scrollUpBtn = document.getElementById("scrollUpBtn");
+
+        // When the user scrolls down 100px from the top of the document, show the button
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollUpBtn.style.display = "block";
+            } else {
+                scrollUpBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the document
+        scrollUpBtn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+    <script>
+        const items = document.querySelectorAll(".list-item123");
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach((entry, index) => {
+                if (entry.isIntersecting) {
+                    setTimeout(() => {
+                        entry.target.classList.add("show");
+                    }, index * 800); // Increased delay for a slower, smoother effect
+                }
+            });
+        }, { threshold: 0.2 });
+
+        items.forEach(item => {
+            observer.observe(item);
+        });
+
+    </script>
+        <script>
+            window.addEventListener('scroll', function () {
+                const revealTexts = document.querySelectorAll('.reveal-text');
+                revealTexts.forEach(function (revealText) {
+                    const revealPosition = revealText.getBoundingClientRect().top;
+                    const screenPosition = window.innerHeight;
+    
+                    if (revealPosition < screenPosition) {
+                        revealText.classList.add('revealed');
+                    }
+                });
+            });
+        </script>
+    <script src="script.js"></script>
+</body>
+
+</html>
