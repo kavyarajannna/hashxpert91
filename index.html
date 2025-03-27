@@ -1,0 +1,1968 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        /* Reset default browser styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+
+        }
+
+        /* Header Styles */
+        header {
+            background-color: white;
+            color: #000;
+            padding: 15px 20px;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-links li {
+            margin: 0 15px;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #000000;
+            font-size: 20px;
+            padding: 5px;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: #4285F4;
+        }
+
+        .hamburger {
+            display: none;
+            flex-direction: column;
+            justify-content: space-between;
+            width: 30px;
+            height: 25px;
+            cursor: pointer;
+        }
+
+        .hamburger span {
+            display: block;
+            height: 3px;
+            background-color: black;
+            border-radius: 2px;
+            transition: transform 0.3s, opacity 0.3s;
+        }
+
+        .hamburger.close span:nth-child(1) {
+            transform: rotate(45deg) translate(5px, 5px);
+        }
+
+        .hamburger.close span:nth-child(2) {
+            opacity: 0;
+        }
+
+        .hamburger.close span:nth-child(3) {
+            transform: rotate(-45deg) translate(5px, -5px);
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                background-color: #000000;
+                width: 100%;
+                z-index: 10;
+                padding: 20px 0;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li {
+                margin: 10px 0;
+                text-align: center;
+            }
+
+            .nav-links a {
+                color: white;
+                padding: 10px;
+            }
+
+            .hamburger {
+                display: flex;
+            }
+        }
+
+
+
+        /* Scroll Up Button */
+        #scrollUpBtn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: #1B449C;
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        #scrollUpBtn:hover {
+            background-color: #FFBB1C;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .contact-container {
+                flex-direction: column;
+                gap: 10px;
+                /* Reduces gap between columns for small screens */
+            }
+
+            .contact-container .vertical-line {
+                display: none;
+                /* Hides the vertical line on mobile */
+            }
+        }
+
+        /* Hero Section */
+        section.hero {
+            position: relative;
+            width: 100%;
+            height: 70vh;
+            /* Default height for large screens */
+            overflow: hidden;
+        }
+
+        section.hero img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            position: absolute;
+            top: 0;
+            left: 0;
+            opacity: 0;
+            transition: opacity 1s ease-in-out;
+        }
+
+        section.hero img.active {
+            opacity: 1;
+        }
+
+        section.hero .hero-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            /* Center text horizontally and vertically */
+            color: #ffffff;
+            text-align: center;
+            /* Ensure the text is centered */
+            width: 100%;
+            padding: 0 10%;
+
+
+        }
+
+        section.hero .hero-content h1 {
+            font-size: 5rem;
+            font-weight: 600;
+            line-height: 5rem;
+            margin-bottom: .5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+        }
+
+        section.hero .hero-content p {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            margin-top: 0;
+            line-height: 3rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+        }
+
+        /* Updated Arrow Styles (Larger Size) */
+        section.hero .arrow {
+            position: absolute;
+            top: 50%;
+            font-size: 6rem;
+            /* Large size */
+            color: white;
+            /* Arrow color */
+            cursor: pointer;
+            z-index: 10;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+        }
+
+        /* Left and Right Arrows */
+        section.hero .arrow.left {
+            left: 10px;
+        }
+
+        section.hero .arrow.right {
+            right: 10px;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 1024px) {
+            section.hero {
+                height: 50vh;
+                /* Slightly reduced height for tablets */
+            }
+
+            section.hero .hero-content {
+                left: 50%;
+                transform: translateX(-50%);
+                width: 80%;
+                padding: 0 5%;
+                top: 45%;
+                /* Adjust top positioning to keep the content centered */
+            }
+
+            section.hero .hero-content h1 {
+                font-size: 3rem;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+            }
+
+            section.hero .hero-content p {
+                font-size: 1.5rem;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+            }
+
+            /* Adjust the arrow for smaller screens */
+            section.hero .arrow {
+                font-size: 4rem;
+                top: 50%;
+                /* Center vertically */
+                transform: translateY(-50%);
+            }
+
+            section.hero .arrow.left {
+                left: 10px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+                /* Keep left arrow on the left */
+            }
+
+            section.hero .arrow.right {
+                right: 10px;
+                text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+                /* Keep right arrow on the right */
+            }
+        }
+
+        @keyframes textReveal {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        section.hero .hero-content h1,
+        section.hero .hero-content p {
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: textReveal 1s ease-out forwards;
+        }
+
+        /* Delay paragraph animation for a smoother effect */
+        section.hero .hero-content p {
+            animation-delay: 0.5s;
+        }
+
+        /* Mobile and smaller screens */
+        @media (max-width: 768px) {
+            section.hero {
+                height: 40vh;
+                /* Reduced height for mobile */
+            }
+
+            section.hero .hero-content {
+                width: 90%;
+                /* Slightly reduced width */
+                padding: 0 3%;
+                top: 40%;
+                /* Adjust the top position */
+            }
+
+            section.hero .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            section.hero .hero-content p {
+                font-size: 1rem;
+            }
+
+            section.hero .arrow {
+                font-size: 3.5rem;
+                top: 50%;
+                /* Ensure vertical centering */
+                transform: translateY(-50%);
+            }
+
+            section.hero .arrow.left {
+                left: 10px;
+                /* Keep left arrow on the left */
+            }
+
+            section.hero .arrow.right {
+                right: 10px;
+                /* Keep right arrow on the right */
+            }
+        }
+
+        /* Very small screens */
+        @media (max-width: 480px) {
+            section.hero .hero-content h1 {
+                line-height: 1rem;
+            }
+
+            section.hero .hero-content p {
+                line-height: 1rem;
+            }
+
+            section.hero .arrow {
+                font-size: 3rem;
+            }
+
+            section.hero .arrow.left {
+                left: 10px;
+            }
+
+            section.hero .arrow.right {
+                right: 10px;
+            }
+        }
+
+
+        /* Section Styles */
+        /* Section Styles */
+        .vision-mission {
+            padding: 40px 5%;
+            background-color: #fff;
+        }
+
+        /* Row Styles */
+        .vision-mission .row {
+            display: flex;
+            flex-wrap: nowrap;
+            /* Ensure both columns stay in the same row */
+            align-items: stretch;
+            gap: 30px;
+        }
+
+        /* Left Column Text Styles */
+        .vision-mission-text {
+            flex: 1;
+            padding-right: 20px;
+        }
+
+        /* Vision and Mission Text */
+        .vision-mission h2 {
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: .5rem;
+            color: #1d2833;
+        }
+
+        /* Increase gap between Vision and Mission */
+        .vision-mission .vision,
+        .vision-mission .mission {
+            margin-bottom: 30px;
+        }
+
+        /* Horizontal Line */
+        .vision-mission hr {
+            width: 100%;
+            border: 1px solid black;
+            margin-bottom: 20px;
+        }
+
+        /* Paragraph Styles */
+        .vision-mission p {
+            text-align: justify;
+            font-size: 1.2rem;
+            line-height: 1.8rem;
+            font-weight: 400;
+            color: #000000;
+        }
+
+        /* Right Column - Image fills the column */
+        .vision-mission-image {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .vision-mission-image .image-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        .vision-mission-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 991px) {
+            .vision-mission .row {
+                flex-wrap: wrap;
+                /* Allow wrapping on smaller screens */
+            }
+
+            .vision-mission-text {
+                padding: 0;
+            }
+
+            .vision-mission h2 {
+                font-size: 1.8rem;
+            }
+
+            .vision-mission p {
+                font-size: 1rem;
+            }
+
+            .vision-mission-image {
+                height: 300px;
+                /* Fixed height for tablets */
+            }
+        }
+
+        @media (max-width: 767px) {
+            .vision-mission {
+                padding: 30px 5%;
+            }
+
+            .vision-mission .row {
+                flex-direction: column;
+            }
+
+            .vision-mission h2 {
+                font-size: 1.5rem;
+            }
+
+            .vision-mission p {
+                font-size: 1.2rem;
+            }
+
+            .vision-mission-image {
+                height: 250px;
+            }
+        }
+
+        /* About Us Section */
+        /* About Us Section */
+        .about-us895 {
+            padding: 60px 0;
+            background-color: #f9f9f9;
+        }
+
+        /* Strict 5% Padding for Container */
+        .container895 {
+            width: 90%;
+            /* Ensures exact 5% padding on both sides */
+            margin: auto;
+            /* Centers the container */
+        }
+
+        /* Row Styles */
+        .row895 {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+        }
+
+        /* About Us Text */
+        .about-us-text895 {
+            text-align: justify;
+        }
+
+        /* About Us Headings */
+        .about-us895 h2 {
+            font-size: 2.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #1d2833;
+        }
+
+        /* Paragraph Styles */
+        .about-us895 p {
+            font-size: 1.2rem;
+            line-height: 1.8rem;
+            font-weight: 400;
+            color: #000000;
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 767px) {
+            .container895 {
+                width: 90%;
+                /* Ensure strict 5% padding on mobile */
+            }
+
+            .row895 {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .about-us-text895 {
+                padding-left: 0;
+                padding-right: 0;
+            }
+
+            .about-us895 h2 {
+                font-size: 24px;
+            }
+
+            .about-us895 p {
+                font-size: 1.2rem;
+            }
+        }
+
+        .section-explore {
+            background-color: #f5f7fa;
+            text-align: center;
+            padding: 20px 0;
+        }
+
+        .section-explore p {
+            font-size: 20px;
+            margin: 0;
+            color: #000000;
+        }
+
+        .section-explore a {
+            color: #0078d4;
+            text-decoration: none;
+        }
+
+        .section-explore a:hover {
+            text-decoration: underline;
+        }
+
+
+        /* Scoped CSS for container55 with 5% left and right padding */
+        .container55 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 4% 5%;
+            gap: 3%;
+            flex-wrap: wrap;
+        }
+
+        .container55 .left-column {
+            flex: 1 1 45%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .container55 .left-column h1 {
+            font-size: 2.5rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            color: #1d2833;
+        }
+
+        .container55 .left-column p {
+            text-align: justify;
+            font-size: 1.285rem;
+            margin-bottom: 1rem;
+            color: #1d2833;
+            line-height: 1.8;
+        }
+
+        .container55 .left-column .button {
+            display: inline-block;
+            background-color: #0088c9;
+            color: #fff;
+            padding: 0.75rem 1.5rem;
+            text-decoration: none;
+            font-size: 1rem;
+            width: 50%;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            border: none;
+        }
+
+        .container55 .left-column .button:hover {
+            background-color: #0056b3;
+        }
+
+        .container55 .right-column {
+            flex: 1 1 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .container55 .right-column img {
+            width: 100%;
+            height: 364px;
+            object-fit: cover;
+        }
+
+        @media (max-width: 1200px) {
+            .container55 {
+                padding: 5%;
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .container55 .left-column,
+            .container55 .right-column {
+                flex: 1 1 100%;
+            }
+
+            /* Make the image come first on small screens */
+            .container55 .right-column {
+                order: -1;
+                /* Image will appear first */
+            }
+
+            .container55 .left-column h1 {
+                font-size: 2rem;
+            }
+
+            .container55 .left-column p {
+                font-size: 1rem;
+            }
+
+            .container55 .right-column img {
+                width: 100%;
+                height: 364px;
+                margin-top: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container55 {
+                padding: 5%;
+                flex-direction: column;
+                text-align: justify;
+            }
+
+            .container55 .left-column,
+            .container55 .right-column {
+                flex: 1 1 100%;
+            }
+
+            /* Make the image come first on smaller screens */
+            .container55 .right-column {
+                order: -1;
+                /* Image will appear first */
+            }
+
+            .container55 .left-column h1 {
+                font-size: 1.75rem;
+            }
+
+            .container55 .left-column p {
+                font-size: 1.2rem;
+            }
+
+            .container55 .right-column img {
+                width: 100%;
+                height: 364px;
+                margin-top: 1.5rem;
+            }
+        }
+
+
+
+        /* section content */
+        section.section-connect {
+            background-color: #1B449C;
+            color: #fff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 5.7%;
+            /* 10% padding on left and right */
+        }
+
+        section.section-connect h2 {
+            margin: 0;
+            font-size: 2.5rem;
+            /* Default font size */
+            font-weight: 600;
+            line-height: 1.2;
+            margin-right: 20px;
+            /* Gap between text and button */
+        }
+
+        .contact-button {
+            background: none;
+            border: 2px solid #fff;
+            color: #fff;
+            padding: 10px 20px;
+            font-size: 1.1rem;
+            /* Default font size for the button */
+            font-weight: 700;
+            letter-spacing: 0.0375rem;
+            line-height: 1.5;
+            text-align: center;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .contact-button:hover {
+            background-color: #fff;
+            color: #1B449C;
+        }
+
+        @media (max-width: 1200px) {
+            section.section-connect h2 {
+                font-size: 2.1rem;
+                /* Slightly smaller for medium screens */
+            }
+
+            .contact-button {
+                font-size: 1rem;
+                /* Smaller button text */
+            }
+        }
+
+        @media (max-width: 1024px) {
+            section.section-connect h2 {
+                font-size: 1.9rem;
+                /* Smaller font size for tablet screens */
+            }
+
+            .contact-button {
+                font-size: 0.95rem;
+                /* Adjust button font size */
+            }
+        }
+
+        @media (max-width: 768px) {
+            section.section-connect h2 {
+                font-size: 1.6rem;
+                /* Further reduce font size for small screens */
+            }
+
+            .contact-button {
+                font-size: 0.9rem;
+                /* Reduce button font size */
+                padding: 8px 15px;
+                /* Adjust padding for smaller screens */
+            }
+        }
+
+        @media (max-width: 480px) {
+            section.section-connect h2 {
+                font-size: 1.4rem;
+                /* Make text smaller for extra-small screens */
+            }
+
+            .contact-button {
+                font-size: 0.85rem;
+                /* Small button text */
+                padding: 8px 12px;
+                /* Adjust padding for extra-small screens */
+            }
+        }
+
+
+
+        /* Footer Styling */
+        /* Footer Styling */
+        footer {
+            background-color: #eceef1;
+            padding: 30px 0;
+            /* Reduced vertical padding */
+            font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+            color: #000000;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .footer-container {
+            width: 100%;
+            /* Full width for footer */
+            margin: 0 auto;
+            padding: 0 5%;
+            /* 5% padding on left and right */
+        }
+
+        /* Adjust padding for smaller screens (below 768px) */
+        @media (max-width: 768px) {
+            .footer-container {
+                padding: 0 5%;
+                /* Maintain 5% padding on left and right for small screens */
+            }
+        }
+
+        .footer-main {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+
+        .column-left,
+        .column-right {
+            padding: 0 0;
+            /* Reduced padding */
+            flex: 1;
+            min-width: 250px;
+            box-sizing: border-box;
+            /* Prevents extra space from padding */
+        }
+
+        /* Footer Links */
+        .footer-links {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .footer-links li {
+            margin: 10px 0;
+        }
+
+        .footer-links a {
+            text-decoration: none;
+            color: #1B449C;
+            font-weight: bold;
+            font-size: 1.3rem;
+            /* Updated font-size */
+            line-height: 1.5;
+        }
+
+        .footer-links a:hover {
+            color: #000;
+        }
+
+        /* Right Column */
+        .footer-logo {
+            width: 300px;
+            height: auto;
+            margin-bottom: 30px;
+        }
+
+        .text-row p {
+            text-align: justify;
+            font-size: 1.2857142857rem;
+            /* Updated font-size */
+            line-height: 1.8125rem;
+            /* Updated line-height */
+        }
+
+        .text-row a {
+            color: #4b0082;
+            text-decoration: none;
+        }
+
+        .text-row a:hover {
+            text-decoration: underline;
+        }
+
+        /* Social Icons Section */
+        .footer-social {
+            text-align: left;
+            margin-bottom: 20px;
+        }
+
+        .social-icons a {
+            color: #1B449C;
+            /* Updated color */
+            font-size: 30px;
+            margin-right: 10px;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .social-icons a:hover {
+            color: #000;
+        }
+
+        .footer-logo img {
+            width: 80px;
+            /* Updated width */
+            height: 49.5px;
+            /* Updated height */
+        }
+
+        /* Footer Bottom Section */
+        .footer-line {
+            border: none;
+            border-top: 1px solid #ccc;
+            margin: 20px 0;
+        }
+
+        .footer-bottom {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            align-items: center;
+        }
+
+        .footer-bottom p {
+            margin: 0;
+            font-size: 1.125rem;
+            /* Updated font-size */
+            font-weight: 500;
+            /* Updated font-weight */
+        }
+
+        .legal-links a {
+            margin: 0 5px;
+            font-size: 1.125rem;
+            /* Updated font-size */
+            font-weight: 500;
+            /* Updated font-weight */
+            color: #000000;
+            text-decoration: none;
+        }
+
+        .legal-links a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .footer-main {
+                flex-direction: column;
+                align-items: center;
+                /* Center columns on smaller screens */
+                padding: 0 0%;
+                /* 5% padding on left and right */
+            }
+
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .legal-links {
+                margin-top: 10px;
+            }
+
+            .footer-social {
+                text-align: center;
+                /* Center social icons */
+            }
+
+            .social-icons a {
+                margin: 0 8px;
+                /* Adjust social icon spacing */
+            }
+        }
+
+
+        .stats1 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            padding: 2% 5%;
+            /* background-color: #f4f4f4; */
+            text-align: center;
+            align-items: center;
+        }
+
+        .stat1 {
+            opacity: 1;
+            /* Ensure visibility */
+            transform: none;
+            /* Remove transformation */
+            position: relative;
+        }
+
+        .stat1:not(:last-child)::after {
+            content: "";
+            position: absolute;
+            right: -10px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 1px;
+            height: 60%;
+            background-color: #ccc;
+        }
+
+        .stat1 span {
+            color: #34A853 !important;
+            font-size: 1.75rem;
+            font-weight: 600;
+            text-align: center;
+            line-height: 1.1;
+        }
+
+        .stat1 p {
+            font-size: 1.125rem;
+            line-height: 1.3;
+            margin-top: .3125rem;
+        }
+
+        @media (max-width: 768px) {
+            .stats1 {
+                grid-template-columns: 1fr;
+            }
+
+            .stat1:not(:last-child)::after {
+                display: none;
+            }
+        }
+
+        /* General Section Styling */
+        .section944,
+        .section8747 {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding-right: 5%;
+            padding-left: 5%;
+            padding-top: 5%;
+            gap: 5%;
+            flex-wrap: wrap;
+            margin-bottom: 50px;
+        }
+
+        /* Text Column Styling */
+        .section944 .text-column,
+        .section8747 .text-column {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        .reveal-text {
+            opacity: 1 !important;
+            transform: translateY(0) !important;
+        }
+
+        /* Column Setup */
+        .section944 .column,
+        .section8747 .column {
+            flex: 1;
+        }
+
+        /* Image Column Styling */
+        .section944 .image-column,
+        .section8747 .image-column {
+            position: relative;
+            width: 100% !important;
+            height: 100% !important;
+            /* Ensures the image column takes the full height */
+        }
+
+        .section944 .image-column img,
+        .section8747 .image-column img {
+            width: 100% !important;
+            /* Ensure full width */
+            height: 100% !important;
+            /* Make image fill the container */
+            object-fit: cover !important;
+            /* Ensure the image covers the column without distortion */
+        }
+
+        /* Text Styling */
+        .section944 .text-column h2,
+        .section8747 .text-column h2 {
+            font-size: 2.5rem;
+            font-weight: 600;
+            line-height: 1.3;
+            margin-bottom: 1.5rem;
+            /* Ensure gap below h1 */
+        }
+
+        .section944 .text-column p,
+        .section8747 .text-column p {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            line-height: 1.8;
+            font-weight: 400;
+            text-align: justify;
+        }
+
+        /* Button Styling */
+        .section944 .text-column button,
+        .section8747 .text-column button {
+            font-size: 1rem;
+            font-weight: 700;
+            letter-spacing: 0.0375rem;
+            line-height: 1.5;
+            padding: 10px 20px;
+            border: none;
+            background-color: #1B449C;
+            color: white;
+            cursor: pointer;
+            transition: background 0.3s;
+            text-align: left;
+        }
+
+        .section944 .text-column button:hover,
+        .section8747 .text-column button:hover {
+            background-color: white;
+            color: #1B449C;
+            /* Change text color to the original button color */
+            border: 1px solid #1B449C;
+            /* Optional: Add border for visibility */
+        }
+
+
+        /* General Styles for All Screens */
+        .section944,
+        .section8747 {
+            margin-bottom: 50px;
+        }
+
+        /* Tablet-Specific Styles (max-width: 1024px) */
+        @media (max-width: 1024px) {
+
+            .section944 .text-column h2,
+            .section8747 .text-column h2 {
+                font-size: 2.2rem;
+                /* Adjust font size for tablets */
+                margin-bottom: 1.2rem;
+                /* Slightly smaller gap for tablets */
+            }
+
+            /* Ensure the text and image are aligned properly */
+            .section944,
+            .section8747 {
+                flex-direction: column;
+                gap: 20px !important;
+            }
+        }
+
+        /* Mobile Specific Styles (max-width: 768px) */
+        @media (max-width: 768px) {
+
+            /* Stack the image and text */
+            .section944,
+            .section8747 {
+                flex-direction: column;
+                gap: 20px !important;
+                /* Ensure space between stacked elements */
+            }
+
+            /* Image should appear first in mobile view */
+            .section944 .image-column,
+            .section8747 .image-column {
+                order: 1 !important;
+                width: 100% !important;
+                height: 300px !important;
+                /* Set a fixed height for image */
+            }
+
+            /* Text Column Order */
+            .section944 .text-column,
+            .section8747 .text-column {
+                order: 2 !important;
+            }
+
+            .section8747 .image-column {
+                order: -1 !important;
+                /* Moves the image above the text in section 8747 */
+            }
+
+            /* Ensure Image Fills Column */
+            .section944 .image-column img,
+            .section8747 .image-column img {
+                object-fit: cover !important;
+                /* Ensures image covers column space */
+                width: 100% !important;
+                height: 100% !important;
+                /* Enforces full height in the column */
+            }
+
+            /* Justify Text in Mobile */
+            .section944 .text-column p,
+            .section8747 .text-column p {
+                text-align: justify !important;
+                /* Justify text in mobile view */
+            }
+        }
+
+        /* Large Screens / Desktop (min-width: 1025px) */
+        @media (min-width: 1025px) {
+
+            .section944,
+            .section8747 {
+                flex-direction: row;
+                gap: 30px;
+                /* Larger gap between columns */
+            }
+
+            .section944 .image-column,
+            .section8747 .image-column {
+                height: auto;
+                width: 45%;
+                /* Reduced image width for large screens */
+            }
+
+            .section944 .text-column,
+            .section8747 .text-column {
+                width: 50%;
+                /* Text takes 50% of the container */
+            }
+        }
+
+        .mySwiper {
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .mySwiper .swiper-slide {
+            display: flex;
+            flex-direction: column;
+            align-items: left;
+            justify-content: center;
+            text-align: left;
+            font-size: 18px;
+            color: black;
+            background: #eceef1;
+            padding: 2rem 5%;
+            width: 100%;
+            min-height: 400px;
+        }
+
+        .mySwiper .form-row {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+            justify-content: flex-start;
+        }
+
+        .mySwiper input {
+            flex: 1;
+            min-width: 280px;
+            height: 45px;
+            padding: 10px;
+            border: none;
+            border-bottom: 2px solid black;
+            background-color: transparent;
+            outline: none;
+            font-size: 16px;
+        }
+
+        .mySwiper input::placeholder {
+            color: #777;
+        }
+
+        .mySwiper .button {
+            background-color: #0088c9;
+            border: none;
+            color: white;
+            padding: 12px 18px;
+            font-weight: bold;
+            opacity: 0.5;
+            cursor: not-allowed;
+            transition: opacity 0.3s;
+        }
+
+        .mySwiper .button.enabled {
+            opacity: 1;
+            cursor: pointer;
+        }
+
+        .mySwiper .swiper-pagination {
+            bottom: 10px !important;
+        }
+
+        .mySwiper .swiper-pagination-bullet {
+            background: black !important;
+            width: 12px;
+            height: 12px;
+        }
+
+        .mySwiper h2 {
+            margin-bottom: 1.5rem;
+            color: #1d2833;
+            font-size: 2.2rem;
+            font-weight: 600;
+        }
+
+        .mySwiper p {
+            margin-bottom: 1.5rem;
+            color: #1d2833;
+            font-weight: 400;
+            line-height: 1.5;
+        }
+
+        .mySwiper h2,
+        .mySwiper p {
+            text-align: left;
+        }
+
+        @media (max-width: 768px) {
+            .mySwiper .swiper-slide {
+                padding: 2rem;
+            }
+
+            .mySwiper h2 {
+                font-size: 1.8rem;
+            }
+
+            .mySwiper p {
+                font-size: 16px;
+            }
+
+            .mySwiper .form-row {
+                flex-direction: column;
+                gap: 15px;
+                align-items: flex-start;
+            }
+
+            .mySwiper input {
+                width: 100%;
+            }
+
+            .mySwiper .button {
+                width: auto;
+                text-align: center;
+                align-self: flex-end;
+                padding: 10px 16px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .mySwiper .swiper-slide {
+                padding: 1.5rem;
+            }
+
+            .mySwiper h2 {
+                font-size: 1.6rem;
+            }
+
+            .mySwiper p {
+                font-size: 14px;
+            }
+
+            .mySwiper input {
+                height: 40px;
+                font-size: 14px;
+            }
+
+            .mySwiper .button {
+                width: auto;
+                text-align: center;
+                align-self: flex-end;
+                padding: 10px 14px;
+            }
+        }
+
+        /* Wrapper for entire section */
+        .pioneer {
+            padding: 5%;
+            text-align: center;
+        }
+
+        /* Title Styling */
+        .pioneer h2 {
+            font-size: 2.2857142858rem;
+            font-weight: 600;
+            color: #1d2833;
+            margin-bottom: 1.5rem;
+        }
+
+        /* Container for image and text */
+        .pioneer .pioneer-container {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            align-items: flex-start;
+            flex-wrap: wrap;
+        }
+
+        /* Individual item (image + text) */
+        .pioneer .pioneer-item {
+            width: 48%;
+            background: white;
+            overflow: hidden;
+            text-align: left;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .pioneer .pioneer-item img {
+            width: 100%;
+            height: auto;
+            /* Fixed height */
+            object-fit: cover;
+            /* Ensures the image covers the box while maintaining aspect ratio */
+            display: block;
+        }
+
+
+        /* Text Content */
+        .pioneer .pioneer-text {
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .pioneer .pioneer-text.reveal-text {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+
+        .pioneer .pioneer-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #1d2833;
+            line-height: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .pioneer .pioneer-text p {
+            font-size: 1.2857142857rem;
+            margin-bottom: 1rem;
+            color: #1d2833;
+            line-height: 1.6;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 1024px) {
+            .pioneer .pioneer-item {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .pioneer h2 {
+                font-size: 2rem;
+            }
+
+            .pioneer .pioneer-container {
+                flex-direction: column;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pioneer h2 {
+                font-size: 1.8rem;
+            }
+
+            .pioneer .pioneer-text {
+                padding: 15px;
+            }
+
+            .pioneer .pioneer-text h3 {
+                font-size: 1.3rem;
+            }
+
+            .pioneer .pioneer-text p {
+                font-size: 0.95rem;
+            }
+        }
+      /* Fullscreen Preloader */
+#preloader {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: #ffffff; /* Adjust background color */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 9999;
+}
+
+/* Video Styling */
+#preloader-video {
+    width: 200px; /* Adjust size as needed */
+    max-width: 100%;
+}
+
+/* Hide preloader when page loads */
+.hidden {
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.5s ease-out, visibility 0.5s ease-out;
+}
+
+    </style>
+</head>
+
+<body>
+ <!-- Preloader -->
+<div id="preloader">
+    <video autoplay muted loop id="preloader-video">
+        <source src="Untitled design.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+</div>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <img src="Picture51.jpg" alt="Slide 1" class="active">
+        <img src="Picture5.jpg" alt="Slide 2">
+        <img src="Picture3.jpg" alt="Slide 3">
+
+        <div class="hero-content">
+            <h1>HashXpert</h1>
+            <p>HashXpert is a company with a deep understanding of emerging IT industry trends</p>
+        </div>
+
+        <button class="arrow left">&#8249;</button>
+        <button class="arrow right">&#8250;</button>
+    </section>
+
+
+
+
+    <!-- Vision Mission Section -->
+    <section class="vision-mission">
+        <div class="container">
+            <div class="row">
+                <!-- Left Column (Vision & Mission Text) -->
+                <div class="col-md-6 vision-mission-text">
+                    <div class="vision">
+                        <h2>Vision</h2>
+                        <hr>
+                        <p>To be a customer-centric company that empowers customers with the freedom to choose solutions
+                            and services that prioritize comprehensive security at the most competitive prices.
+                        </p>
+                    </div>
+                    <div class="mission">
+                        <h2>Mission</h2>
+                        <hr>
+                        <p>To deliver the highest-quality IT solutions to our customers, emphasizing exceptional
+                            service, a wide range of solution choices, and unwavering security.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Right Column (Image) -->
+                <div class="col-md-6 vision-mission-image">
+                    <div class="image-container">
+                        <img src="vision-mission-planning-aspirations-process-concept.jpg"
+                            alt="Vision and Mission Image">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- aboutus Section -->
+    <!-- About Us Section -->
+    <section class="about-us895">
+        <div class="container895">
+            <div class="row895">
+                <div class="col-md-12 about-us-text895">
+                    <h2>About Us</h2>
+                    <P>HashXpert was established by seasoned professionals from the IT industry, bringing a wealth of
+                        expertise to the organization. With a profound understanding of the ever-changing IT landscape,
+                        we are dedicated to delivering cutting-edge solutions. Headquartered in Dubai and expanding our
+                        footprint in India and UK, we cater to businesses of all scales, from budding startups to
+                        established
+                        large enterprises.
+                    </P>
+                    <p>The inception of HashXpert was driven by the vision and experience of industry
+                        veterans who possess extensive knowledge of the IT sector. From its foundation, HashXpert
+                        has been built with a keen insight into the latest trends shaping the IT
+                        industry. Based in Dubai, our operations span across the Middle East and India, with a strong
+                        on-the-ground presence in the UAE.</p>
+                    <p>As one of the leading System Integrators in the UAE, we offer comprehensive IT solutions tailored
+                        to the needs of startups, SMEs, and large corporations alike. Our services encompass custom IT
+                        solutions across a variety of platforms and technologies. Our skilled team of experts
+                        collaborates closely with clients to turn their visions into tangible outcomes.
+                    </p>
+                    <p>Our expanding team boasts proficiency in product design, architecture, implementation, and
+                        deployment across diverse platforms including Network, System, Security, and Services. Committed
+                        to providing high-quality, user-friendly, and easily maintainable solutions, we ensure that our
+                        offerings meet the needs of our clients and their end-users, all at competitive pricing.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="section944">
+        <div class="column text-column">
+            <h2>Services</h2>
+            <p>Tailored solutions to meet business needs, enhancing efficiency and scalability.Secure and scalable cloud
+                infrastructure for seamless data storage and operations. Intelligent automation and data-driven insights
+                for smarter decision-making.</p>
+            <button onclick="window.location.href='Solutions.html'">Learn More</button>
+
+        </div>
+        <div class="column image-column">
+            <img src="young-couple-buying-car-car-showroom.jpg" alt="Services">
+        </div>
+    </section>
+
+    <section class="section8747">
+        <div class="column image-column">
+            <img src="app-woman-white-solution-closeup-two.jpg" alt="Solutions Image">
+        </div>
+        <div class="column text-column">
+            <h2>Solutions</h2>
+            <p>
+                Technology solutions drive innovation by enhancing efficiency, automation, and connectivity across
+                industries. They empower businesses with AI, cloud computing, and IoT to streamline operations and
+                improve decision-making. From healthcare to finance, technology solutions transform challenges into
+                opportunities for growth and advancement.</p>
+            <button onclick="window.location.href='service1.html'">Learn More</button>
+        </div>
+    </section>
+
+    <section class="section944">
+        <div class="column text-column">
+            <h2>Revolutionize Your Business</h2>
+            <p>Modernizing businesses for the AI era, we drive growth and innovation.
+                Our solutions ensure mission-critical operations run at scale.
+                With a focus on security, reliability, and performance, we deliver excellence.
+                Compliance and efficiency remain at the core of everything we do.</p>
+            <button onclick="window.location.href='Solutions.html'">Explore our services</button>
+
+        </div>
+        <div class="column image-column">
+            <img src="innovat2.jpg" alt="Services">
+        </div>
+    </section>
+    <div class="swiper mySwiper">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide">
+                <h2>Want to stay connected?</h2>
+                <p>Subscribe here to stay up-to-date on the technologies defining today and shaping tomorrow.</p>
+                <div class="form-row">
+                    <input type="text" id="firstName" placeholder="First Name" required oninput="validateForm(1)">
+                    <input type="text" id="lastName" placeholder="Last Name" required oninput="validateForm(1)">
+                    <button id="nextBtn1" class="button" onclick="nextSlide()" disabled>Next</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <h2>Want to stay connected?</h2>
+                <p>Subscribe here to stay up-to-date on the technologies defining today and shaping tomorrow.</p>
+                <div class="form-row">
+                    <input type="email" id="workEmail" placeholder="Work Email" required oninput="validateForm(2)">
+                    <input type="text" id="jobTitle" placeholder="Job Title" required oninput="validateForm(2)">
+                    <button id="nextBtn2" class="button" onclick="nextSlide()" disabled>Next</button>
+                </div>
+            </div>
+            <div class="swiper-slide">
+                <h2>Want to stay connected?</h2>
+                <p>Subscribe here to stay up-to-date on the technologies defining today and shaping tomorrow.</p>
+                <div class="form-row">
+                    <input type="text" id="country" placeholder="Country" required oninput="validateForm(3)">
+                    <input type="text" id="companyName" placeholder="Company Name" required oninput="validateForm(3)">
+                    <button id="submitBtn" class="button" onclick="submitForm()" disabled>Submit</button>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <section class="pioneer">
+        <h2>Pioneering the Future of IT</h2>
+        <div class="pioneer-container">
+            <!-- First Item -->
+            <div class="pioneer-item">
+                <img src="pioneer1.jpg" alt="Visionary Founders">
+                <div class="pioneer-text">
+                    <h3>Visionary Founders</h3>
+                    <p>HashXpert was established by seasoned IT experts, each bringing decades of industry experience to
+                        the table. With a deep understanding of the evolving technology landscape, we're driven to
+                        provide innovative solutions that empower businesses to thrive.</p>
+                </div>
+            </div>
+
+            <!-- Second Item -->
+            <div class="pioneer-item">
+                <img src="pioneer3.jpg" alt="Global Footprint">
+                <div class="pioneer-text">
+                    <h3>Global Footprint</h3>
+                    <p>From our headquarters in Dubai to our growing presence in 3 locations, we serve organizations of
+                        all sizes - from dynamic startups to established enterprises. Our commitment to excellence knows
+                        no boundaries as we continue to expand our reach and impact.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <section class="stats1">
+        <div class="stat1">
+            <span>70+</span>
+            <p>countries</p>
+        </div>
+        <div class="stat1">
+            <span>125,000+</span>
+            <p>employees</p>
+        </div>
+        <div class="stat1">
+            <span>60+</span>
+            <p>years of innovation</p>
+        </div>
+    </section> -->
+
+
+
+    <!-- <section class="container55">
+        <div class="left-column">
+            <h1>Modernize and Transform</h1>
+            <p>We work every day to support our clients’ growth in the era of AI and to deliver mission-critical
+                operations at scale with security, reliability, performance and compliance.</p>
+            <a href="#" class="button">Explore Our Offerings</a>
+        </div>
+        <div class="right-column">
+            <img src="businessman-pointing-his-presentation-futuristic-digital-screen.jpg"
+                alt="Modernize and Transform Image">
+        </div>
+    </section> -->
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact
+            Us</button>
+
+    </section>
+
+
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="Hashxpert Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert
+                            specializes in providing end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/hashxpert-technologies-llc/?originalSubdomain=ae"><i
+                            class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <div class="legal-links">
+                    <a href="PrivacyPolicy.html">PrivacyPolicy</a> |
+                    <a href="TermsOfUse.html">Terms</a> |
+                    <a href="FAQ.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+    <script src="script.js"></script>
+    <script>
+
+
+        // Scroll Up Button Functionality
+        var scrollUpBtn = document.getElementById("scrollUpBtn");
+
+        // When the user scrolls down 100px from the top of the document, show the button
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollUpBtn.style.display = "block";
+            } else {
+                scrollUpBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the document
+        scrollUpBtn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+    <script>
+        // Hero Section Slider
+        const heroImages = document.querySelectorAll('.hero img');
+        const heroLeftArrow = document.querySelector('.hero .arrow.left');
+        const heroRightArrow = document.querySelector('.hero .arrow.right');
+        let heroIndex = 0;
+
+        function showHeroSlide(index) {
+            heroImages.forEach((img, i) => {
+                img.classList.toggle('active', i === index);
+            });
+        }
+
+        heroLeftArrow.addEventListener('click', () => {
+            heroIndex = (heroIndex - 1 + heroImages.length) % heroImages.length;
+            showHeroSlide(heroIndex);
+        });
+
+        heroRightArrow.addEventListener('click', () => {
+            heroIndex = (heroIndex + 1) % heroImages.length;
+            showHeroSlide(heroIndex);
+        });
+
+        // Automatic Slide for Hero Section
+        setInterval(() => {
+            heroIndex = (heroIndex + 1) % heroImages.length;
+            showHeroSlide(heroIndex);
+        }, 5000);
+
+
+
+    </script>
+    <script>
+
+    </script>
+    <script>
+        document.addEventListener("scroll", function () {
+            document.querySelectorAll(".section944 .text-column, .section8747 .text-column , .pioneer .pioneer-text").forEach(textColumn => {
+                const columnTop = textColumn.getBoundingClientRect().top;
+                if (columnTop < window.innerHeight * 0.85) {
+                    textColumn.classList.add("reveal-text");
+                }
+            });
+        });
+    </script>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper/swiper-bundle.min.js"></script>
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            loop: false,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: false,
+            },
+            allowTouchMove: true,
+        });
+
+        function nextSlide() {
+            swiper.slideNext();
+        }
+
+        function validateForm(slide) {
+            let isValid = false;
+
+            if (slide === 1) {
+                let firstName = document.getElementById("firstName").value.trim();
+                let lastName = document.getElementById("lastName").value.trim();
+                isValid = firstName !== "" && lastName !== "";
+                toggleButton("nextBtn1", isValid);
+            } else if (slide === 2) {
+                let workEmail = document.getElementById("workEmail").value.trim();
+                let jobTitle = document.getElementById("jobTitle").value.trim();
+                isValid = workEmail !== "" && jobTitle !== "" && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(workEmail);
+                toggleButton("nextBtn2", isValid);
+            } else if (slide === 3) {
+                let country = document.getElementById("country").value.trim();
+                let companyName = document.getElementById("companyName").value.trim();
+                isValid = country !== "" && companyName !== "";
+                toggleButton("submitBtn", isValid);
+            }
+        }
+
+        function toggleButton(buttonId, isEnabled) {
+            let button = document.getElementById(buttonId);
+            button.disabled = !isEnabled;
+            button.classList.toggle("enabled", isEnabled);
+        }
+
+        function submitForm() {
+            let message = `
+            First Name: ${document.getElementById("firstName").value}
+            Last Name: ${document.getElementById("lastName").value}
+            Work Email: ${document.getElementById("workEmail").value}
+            Job Title: ${document.getElementById("jobTitle").value}
+            Country: ${document.getElementById("country").value}
+            Company Name: ${document.getElementById("companyName").value}
+        `;
+
+            window.location.href = `mailto:kavyaraj313@gmail.com?subject=User Submission&body=${encodeURIComponent(message)}`;
+        }
+    </script>
+
+<script>
+   document.addEventListener("DOMContentLoaded", function () {
+    setTimeout(function () {
+        let preloader = document.getElementById("preloader");
+        preloader.classList.add("hidden");
+        setTimeout(() => preloader.style.display = "none", 500); // Completely remove after transition
+    }, 3000); // Adjust delay based on video length
+});
+
+</script>
+</body>
+
+</html>
