@@ -1,0 +1,2133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About</title>
+    <link rel="icon" type="image/png" href="Picture50 - Copy.png">
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.0/css/bootstrap.min.css">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- Animate.css -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+
+    <!-- WOW.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/wow/1.1.2/wow.min.js"></script>
+
+    <!-- Favicon -->
+    <link href="img/favicon.ico" rel="icon">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&family=Rubik:wght@400;500;600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.10.0/css/all.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="lib/owlcarousel/assets/owl.carousel.min.css" rel="stylesheet">
+    <link href="lib/animate/animate.min.css" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="css/style.css" rel="stylesheet">
+</head>
+<style>
+    /* Reset default browser styles */
+    * {
+
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+
+    }
+   /* Custom Styles */
+   .rounded-box {
+            border-radius: 10px;
+            overflow: hidden;
+        }
+    /* Header Styles */
+    header {
+        background-color: white;
+        color: #000;
+        padding: 15px 20px;
+    }
+
+    .navbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        position: relative;
+    }
+
+    .logo {
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .nav-links {
+        display: flex;
+        list-style: none;
+    }
+
+    .nav-links li {
+        margin: 0 15px;
+    }
+
+    .nav-links a {
+        text-decoration: none;
+        color: #333;
+        font-size: 20px;
+        padding: 5px;
+        transition: color 0.3s;
+    }
+
+    .nav-links a:hover {
+        color: #1B449C;
+    }
+
+    .hamburger {
+        display: none;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 30px;
+        height: 25px;
+        cursor: pointer;
+    }
+
+    .hamburger span {
+        display: block;
+        height: 3px;
+        background-color: black;
+        border-radius: 2px;
+        transition: transform 0.3s, opacity 0.3s;
+    }
+
+    .hamburger.close span:nth-child(1) {
+        transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.close span:nth-child(2) {
+        opacity: 0;
+    }
+
+    .hamburger.close span:nth-child(3) {
+        transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    @media (max-width: 768px) {
+        .nav-links {
+            display: none;
+            flex-direction: column;
+            position: absolute;
+            top: 60px;
+            left: 0;
+            background-color: #333;
+            width: 100%;
+            z-index: 10;
+            padding: 20px 0;
+        }
+
+        .nav-links.active {
+            display: flex;
+        }
+
+        .nav-links li {
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .nav-links a {
+            color: white;
+            padding: 10px;
+        }
+
+        .hamburger {
+            display: flex;
+        }
+    }
+
+    /* Hero Section */
+    /* Hero Section Styles */
+    .hero {
+        background: url('businessman-pressing-shiny-button.jpg') no-repeat center center/cover;
+        height: 400px;
+        display: flex;
+        align-items: center;
+        padding: 0 105px;
+        text-align: left;
+    }
+
+    .hero-content h1 {
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 10);
+        color: #f5f7fa;
+        font-size: 3rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin: 0;
+        opacity: 0;
+        /* Initially hidden */
+        transform: translateX(-50px);
+        /* Start position for animation */
+        animation: textReveal 1.5s ease-out forwards;
+        /* Trigger animation */
+    }
+
+    @keyframes textReveal {
+        to {
+            opacity: 1;
+            transform: translateX(0);
+            /* End position */
+        }
+    }
+
+
+    /* Video and Text Section */
+    .video-text {
+        display: flex;
+        flex-wrap: wrap;
+        padding: 30px 15%;
+        gap: 30px;
+        color: #000;
+    }
+
+    .video {
+        flex: 1;
+        max-width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .video-thumbnail {
+        position: relative;
+        width: 100%;
+        border-radius: 10px;
+        overflow: hidden;
+        cursor: pointer;
+    }
+
+    .video-thumbnail img {
+        width: 100%;
+        height: auto;
+        display: block;
+    }
+
+    .video-thumbnail .play-button {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background: rgba(0, 0, 0, 0.7);
+        border: none;
+        border-radius: 50%;
+        width: 50px;
+        height: 50px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+
+    .video-thumbnail .play-button::before {
+        content: '\25BA';
+        color: #fff;
+        font-size: 20px;
+    }
+
+    .text {
+        flex: 1;
+    }
+
+    .text h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: #050505;
+    }
+
+    .text p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #000000;
+    }
+
+    /* Video Popup */
+    .video-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+        display: none;
+        /* Hidden by default */
+    }
+
+    .video-popup video {
+        width: 80%;
+        border-radius: 10px;
+    }
+
+    .video-popup .close-button {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: #fff;
+        border: none;
+        border-radius: 50%;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .hero {
+            padding: 20px;
+            height: auto;
+            text-align: center;
+        }
+
+
+
+        .video-text {
+            flex-direction: column;
+            padding: 20px;
+        }
+    }
+
+
+    .partner-section {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 10% 5%;
+        /* Added 5% left and right padding */
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .partner-logos {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        flex: 1 1 50%;
+    }
+
+    .partner-logos img {
+        width: 180px;
+        height: 70px;
+        object-fit: contain;
+        margin: 0 auto;
+    }
+
+    .partner-content {
+        flex: 1 1 40%;
+        text-align: justify;
+        /* Justify content */
+    }
+
+    .partner-heading {
+        font-size: 2.3rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 1.5rem;
+        color: #090d10;
+    }
+
+    .partner-description {
+        font-size: 1.3rem;
+        line-height: 1.8;
+        font-weight: 400;
+        color: #000000;
+        margin-bottom: 1rem;
+    }
+
+    .partner-link {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #1B449C;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .partner-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 1024px) {
+        .partner-section {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .partner-logos {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .partner-content {
+            text-align: justify;
+            /* Keeps justification */
+        }
+    }
+
+    @media (max-width: 768px) {
+        .partner-logos {
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .partner-logos {
+            grid-template-columns: repeat(2, 1fr);
+        }
+
+        .partner-logos img {
+            width: 100px;
+            height: 40px;
+        }
+    }
+
+
+    .section-explore {
+        background-color: #f5f7fa;
+        text-align: center;
+        padding: 20px 0;
+    }
+
+    .section-explore p {
+        font-size: 20px;
+        margin: 0;
+        color: #333;
+    }
+
+    .section-explore a {
+        color: #0078d4;
+        text-decoration: none;
+    }
+
+    .section-explore a:hover {
+        text-decoration: underline;
+    }
+
+
+
+
+
+    /* resposnive section */
+    .responsive-section {
+        padding: 20px 5%;
+        box-sizing: border-box;
+    }
+
+    .container1 {
+        display: flex;
+        flex-wrap: wrap;
+    }
+
+    .row1 {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 3%;
+        margin-bottom: 3%;
+    }
+
+    .column1 {
+        width: 48%;
+        display: flex;
+        justify-content: space-between;
+        gap: 2%;
+    }
+
+    .image-column {
+        width: 100%;
+    }
+
+    .text-column {
+        width: 100%;
+        padding-left: 10px;
+    }
+    .image-column img {
+    width: 100%;
+    height: auto;
+    transition: transform 0.3s ease-in-out;
+}
+
+.image-column img:hover {
+    transform: scale(0.9); /* Shrinks the image on hover */
+}
+
+
+    .border-top {
+        border-top: 2px solid black;
+        padding-top: 10px;
+    }
+
+    /* Styles for h3 */
+    .responsive-section h3 {
+        margin-top: 5%;
+        font-size: 2rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        color: #000000;
+        text-align: left;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    /* Styles for h2 */
+    .responsive-section h2 {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin-bottom: 1rem;
+        line-height: 1.5;
+        color: #000000;
+        text-align: left;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    /* Styles for p */
+    .responsive-section p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #000000;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        opacity: 0;
+        transition: opacity 1s ease;
+    }
+
+    /* Styles for Learn More link */
+    .responsive-section .learn-more1 {
+        font-size: 1rem;
+        font-weight: 500;
+        line-height: 1.4;
+        color: #1B449C;
+        text-decoration: none;
+    }
+
+    .responsive-section .learn-more1:hover {
+        text-decoration: underline;
+    }
+
+    /* Reveal Effect */
+    .reveal-text.revealed {
+        opacity: 1;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .responsive-section {
+            padding: 20px 5%;
+        }
+
+        .column1 {
+            width: 100%;
+            flex-direction: column;
+            margin-bottom: 20px;
+            /* Added gap between columns */
+        }
+
+        .row1 {
+            gap: 5%;
+        }
+    }
+
+
+
+    .reveal-text {
+        animation: reveal 1s ease-out forwards;
+    }
+
+    .reveal-text.revealed {
+        opacity: 1;
+    }
+
+
+
+
+    /* Scroll Up Button */
+    #scrollUpBtn {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background-color: #1B449C;
+        color: white;
+        border: none;
+        padding: 15px;
+        font-size: 18px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: none;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    }
+
+    #scrollUpBtn:hover {
+        background-color: #FFB81C;
+    }
+
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .contact-container {
+            flex-direction: column;
+            gap: 10px;
+            /* Reduces gap between columns for small screens */
+        }
+
+        .contact-container .vertical-line {
+            display: none;
+            /* Hides the vertical line on mobile */
+        }
+    }
+
+    /* Footer Styling */
+    /* section content */
+    section.section-connect {
+        background-color: #1B449C;
+        color: #fff;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 20px 5.7%;
+        /* 10% padding on left and right */
+    }
+
+    section.section-connect h2 {
+        margin: 0;
+        font-size: 2.5rem;
+        /* Default font size */
+        font-weight: 600;
+        line-height: 1.2;
+        margin-right: 20px;
+        /* Gap between text and button */
+    }
+
+    .contact-button {
+        background: none;
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 10px 20px;
+        font-size: 1.1rem;
+        /* Default font size for the button */
+        font-weight: 700;
+        letter-spacing: 0.0375rem;
+        line-height: 1.5;
+        text-align: center;
+        text-transform: uppercase;
+        cursor: pointer;
+        transition: background-color 0.3s ease, color 0.3s ease;
+    }
+
+    .contact-button:hover {
+        background-color: #fff;
+        color: #1B449C;
+    }
+
+    @media (max-width: 1200px) {
+        section.section-connect h2 {
+            font-size: 2.1rem;
+            /* Slightly smaller for medium screens */
+        }
+
+        .contact-button {
+            font-size: 1rem;
+            /* Smaller button text */
+        }
+    }
+
+    @media (max-width: 1024px) {
+        section.section-connect h2 {
+            font-size: 1.9rem;
+            /* Smaller font size for tablet screens */
+        }
+
+        .contact-button {
+            font-size: 0.95rem;
+            /* Adjust button font size */
+        }
+    }
+
+    @media (max-width: 768px) {
+        section.section-connect h2 {
+            font-size: 1.6rem;
+            /* Further reduce font size for small screens */
+        }
+
+        .contact-button {
+            font-size: 0.9rem;
+            /* Reduce button font size */
+            padding: 8px 15px;
+            /* Adjust padding for smaller screens */
+        }
+    }
+
+    @media (max-width: 480px) {
+        section.section-connect h2 {
+            font-size: 1.4rem;
+            /* Make text smaller for extra-small screens */
+        }
+
+        .contact-button {
+            font-size: 0.85rem;
+            /* Small button text */
+            padding: 8px 12px;
+            /* Adjust padding for extra-small screens */
+        }
+    }
+
+
+    /* Footer Styling */
+    /* Footer Styling */
+    footer {
+        background-color: #eceef1;
+        padding: 30px 0;
+        /* Reduced vertical padding */
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        color: #333;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    .footer-container {
+        width: 100%;
+        /* Full width for footer */
+        margin: 0 auto;
+        padding: 0 5%;
+        /* 5% padding on left and right */
+    }
+
+    /* Adjust padding for smaller screens (below 768px) */
+    @media (max-width: 768px) {
+        .footer-container {
+            padding: 0 5%;
+            /* Maintain 5% padding on left and right for small screens */
+        }
+    }
+
+    .footer-main {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: space-between;
+        margin-bottom: 20px;
+    }
+
+    .column-left,
+    .column-right {
+        padding: 0 0;
+        /* Reduced padding */
+        flex: 1;
+        min-width: 250px;
+        box-sizing: border-box;
+        /* Prevents extra space from padding */
+    }
+
+    /* Footer Links */
+    .footer-links {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .footer-links li {
+        margin: 10px 0;
+    }
+
+    .footer-links a {
+        text-decoration: none;
+        color: #1B449C;
+        font-weight: bold;
+        font-size: 1.3rem;
+        /* Updated font-size */
+        line-height: 1.5;
+    }
+
+    .footer-links a:hover {
+        color: #000;
+    }
+
+    /* Right Column */
+    .footer-logo {
+        width: 300px;
+        height: auto;
+        margin-bottom: 30px;
+    }
+
+    .text-row p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        /* Updated font-size */
+        line-height: 1.8125rem;
+        /* Updated line-height */
+    }
+
+    .text-row a {
+        color: #4b0082;
+        text-decoration: none;
+    }
+
+    .text-row a:hover {
+        text-decoration: underline;
+    }
+
+    /* Social Icons Section */
+    .footer-social {
+        text-align: left;
+        margin-bottom: 20px;
+    }
+
+    .social-icons a {
+        color: #1B449C;
+        /* Updated color */
+        font-size: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        display: inline-block;
+    }
+
+    .social-icons a:hover {
+        color: #000;
+    }
+
+    .footer-logo img {
+        width: 80px;
+        /* Updated width */
+        height: 49.5px;
+        /* Updated height */
+    }
+
+    /* Footer Bottom Section */
+    .footer-line {
+        border: none;
+        border-top: 1px solid #ccc;
+        margin: 20px 0;
+    }
+
+    .footer-bottom {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .footer-bottom p {
+        margin: 0;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+    }
+
+    .legal-links a {
+        margin: 0 5px;
+        font-size: 1.125rem;
+        /* Updated font-size */
+        font-weight: 500;
+        /* Updated font-weight */
+        color: #333;
+        text-decoration: none;
+    }
+
+    .legal-links a:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .footer-main {
+            flex-direction: column;
+            align-items: center;
+            /* Center columns on smaller screens */
+            padding: 0 0%;
+            /* 5% padding on left and right */
+        }
+
+        .footer-bottom {
+            flex-direction: column;
+            text-align: center;
+        }
+
+        .legal-links {
+            margin-top: 10px;
+        }
+
+        .footer-social {
+            text-align: center;
+            /* Center social icons */
+        }
+
+        .social-icons a {
+            margin: 0 8px;
+            /* Adjust social icon spacing */
+        }
+    }
+
+
+
+
+
+    /* Styles for Section 03 */
+    .section-03 {
+        display: flex;
+        justify-content: space-between;
+        align-items: flex-start;
+        padding:0 5%;
+        padding-top: 5%;
+        padding-bottom:.5%;
+        /* padding-left: 10%;
+            padding-right: 10%; */
+        flex-wrap: wrap;
+    }
+
+    .section-03-content {
+        max-width: 60%;
+        padding-right: 10%;
+    }
+
+    .section-03-heading {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+        color: #000000;
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .section-03-paragraph {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #000000;
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin-bottom: 1.5rem;
+    }
+
+    .section-03-list {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #000000;
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        list-style-type: disc;
+        margin-left: 1.5rem;
+    }
+
+    .section-03-image {
+        width: 100%;
+        /* Make it responsive to the container */
+        max-width: 40%;
+        /* Limits width to 40% of the parent container */
+        height: auto;
+        /* Maintain aspect ratio */
+        object-fit: cover;
+        /* Ensures image fills the box without distortion */
+        display: block;
+        /* Prevents extra spacing issues */
+    }
+
+    /* Responsive design */
+    @media (max-width: 1024px) {
+        .section-03-image {
+            max-width: 50%;
+            /* Adjusts width for tablets */
+            height: auto;
+        }
+    }
+
+    @media (max-width: 768px) {
+        .section-03-image {
+            max-width: 100%;
+            /* Full width for smaller screens */
+            height: auto;
+        }
+    }
+
+
+    /* Blue link with arrow hover effect */
+    .section-03-link {
+        font-size: 1.2857142857rem;
+        color: #1B449C;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .section-03-link:hover {
+        text-decoration: underline;
+    }
+
+    .section-03-link svg {
+        margin-left: 0.5rem;
+        transition: transform 0.3s ease;
+    }
+
+    .section-03-link:hover svg {
+        transform: translateX(5px);
+    }
+
+    /* Mobile responsiveness */
+    @media (max-width: 768px) {
+        .section-03 {
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .section-03-content {
+            max-width: 100%;
+            padding-right: 0;
+            text-align: justify;
+        }
+
+
+    }
+
+
+
+    /* Parent container styling */
+    /* Parent container styling */
+    .section-container01 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 5% 5%;
+        background-color: #f4f6f8;
+        gap: 3rem;
+        /* Adds space between the text and image columns */
+    }
+
+    /* Content container */
+    .text-content01 {
+        flex: 1;
+    }
+
+    /* Image container */
+    .image-container01 {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    /* Image styling */
+    .image-container01 img {
+        width: 100%;
+        /* Makes the image fit the full column */
+        height: auto;
+        /* Adjusts height proportionally */
+        object-fit: cover;
+        /* Ensures the image fills the container properly */
+    }
+
+    /* Responsive design */
+    @media (max-width: 1024px) {
+        .section-container01 {
+            padding: 2rem 3%;
+            gap: 2rem;
+            /* Reducing gap for smaller screens */
+        }
+
+        .text-content01 h2 {
+            font-size: 2rem;
+        }
+
+        .text-content01 p {
+            font-size: 1.2857rem;
+            text-align: justify;
+        }
+    }
+
+    .text-content01 h2 {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 0.5rem;
+        color: #000000;
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .text-content01 p {
+        text-align: justify;
+        font-size: 1.2857142857rem;
+        line-height: 1.875rem;
+        font-weight: 400;
+        color: #000000;
+        font-family: 'Open Sans', -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+        margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 768px) {
+        .section-container01 {
+            flex-direction: column;
+            padding: 2rem 5%;
+            gap: 1.5rem;
+            /* Adjusting gap for mobile */
+        }
+
+        .text-content01 {
+            text-align: center;
+        }
+
+        .image-container01 img {
+            width: 100%;
+            height: auto;
+        }
+    }
+
+
+
+
+
+
+    /* General Styling for the Newsroom Section */
+    .newsroom-section {
+        padding: 5%;
+        background-color: #ffffff;
+        font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
+    }
+
+    .newsroom-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        text-align: left;
+    }
+
+    /* Newsroom Heading Styling */
+    .newsroom-heading {
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 2rem;
+        color: #000000;
+    }
+
+    /* Articles Grid */
+    .newsroom-articles {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+
+    }
+
+    .newsroom-article {
+        background-color: #f9f9f9;
+        padding: 1.5rem;
+        /* border-radius: 8px; */
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        display: grid;
+        grid-template-rows: auto auto auto;
+        gap: 1rem;
+    }
+
+    /* Article Title (H3) */
+    .newsroom-article-title {
+        font-size: 1.5rem;
+        font-weight: 600;
+        line-height: 2rem;
+        color: #000;
+        margin-bottom: 1rem;
+    }
+
+    /* Article Content */
+    .newsroom-article-content {
+        font-size: 1.2857142857rem;
+        line-height: 1.6;
+        color: #000000;
+        text-align: justify;
+    }
+
+    /* Continue Reading Link */
+    .newsroom-link {
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.5;
+        margin: 0;
+        text-align: left;
+        color: #1B449C;
+        text-decoration: none;
+    }
+
+    .newsroom-link:hover {
+        text-decoration: underline;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        .newsroom-articles {
+            grid-template-columns: 1fr;
+        }
+    }
+
+
+
+    /* Four-Column Section Styles */
+    .custom-four-columns8976 {
+        padding: .5rem 5rem;
+        background-color: #1B449C;
+    }
+
+    .custom-container8976 {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        padding: 20px 0;
+    }
+
+    .custom-column8976 {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        border-left: 2px solid #fff;
+        padding: 20px;
+        text-align: center;
+        color: white;
+    }
+
+    .custom-column8976:first-child {
+        border-left: none;
+    }
+
+    .custom-four-columns8976 h3 {
+        font-size: 2rem;
+        margin-bottom: .5rem;
+    }
+
+    .custom-four-columns8976::after {
+        content: "";
+        display: block;
+        width: 100%;
+        height: 2px;
+        /* background-color: #000; */
+        margin-top: 20px;
+    }
+
+    @media (max-width: 768px) {
+        .custom-container8976 {
+            grid-template-columns: 1fr;
+        }
+
+        .custom-column8976 {
+            border-left: none;
+            border-top: 2px solid #fff;
+            /* Change to white */
+        }
+
+        .custom-column8976:first-child {
+            border-top: none;
+        }
+
+        .custom-four-columns8976::after {
+            display: block;
+        }
+    }
+
+    @media (min-width: 769px) {
+        .custom-four-columns8976::after {
+            display: none;
+        }
+    }
+
+    /* Section Title */
+    .section-title {
+        max-width: 600px;
+        margin: auto;
+    }
+
+
+    .text-primary {
+        color: red !important;
+    }
+
+    .text-uppercase {
+        text-transform: uppercase !important;
+    }
+
+
+
+    /* Feature Icons */
+    .feature-icon {
+        background-color: #1B449C;
+        color: white;
+        width: 60px;
+        height: 60px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        font-size: 24px;
+        margin-bottom: 15px;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    .feature-icon:hover {
+        transform: scale(1.1);
+    }
+
+    /* Feature Image */
+    .feature-img {
+        width: 100%;
+        height: 100%;
+        border-radius: 10px;
+        object-fit: cover;
+        animation: fadeIn 1s ease-in-out;
+    }
+
+    .branch .container1 {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        min-height: 100vh;
+        padding: 2% 5%;
+    }
+
+    .branch .content {
+        flex: 1;
+        /* padding: 50px; */
+    }
+
+    .branch .content h2 {
+        text-align: left;
+        font-size: 2.2857142858rem;
+        font-weight: 600;
+        line-height: 1.2;
+        margin-bottom: 3rem;
+    }
+
+    .branch .stats {
+        display: flex;
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .branch .stats-item {
+        text-align: center;
+    }
+
+    .branch .stats-item h3 {
+        font-size: 1.5rem;
+    font-weight: 600;
+    line-height: 2rem;
+    color: #000;
+    margin-bottom: 1rem;
+        color: #222;
+    }
+
+    .branch .stats-item p {
+        font-size: 1.8rem;
+        font-weight: 500;
+        margin-bottom: 0.5rem;
+        color: #444;
+        margin-top: 5px;
+    }
+
+    .branch .stats-item span {
+        font-size: 1.2857142858rem;
+        line-height: 1.75;
+        color: #666;
+        display: block;
+        margin-top: 5px;
+    }
+
+    .branch .image-container {
+        flex: 1;
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 500px;
+        overflow: hidden;
+    }
+
+    .branch .image-container img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        clip-path: path('M 0 0 L 100% 0 L 100% 100% L 0 80% C 40% 90%, 60% 70%, 100% 100% L 0 100% Z');
+    }
+
+    @media (max-width: 1024px) {
+        .branch .container1 {
+            flex-direction: column;
+            text-align: center;
+            padding: 30px;
+        }
+
+        .branch .content {
+            padding: 30px;
+        }
+
+        .branch .image-container {
+            width: 100%;
+            height: 300px;
+        }
+    }
+
+    /* Counter Animation */
+    .branch .counter {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 0.5s, transform 0.5s;
+    }
+
+    .branch .counter.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+    .key-clients {
+            text-align: center;
+            padding: 50px 5%;
+          
+        }
+
+        .key-clients h2 {
+            font-size: 2.2857142858rem;
+    font-weight: 600;
+    line-height: 1.2;
+    margin-bottom: 2rem;
+    color: #000000;
+        
+        }
+
+        .key-clients p {
+            font-size: 1.2857142857rem;
+    line-height: 1.6;
+   
+            color: #666;
+            margin-bottom: 30px;
+        }
+
+        .key-clients-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 10px; /* Reduced gap */
+            align-items: center;
+        }
+
+        .key-clients-item {
+            text-align: center;
+            background: white;
+            padding: 10px;
+          
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .key-clients-item img {
+            width: 150px;
+            height: 100px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto 10px;
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .key-clients-item:hover {
+            transform: scale(1.05);
+        }
+
+        .key-clients-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .key-clients-item p {
+            font-size: 1.2857142857rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 1024px) {
+            .key-clients-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .key-clients-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .key-clients h2 {
+                font-size: 1.8rem;
+            }
+
+            .key-clients p {
+                font-size: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .key-clients-grid {
+                grid-template-columns: repeat(1, 1fr);
+            }
+        }
+</style>
+</head>
+
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="logo">
+                <img style="width: 15rem;" src="Picture1.png" alt="Logo">
+            </div>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="About.html">About</a></li>
+                <li><a href="Solutions.html">Services</a></li>
+                <li><a href="service1.html">Solution</a></li>
+                <li><a href="Contact.html">Contact</a></li>
+            </ul>
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </nav>
+    </header>
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Empowering Innovation and Growth</h1>
+        </div>
+    </section>
+
+    <!-- <section class="custom-four-columns8976">
+        <div class="custom-container8976">
+            <div class="custom-column8976">
+                <h3>70+</h3>
+                <p class="p8976">countries</p>
+            </div>
+            <div class="custom-column8976">
+                <h3>125,000+</h3>
+                <p class="p8976">employees</p>
+            </div>
+            <div class="custom-column8976">
+                <h3>200</h3>
+                <p class="p8976">customers in the Fortune 500</p>
+            </div>
+            <div class="custom-column8976">
+                <h3>60+</h3>
+                <p class="p8976">years of innovation</p>
+            </div>
+           <div class="custom-column8976">
+                    <h3>04</h3>
+                    <p class="p8976">lalalaalal</p>
+                </div>
+        </div>
+    </section> -->
+
+    <!-- Video and Text Section
+    <section class="video-text">
+        <div class="video">
+            <div class="video-thumbnail" onclick="openVideo()">
+                <img src="thumbnail.jpg" alt="Video Thumbnail">
+                <button class="play-button"></button>
+            </div>
+        </div>
+        <div class="text">
+            <h2>Innovative Solutions</h2>
+            <p>
+                We provide cutting-edge solutions to empower businesses and improve operational efficiency.
+                Our technology enables sustainable growth and fosters innovation across industries.
+            </p>
+        </div>
+    </section> -->
+    <section class="section-03">
+        <div class="section-03-content">
+            <h2 class="section-03-heading">HashXpert</h2>
+            <p class="section-03-paragraph">
+                HashXpert develop a roadmap for your vision, turning concepts into practical designs. Our
+                approach ensures your
+                ideas are transformed into actionable plans. We focus on creating designs that are both feasible and
+                impactful. From inception to execution, we bring your vision to life. Our expertise ensures effective
+                implementation every step of the way.
+            </p>
+            <ul class="section-03-list">
+                <li>We provide end-to-end implementation and rollout of new infrastructure, including hardware setup and
+                    installation.</li>
+                <li>We offer Proof-of-Concepts (POCs) to evaluate the viability of solutions, ensuring they integrate
+                    seamlessly and function as expected within your existing infrastructure.</li>
+                <li>
+                    We place a strong emphasis on providing continuous support after the sale, ensuring that you receive
+                    the assistance you need throughout every stage of your journey.</li>
+                <li>We are dedicated to addressing your questions and supporting you throughout the entire purchasing
+                    journey, offering more than just marketing insights to ensure you make informed decisions.</li>
+
+            </ul><br>
+            <!-- <a href="#" class="section-03-link">
+                DOWNLOAD THE DXC INDIA FACTSHEET
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                    class="bi bi-arrow-right" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M1 8a.5.5 0 0 1 .5-.5h10.793L8.146 4.354a.5.5 0 1 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L12.293 8.5H1.5A.5.5 0 0 1 1 8z" />
+                </svg>
+            </a> -->
+        </div>
+        <img src="Picture51.jpg" alt="HashXpert’s Technology" class="section-03-image">
+    </section>
+    <!-- Video Popup
+    <div class="video-popup" id="videoPopup">
+        <button class="close-button" onclick="closeVideo()">×</button>
+        <video src="video.mp4" controls></video>
+    </div> -->
+    <!-- Features Section -->
+    <!-- Features Section -->
+    <div class="container-fluid py-5 wow fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="section-title text-center position-relative pb-3 mb-5">
+                <h5 style=" font-weight: 800 !important;" class="fw-bold text-primary text-uppercase">Why Choose Us</h5>
+                <h1 style=" font-weight: 800 !important;" class="mb-0">We Are Here to Grow Your Business Exponentially
+                </h1>
+            </div>
+            <div class="row g-5">
+                <!-- Left Column -->
+                <div class="col-lg-4">
+                    <div class="row g-5">
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.2s">
+                            <div class="feature-icon">
+                                <i class="fa fa-cubes"></i>
+                            </div>
+                            <h4>Best In Industry</h4>
+                            <p>Providing top-notch industry-leading services and solutions.</p>
+                        </div>
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.6s">
+                            <div class="feature-icon">
+                                <i class="fa fa-award"></i>
+                            </div>
+                            <h4>Award Winning</h4>
+                            <p>Recognized and awarded for our excellence and innovation.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Middle Image Column -->
+                <div class="col-lg-4 wow zoomIn" data-wow-delay="0.9s" style="min-height: 350px;">
+                    <div class="position-relative h-100">
+                        <img class="feature-img" src="3d-puzzle-wall.jpg" alt="Feature Image">
+                    </div>
+                </div>
+
+                <!-- Right Column -->
+                <div class="col-lg-4">
+                    <div class="row g-5">
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.4s">
+                            <div class="feature-icon">
+                                <i class="fa fa-users-cog"></i>
+                            </div>
+                            <h4>Professional Staff</h4>
+                            <p>Experienced and dedicated professionals at your service.</p>
+                        </div>
+                        <div class="col-12 wow zoomIn" data-wow-delay="0.8s">
+                            <div class="feature-icon">
+                                <i class="fa fa-phone-alt"></i>
+                            </div>
+                            <h4>24/7 Support</h4>
+                            <p>Providing round-the-clock assistance for all your needs.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="section-container01">
+        <section class="text-content01">
+            <h2>Our Purpose</h2><br>
+            <p>Our goal is to be a customer-centric company, offering flexibility in solutions and services.We
+                prioritize security while ensuring competitive pricing.Customer needs drive our tailored and secure
+                options.We focus on delivering reliable and innovative solutions.Our commitment is to provide seamless
+                and secure experiences.We strive to exceed expectations with high-quality services.Empowering customers
+                with value remains our core mission.Trust and satisfaction are at the heart of our approach.We are
+                dedicated to creating lasting customer relationships.</p>
+            <!-- <a href="#">EXECUTIVE LEADERSHIP</a><br>
+            <a href="#">BOARD OF DIRECTORS</a> -->
+        </section>
+        <section class="image-container01">
+            <img src="innovation.jpg" alt="Our leaders image">
+        </section>
+    </section>
+
+
+    <div class="branch">
+        <div class="container1">
+            <div class="content">
+                <h2>Why Choose HashXpert ?</h2>
+                <div class="stats">
+                    <div class="stats-item">
+                        <h3 class="counter" data-target="100">1</h3>
+                        <p>Fortune Clients</p>
+                        <span>Trusted by global enterprises for critical IT solutions.</span>
+                    </div>
+                    <div class="stats-item">
+                        <h3 class="counter" data-target="3">1</h3>
+                        <p>Global Regions</p>
+                        <span>Local execution with worldwide expertise and reach.</span>
+                    </div>
+                    <div class="stats-item">
+                        <h3>100%</h3>
+                        <p>Innovation-Driven</p>
+                        <span>Cutting-edge AI & cloud solutions for modern businesses.</span>
+                    </div>
+                    <div class="stats-item">
+                        <h3>24/7</h3>
+                        <p>IT Management</p>
+                        <span>Comprehensive end-to-end services and support.</span>
+                    </div>
+                </div>
+            </div>
+            <div class="image-container">
+                <img src="client.jpg" alt="Team Celebration">
+            </div>
+        </div>
+    </div>
+    <section class="responsive-section">
+        <h3>PREPARATION OF JOB DESCRIPTIONS</h3><br>
+        <div class="container1">
+            <div class="row1">
+                <!-- Column 1 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="boss-shaking-hand-thanking-worker-good-job.jpg"
+                            alt="Crafting Detailed Job Descriptions">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Crafting Detailed Job Descriptions</h2>
+                        <p class="reveal-text">Creating comprehensive job descriptions is crucial for attracting the
+                            right candidates. They serve as a roadmap for potential applicants, outlining what is
+                            expected in the role.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="still-life-business-roles-with-various-mechanism-pieces.jpg"
+                            alt="Outline the Key Responsibilities">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Outline the Key Responsibilities
+                        </h2>
+                        <p class="reveal-text">Clearly delineating key responsibilities helps candidates understand
+                            their daily tasks and the impact their role will have on the organization.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="responsive-section">
+        <!-- //<h3>What we stand for</h3>  -->
+        <div class="container1">
+            <div class="row1">
+                <!-- Column 1 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="development-knowledge-study-education-concept.jpg"
+                            alt="Skills Needed for Each Position">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Skills Needed for Each Position
+                        </h2>
+                        <p class="reveal-text">Identifying the specific skills required for each position ensures that
+                            applicants can assess their fit for the role, which facilitates the better recruitment
+                            outcomes and results.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+
+                <!-- Column 2 -->
+                <div class="column1">
+                    <div class="image-column">
+                        <img src="portrait-smiling-confident-young-male-professional-with-contract-against-colored-background.jpg"
+                            alt="Image 2">
+                    </div>
+                    <div class="text-column border-top">
+                        <h2>Qualifications Needed for Each Position
+                        </h2>
+                        <p class="reveal-text">Listing the necessary qualifications helps streamline the hiring process
+                            by ensuring that only those who meet the educational and experiential requirements apply.
+                        </p><br>
+                        <!-- <a href="#" class="learn-more1">Learn More</a> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Us Section -->
+    <div class="container-fluid py-5 wow animate__animated animate__fadeInUp" data-wow-delay="0.1s">
+        <div class="container py-5">
+            <div class="row g-5">
+                <!-- Left Column -->
+                <div class="col-lg-7">
+                    <div class="section-title position-relative pb-3 mb-5 wow animate__animated animate__fadeInLeft" data-wow-delay="0.2s">
+                        <!-- <h5 class="fw-bold text-primary text-uppercase">About Us</h5> -->
+                        <h1 class="mb-0">The Best IT Solution </h1>
+                    </div>
+                    <p class="mb-4 wow animate__animated animate__fadeInUp" data-wow-delay="0.3s">
+                        We specialize in crafting designs that are both practical and impactful. From concept to completion, we turn your vision into reality, ensuring seamless execution with our expertise at every stage.
+                    </p>
+
+                    <!-- Features List -->
+                    <div class="row g-0 mb-3">
+                        <div class="col-sm-6 wow animate__animated animate__zoomIn" data-wow-delay="0.4s">
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Award Winning</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Professional Staff</h5>
+                        </div>
+                        <div class="col-sm-6 wow animate__animated animate__zoomIn" data-wow-delay="0.5s">
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>24/7 Support</h5>
+                            <h5 class="mb-3"><i class="fa fa-check text-primary me-3"></i>Fair Prices</h5>
+                        </div>
+                    </div>
+
+                    <!-- Contact Information -->
+                    <div class="d-flex align-items-center mb-4 wow animate__animated animate__fadeIn" data-wow-delay="0.6s">
+                        <div class="bg-primary d-flex align-items-center justify-content-center rounded-circle" style="width: 60px; height: 60px;">
+                            <i class="fa fa-phone-alt text-white"></i>
+                        </div>
+                        <div class="ps-4">
+                            <h5 class="mb-2">Call to ask any question</h5>
+                            <h4 class="text-primary mb-0">+012 345 6789</h4>
+                        </div>
+                    </div>
+
+                    <!-- Button -->
+                    <a href="Contact.html" class="btn btn-primary py-3 px-5 mt-3 wow animate__animated animate__zoomIn" data-wow-delay="0.7s">
+                       Contact Us
+                    </a>
+                </div>
+
+                <!-- Right Column (Image) -->
+                <div class="col-lg-5" style="min-height: 500px;">
+                    <div class="position-relative h-100 rounded-box">
+                        <img class="position-absolute w-100 h-100 rounded wow animate__animated animate__zoomIn" 
+                            data-wow-delay="0.8s" src="20742.jpg" style="object-fit: cover;">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <section class="section-container01">
+        <section class="text-content01">
+            <h2>What Drives Us</h2><br>
+            <p>We provide top-quality IT solutions tailored to customer needs.Our commitment is to exceptional service
+                and reliable support.A diverse range of solutions ensures flexibility and choice.We strive to deliver
+                innovative and efficient IT services.Customer satisfaction is at the core of our approach.Security is
+                integrated into every solution we offer.We prioritize trust, reliability, and seamless experiences.Our
+                goal is to enhance business success with technology.Excellence in IT solutions defines our mission.</p>
+            <!-- <a href="#">EXECUTIVE LEADERSHIP</a><br>
+            <a href="#">BOARD OF DIRECTORS</a> -->
+        </section>
+        <section class="image-container01">
+            <img src="Picture9.jpg" alt="Our leaders">
+        </section>
+    </section>
+
+    <section class="newsroom-section">
+        <div class="newsroom-container">
+            <h2 class="newsroom-heading">COMPLIANCE METRICS
+            </h2>
+            <div class="newsroom-articles">
+                <!-- Article 1 -->
+                <div class="newsroom-article">
+                    <h3 class="newsroom-article-title">
+                        Comprehensive Audits
+
+                    </h3>
+                    <p class="newsroom-article-content">
+                        Our audits cover all customers, ensuring strict compliance across operations.
+                        We meticulously follow all regulatory requirements without exceptions.
+                        Every process is evaluated to maintain the highest standards.
+                        Compliance is at the core of our operational framework.
+                        By adhering to regulations, we reinforce trust and credibility.
+                        This commitment strengthens our reputation in the market.
+                    </p>
+                    <!-- <a href="#" class="newsroom-link">Continue reading</a> -->
+                </div>
+                <!-- Article 2 -->
+                <div class="newsroom-article">
+                    <h3 class="newsroom-article-title">
+                        100% Compliance Achievement
+
+                    </h3>
+                    <p class="newsroom-article-content">
+                        We have consistently showcased our strong commitment to regulatory standards.
+                        Our dedication to operational excellence remains unwavering.
+                        We have maintained a track record of 100% compliance.
+                        Every audit conducted has reinforced our adherence to standards.
+                        We continuously strive to exceed regulatory expectations.
+                        Our commitment ensures excellence in every aspect of operations.
+                    </p>
+                    <!-- <a href="#" class="newsroom-link">Continue reading</a> -->
+                </div>
+                <!-- Article 3 -->
+                <div class="newsroom-article">
+                    <h3 class="newsroom-article-title">
+                        Building Reliability and Trust
+                    </h3>
+                    <p class="newsroom-article-content">
+                        By maintaining strict compliance standards,
+                        We ensure reliability in every interaction.
+                        Trust is the foundation of our client relationships,
+                        Strengthening bonds through consistent integrity.
+                        Our commitment fosters long-term partnerships,
+                        Driving customer loyalty and business growth.
+                    </p>
+                    <!-- <a href="#" class="newsroom-link">Continue reading</a> -->
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="key-clients">
+        <h2>Key Clients</h2>
+        <p>Our trusted relationships with industry leaders and government entities demonstrate our commitment to excellence:</p>
+        <div class="key-clients-grid">
+            <div class="key-clients-item">
+                <img src="keyclient.png" alt="Abu Dhabi Airports">
+                <p>ABU DHABI AIRPORTS COMPANY</p>
+            </div>
+            <div class="key-clients-item">
+                <img src="keyclient3.png" alt="Family Care Authority">
+                <p>FAMILY CARE AUTHORITY</p>
+            </div>
+            <div class="key-clients-item">
+                <img src="keyclient4.png" alt="General Civil Aviation Authority">
+                <p>GENERAL CIVIL AVIATION AUTHORITY</p>
+            </div>
+            <div class="key-clients-item">
+                <img src="keyclient5.png" alt="Ministry of Education">
+                <p>MINISTRY OF EDUCATION</p>
+            </div>
+            <div class="key-clients-item">
+                <img src="sinyar.jpeg" alt="Sinyar">
+                <p>SINYAR ENTERPRISES SOLE PROPRIETORSHIP LLC</p>
+            </div>
+            <div class="key-clients-item">
+                <img src="bunduq.png" alt="Bunduq Oil Company">
+                <p>BUNDUQ OIL COMPANY LTD.</p>
+            </div>
+            <div class="key-clients-item">
+                <img src="falcon.jpeg" alt="Falcon & Associates Dubai">
+                <p>FALCON & ASSOCIATES DUBAI</p>
+            </div>
+            <div class="key-clients-item">
+                <img src="keyclient10.png" alt="Purecs Healthcare">
+                <p>PURECS HEALTHCARE</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- <section class="partner-section">
+        <div class="partner-logos">
+            
+            <img src="Picture47.png" alt="AWS">
+            <img src="Picture48.png" alt="Google Cloud">
+            <img src="Picture46.png" alt="AWS">
+            <img src="Picture45.png" alt="Google Cloud">
+        </div>
+        <div class="partner-content">
+            <h1 class="partner-heading">We partner with the best</h1>
+            <p class="partner-description">Combining strengths and our deep expertise, we deliver solutions that drive
+                greater outcomes for our customers.</p>
+         
+        </div>
+    </section> -->
+
+    <section class="section-connect">
+        <h2>Connect with HashXpert</h2>
+        <button class="contact-button" onclick="window.location.href='Contact.html'">Contact
+            Us</button>
+    </section>
+
+    <footer>
+        <div class="footer-container">
+            <!-- Main Section -->
+            <div class="footer-main">
+                <div class="column-left">
+                    <ul class="footer-links">
+                        <li><a href="index.html">Home</a></li>
+                        <li><a href="About.html">About</a></li>
+                        <li><a href="Solutions.html">Services</a></li>
+                        <li><a href="service1.html">Solution</a></li>
+                        <li><a href="Contact.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="column-right">
+                    <div class="logo-row">
+                        <img src="Picture1.png" alt="DXC Logo" class="footer-logo">
+                    </div>
+                    <div class="text-row">
+                        <p>
+                            HashXpert appears to be a forward-thinking IT company founded by seasoned
+                            professionals with extensive experience in the IT industry. The company is built on a strong
+                            foundation of understanding emerging trends and technologies, positioning itself as a key
+                            player in the IT sector. Headquartered in Dubai, HashXpert has a strategic
+                            presence in the Middle East and India, enabling it to cater to a diverse range of clients
+                            across these regions. As a system integrator in the UAE, HashXpert specializes in providing
+                            end-to-end IT solutions tailored to the needs of various
+                            businesses, from startups and SMEs to large enterprises. The company’s expertise spans
+                            multiple platforms and technologies, allowing it to deliver customized IT solutions that
+                            align with the unique requirements of its clients.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Social Icons Section -->
+            <div class="footer-social">
+                <div class="social-icons">
+                    <!-- <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a> -->
+                    <a href="https://www.linkedin.com/company/hashxpert-technologies-llc/?originalSubdomain=ae"><i
+                            class="fab fa-linkedin"></i></a>
+                    <!-- <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a> -->
+                </div>
+            </div>
+
+            <!-- Footer Bottom Section -->
+            <hr class="footer-line">
+            <div class="footer-bottom">
+                <p class="copyright">© HashXpert</p>
+                <div class="legal-links">
+                    <a href="PrivacyPolicy.html">PrivacyPolicy</a> |
+                    <a href="TermsOfUse.html">Terms</a> |
+                    <a href="FAQ.html">FAQ</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scroll Up Button -->
+    <button id="scrollUpBtn" title="Scroll to Top">↑</button>
+
+    <script src="script.js"></script>
+    <script>
+
+
+        // Scroll Up Button Functionality
+        var scrollUpBtn = document.getElementById("scrollUpBtn");
+
+        // When the user scrolls down 100px from the top of the document, show the button
+        window.onscroll = function () {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                scrollUpBtn.style.display = "block";
+            } else {
+                scrollUpBtn.style.display = "none";
+            }
+        };
+
+        // When the user clicks on the button, scroll to the top of the document
+        scrollUpBtn.addEventListener("click", function () {
+            window.scrollTo({ top: 0, behavior: "smooth" });
+        });
+    </script>
+
+    <script>
+        function openVideo() {
+            document.getElementById('videoPopup').style.display = 'flex';
+        }
+
+        function closeVideo() {
+            document.getElementById('videoPopup').style.display = 'none';
+        }
+    </script>
+    <script>
+        window.addEventListener('scroll', function () {
+            const revealTexts = document.querySelectorAll('.reveal-text');
+            revealTexts.forEach(function (revealText) {
+                const revealPosition = revealText.getBoundingClientRect().top;
+                const screenPosition = window.innerHeight;
+
+                if (revealPosition < screenPosition) {
+                    revealText.classList.add('revealed');
+                }
+            });
+        });
+    </script>
+     <!-- Bootstrap JS -->
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    
+    <!-- JavaScript Libraries -->
+    <script>
+        new WOW().init();
+    </script>
+    <script>
+        function animateCounters() {
+            const counters = document.querySelectorAll(".counter");
+            const options = { threshold: 0.5 }; // Trigger animation when 50% visible
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        let counter = entry.target;
+                        let target = +counter.getAttribute("data-target");
+                        let start = 1;
+                        let increment = Math.ceil(target / 100);
+                        let duration = 2000; // Animation duration in ms
+                        let stepTime = Math.floor(duration / (target / increment));
+
+                        function updateCounter() {
+                            start += increment;
+                            if (start > target) {
+                                counter.innerText = target;
+                            } else {
+                                counter.innerText = start;
+                                setTimeout(updateCounter, stepTime);
+                            }
+                        }
+
+                        counter.classList.add("visible");
+                        updateCounter();
+                        observer.unobserve(counter);
+                    }
+                });
+            }, options);
+
+            counters.forEach(counter => observer.observe(counter));
+        }
+
+        document.addEventListener("DOMContentLoaded", animateCounters);
+    </script>
+</body>
+
+</html>
