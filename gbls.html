@@ -16,6 +16,7 @@
         margin: 0;
         padding: 0;
         box-sizing: border-box;
+        
         font-family: Open Sans, -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Helvetica Neue, Arial, Noto Sans, Liberation Sans, sans-serif, Apple Color Emoji, Segoe UI Emoji, Segoe UI Symbol, Noto Color Emoji;
 
     }
@@ -503,6 +504,7 @@
 
     .grit12-content p,
     .grit12-content ul {
+        text-align: left;
         font-size: 1.2857142857rem;
         margin-bottom: 1rem;
         margin-top: 0;
@@ -773,30 +775,47 @@
     }
 
     .hero {
-        position: relative;
-        width: 100%;
-        height: 92vh;
-        /* Full viewport height */
-        overflow: hidden;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-    }
+            position: relative;
+            width: 100%;
+            height: 100vh; /* Default: Full viewport height */
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
 
-    .hero video,
-    .hero img {
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-    }
+        .hero video,
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
 
-    .hero img {
-        display: none;
-        /* Hide the image initially */
-    }
+        .hero img {
+            display: none; /* Hide both images by default */
+        }
+
+        /* Mobile view: Reduce height and show the mobile image */
+        @media (max-width: 768px) {
+            .hero {
+                height: 60vh; /* Reduce hero section height */
+            }
+
+            .hero video {
+                display: none; /* Hide the video */
+            }
+
+            .hero img#heroImage {
+                display: none; /* Hide the desktop image */
+            }
+
+            .hero img#heroImageMobile {
+                display: block; /* Show the mobile image */
+            }
+        }
 </style>
 </style>
 </head>
@@ -822,14 +841,16 @@
         </nav>
     </header>
 
+   
+   
     <section class="hero">
         <video id="heroVideo" autoplay muted>
             <source src="gbls.mp4" type="video/mp4">
             Your browser does not support the video tag.
         </video>
-        <img id="heroImage" src="gbls.png" alt="Hero Image">
+        <img id="heroImage" src="gbls.png" alt="Hero Image (Desktop)">
+        <img id="heroImageMobile" src="/hero.png" alt="Hero Image (Mobile)">
     </section>
-
 
     <section class="grit12" id="grit12">
         <div class="grit12-content">
@@ -1095,12 +1116,13 @@
         }
     </script>
 
-    <script>
-        document.getElementById("heroVideo").addEventListener("ended", function () {
-            this.style.display = "none"; // Hide the video after it finishes
-            document.getElementById("heroImage").style.display = "block"; // Show the image
-        });
-    </script>
+<script>
+    document.getElementById("heroVideo").addEventListener("ended", function () {
+        this.style.display = "none"; // Hide the video after it finishes
+        document.getElementById("heroImage").style.display = "block"; // Show the desktop image
+    });
+</script>
+
     <script src="script.js"></script>
 </body>
 
